@@ -7,3 +7,6 @@ sources/live/cache/*.json
 nbproject/private/
 sources/archives/
 sources/admin/temp_ajust.php
+docker/error.log
+database/*
+!database/.gitkeep
