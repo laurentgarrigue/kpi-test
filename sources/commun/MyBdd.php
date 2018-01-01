@@ -1355,16 +1355,13 @@ class MyBdd
 	// Journal des manipulations
 	function utyJournal($action, $saison='', $competition='', $evenement='NULL', $journee='NULL', $match='NULL', $journal='', $user='')
 	{
-		if ($saison == '') {
-            $saison = utyGetSaison();
-        }
-        if ($competition == '') {
-            $competition = utyGetSession('codeCompet', '');
-        }
-        if ($user == '') {
-            $user = utyGetSession('User');
-        }
-        $sql  = "INSERT INTO gickp_Journal (Dates ,Users ,Actions ,Saisons ,Competitions ,Evenements ,Journees ,Matchs ,Journal) VALUES (";
+		if($saison == '')
+			$saison = utyGetSaison();
+		if($competition == '')
+			$competition = utyGetSession('codeCompet', '');
+		if($user == '')
+			$user = utyGetSession('User');
+		$sql  = "INSERT INTO gickp_Journal (Dates ,Users ,Actions ,Saisons ,Competitions ,Evenements ,Journees ,Matchs ,Journal) VALUES (";
 		$sql .= "CURRENT_TIMESTAMP, ";
 		$sql .= "'".$user."', ";
 		$sql .= "'".$action."', ";
