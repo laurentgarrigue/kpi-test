@@ -1,4 +1,5 @@
-/database/
+database/
+!database/.gitkeep
 sources/smarty/templates_c/*
 !sources/smarty/templates_c/.gitkeep
 sources/live/cache/*.json
