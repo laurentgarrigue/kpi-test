@@ -1,5 +1,24 @@
 jq = jQuery.noConflict();
 
+var langue = [];
+
+if(lang == 'en')  {
+    langue['Cliquez_pour_modifier'] = 'Click to edit';
+    langue['Confirm_delete'] = 'Delete selected phases ?';
+    langue['Confirm_update'] = 'Confirm update ?';
+    langue['Confirm_dupplicate'] = 'Confirm dupplicate ?';
+    langue['MAJ_impossible'] = 'Unable to update';
+    langue['Selection_competition'] = 'Select a competition !';
+} else {
+    langue['Cliquez_pour_modifier'] = 'Cliquez pour modifier';
+    langue['Confirm_delete'] = 'Supprimer les journées/phases sélectionnées ?';
+    langue['Confirm_update'] = 'Confirmer le changement ?';
+    langue['Confirm_dupplicate'] = 'Confirmez-vous la copie ?';
+    langue['MAJ_impossible'] = 'Mise à jour impossible';
+    langue['Selection_competition'] = 'Sélectionner une compétition !';
+}
+
+
 jq(document).ready(function() {
 	jq("#evenement").change(function(){
 		jq("#competition").val('*');
@@ -29,7 +48,7 @@ jq(document).ready(function() {
 						laJournee.attr('data-valeur', changeType);
 						laJournee.attr('title', textType);
 					} else {
-						alert('Changement impossible');
+						alert(langue['MAJ_impossible']);
 						laJournee.attr('src', '../img/type' + laJournee.attr('data-valeur') + '.png');
 						laJournee.attr('data-valeur', laJournee.attr('data-valeur'));
 					}
@@ -62,7 +81,7 @@ jq(document).ready(function() {
 						laJournee.attr('title', textType);
 					}
 					else{
-						custom_alert('Changement impossible', 'Attention');
+						custom_alert(langue['MAJ_impossible'], 'Attention');
 						laJournee.attr('src', '../img/oeil2' + laJournee.attr('data-valeur') + '.gif');
 						laJournee.attr('data-valeur', laJournee.attr('data-valeur'));
 					}
@@ -92,14 +111,14 @@ jq(document).ready(function() {
 					}
 					else{
 						laJournee.show().next().remove();
-						alert('Changement impossible <br />'+data);
+						alert(langue['MAJ_impossible'] + ' <br />'+data);
 					}
 				},
 				'text' // Format des données reçues.
 			);		
 	});
     
-    jq('.directInput').attr('title','Cliquez pour modifier');
+    jq('.directInput').attr('title',langue['Cliquez_pour_modifier']);
     
     jq("body").delegate("span.directInput", "click", function(event){
 		event.preventDefault();
@@ -109,8 +128,15 @@ jq(document).ready(function() {
             case 'text':
                 jq(this).before('<input type="text" id="inputZone" class="directInputSpan" size="7" data-anciennevaleur="'+valeur+'" value="'+valeur+'">');
                 break;
+            case 'smalltext':
+                jq(this).before('<input type="text" id="inputZone" class="directInputSpan" size="3" data-anciennevaleur="'+valeur+'" value="'+valeur+'">');
+                break;
             case 'tel':
                 jq(this).before('<input type="tel" id="inputZone" class="directInputSpan" size="1" data-anciennevaleur="'+valeur+'" value="'+valeur+'">');
+                break;
+            case 'date':
+                jq(this).before('<input type="text" id="inputZone" class="directInputSpan" size="8" value="'+valeur+'" >');
+                jq('#inputZone').mask("9999-99-99");
                 break;
         }
         jq(this).hide();
@@ -155,7 +181,7 @@ jq(document).ready(function() {
                     },
                     function(data){
                         if(data != 'OK!'){
-                            alert('mise à jour impossible : '+data);
+                            alert(langue['MAJ_impossible'] + ' : ' + data);
                         }else{
                             thisSpan.text(nouvelleValeur);
                         }
@@ -194,7 +220,7 @@ function ParamJournee(idJournee)
 		var compet = document.forms['formCalendrier'].elements['competition'].value;
 		if (compet == '*')
 		{
-			alert('Sélectionnez une compétition');
+			alert(langue['Selection_competition']);
 			return;
 		}
 	}
@@ -221,7 +247,7 @@ function ClickEvenementJournee(idJournee)
 
 function publiMultiJournees()
 {
-	if(!confirm('Publier/Dépublier les journées/phases sélectionnées. Confirmez-vous le changement ?'))
+	if(!confirm(langue['Confirm_update']))
 	{
 		return false;
 	}
@@ -231,7 +257,7 @@ function publiMultiJournees()
  		
 function duplicate(idJournee)
 {
-	if(!confirm('Confirmez-vous la copie ?'))
+	if(!confirm(langue['Confirm_dupplicate']))
 		return false;
 		
 	document.forms['formCalendrier'].elements['Cmd'].value = 'Duplicate';
