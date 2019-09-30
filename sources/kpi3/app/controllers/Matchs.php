@@ -42,4 +42,14 @@ class Matchs extends CI_Controller {
         $this->twig->display('matchs/view.twig.html', $data);
         $this->twig->display('templates/footer.twig.html');
     }
+    
+    public function pdf() {
+        require_once APPPATH.'third_party/fpdf181/fpdf.php';
+        
+        $pdf = new FPDF();
+        $pdf->AddPage('P','A4',0);
+        $pdf->SetFont('Arial','B',16);
+        $pdf->Cell(0,0,'Hola mundo FPDF desde Codeigniter',0,1,'C');
+        $pdf->Output('paginaEnBlanco.pdf' , 'I' );
+    }
 }
