@@ -10,7 +10,8 @@ class Matchs extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('matchs_model');
-        $this->load->helper('url_helper');
+        $this->twig->add_function('site_url');
+        
         $this->output->enable_profiler(TRUE);
     }
 
@@ -19,9 +20,9 @@ class Matchs extends CI_Controller {
         $data['title'] = 'Liste des matchs';
         $data['matchs'] = $this->matchs_model->get_matchs();
 
-        $this->load->view('templates/header', $data);
-        $this->load->view('matchs/index', $data);
-        $this->load->view('templates/footer');
+        $this->twig->display('templates/header.twig.html', $data);
+        $this->twig->display('matchs/index.twig.html', $data);
+        $this->twig->display('templates/footer.twig.html');
     }
 
     public function view($id = NULL)
@@ -34,9 +35,10 @@ class Matchs extends CI_Controller {
         }
 
         $data['title'] = $data['match_item']['Numero_ordre'];
+        $_SESSION['toto'] = 'tata';
 
-        $this->load->view('templates/header', $data);
-        $this->twig->display('matchs/view.twig', $data);
-        $this->load->view('templates/footer');
+        $this->twig->display('templates/header.twig.html', $data);
+        $this->twig->display('matchs/view.twig.html', $data);
+        $this->twig->display('templates/footer.twig.html');
     }
 }

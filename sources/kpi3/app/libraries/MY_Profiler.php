@@ -5,7 +5,7 @@ class MY_Profiler extends CI_Profiler
 
     function run()
     {
-        $output = "<div id='codeigniter_profiler' style='clear:both;background-color:#fff;padding:10px;'>";
+        $output = "<div id='codeigniter_profiler' style='clear:both;background-color:#eee;'>";
 
         $output .= '<div style="margin-left: 2%; margin-right: 1%; float: left; width: 47%;">';
         $output .= $this->_compile_uri_string();
@@ -32,7 +32,7 @@ class MY_Profiler extends CI_Profiler
         $output .= '<fieldset style="border:1px solid #009999;padding:6px 10px 10px 10px;margin:20px 0 20px 0;background-color:#eee">';
         $output .= "\n";
 
-        $output .= '<legend style="color:#009999;">&nbsp;&nbsp;' . 'DONNEES SESSION' . '&nbsp;&nbsp;</legend>';
+        $output .= '<legend style="color:#009999;">&nbsp;&nbsp;' . 'SESSION DATA' . '&nbsp;&nbsp;</legend>';
         $output .= "\n";
 
         if(isset($this->CI->session) && is_object($this->CI->session))
@@ -48,12 +48,12 @@ class MY_Profiler extends CI_Profiler
             foreach($sess['userdata'] as $key => $val)
             {
                 //	On échappe (juste pour l'affichage) les données non numériques et on les affiche
-                if( ! is_numeric($key))
-                {
-                    $key = "'" . $key . "'";
-                }
+                //  if( ! is_numeric($key))
+                //  {
+                //      $key = "'" . $key . "'";
+                //  }
                 $output .= "<tr><td width='50%' style='color:#000;
-                    background-color:#ddd;'>&#36;_SESSION[" . $key . "]&nbsp;&nbsp; </td>"
+                    background-color:#ddd;'>" . $key . "</td>"
                         . "<td width='50%' style='color:#009999;font-weight:normal;background-color:#ddd;'>";
 
                 //	On affiche la valeur de la variable. Si c'est un tableau, on exécute la fonction print_r

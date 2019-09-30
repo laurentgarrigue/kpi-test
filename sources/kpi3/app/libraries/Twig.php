@@ -26,6 +26,10 @@ class Twig {
         $this->_twig = new Twig_Environment($this->_twig_loader, $this->_config['environment']);
     }
 
+	public function add_function($name) {
+		$this->_twig->addFunction($name, new Twig_Function_Function($name));
+	}
+
     public function render($template, $data = array()){
         $template = $this->addExtension($template);
         return $this->_twig->render($template, $data);
