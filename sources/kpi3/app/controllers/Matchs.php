@@ -20,6 +20,7 @@ class Matchs extends CI_Controller {
         $data['title'] = 'Liste des matchs';
         $data['matchs'] = $this->matchs_model->get_matchs();
 
+//        vdebug($data);
         $this->twig->display('templates/header.twig.html', $data);
         $this->twig->display('matchs/index.twig.html', $data);
         $this->twig->display('templates/footer.twig.html');
