@@ -49,7 +49,28 @@ class Matchs extends CI_Controller {
         $pdf = new FPDF();
         $pdf->AddPage('P','A4',0);
         $pdf->SetFont('Arial','B',16);
-        $pdf->Cell(0,0,'Hola mundo FPDF desde Codeigniter',0,1,'C');
-        $pdf->Output('paginaEnBlanco.pdf' , 'I' );
+        $pdf->Cell(0,0,'Pdf généré par FPDF via Codeigniter',0,1,'C');
+        $pdf->Output('pageBlanche.pdf' , 'I' );
+    }
+    
+    public function mpdf($id = NULL) {
+        $data['match_item'] = $this->matchs_model->get_matchs($id);
+
+        if (empty($data['match_item']))
+        {
+                show_404();
+        }
+
+        $data['title'] = $data['match_item']['Numero_ordre'];
+        $_SESSION['toto'] = 'tata';
+
+        $html = $this->twig->render('templates/header.twig.html', $data);
+        $html .= $this->twig->render('matchs/view.twig.html', $data);
+        $html .= $this->twig->render('templates/footer.twig.html');
+        
+        $this->load->library('m_pdf');
+        $pdf = $this->m_pdf->load();
+        $pdf->WriteHTML($html);
+		$pdf->Output();
     }
 }

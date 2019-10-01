@@ -54,6 +54,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //$route['translate_uri_dashes'] = FALSE;
 
 $route['matchs/pdf'] = 'matchs/pdf';
+$route['matchs/mpdf/(:any)'] = 'matchs/mpdf/$1';
 $route['matchs/(:any)'] = 'matchs/view/$1';
 $route['matchs'] = 'matchs';
 $route['(:any)'] = 'pages/view/$1';

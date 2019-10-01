@@ -31,7 +31,7 @@ class Twig {
 	}
 
     public function render($template, $data = array()){
-        $template = $this->addExtension($template);
+//        $template = $this->addExtension($template);
         return $this->_twig->render($template, $data);
     }
 
