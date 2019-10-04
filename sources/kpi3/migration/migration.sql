@@ -15,8 +15,6 @@ ALTER TABLE gickp_Competitions_Equipes ADD FOREIGN KEY (Code_club) REFERENCES gi
 ALTER TABLE gickp_Surclassements ADD FOREIGN KEY (Matric) REFERENCES gickp_Liste_Coureur (Matric);
 
 
-
-
 -- Hum...
 ALTER TABLE gickp_Arbitre ADD FOREIGN KEY (Matric) REFERENCES gickp_Liste_Coureur (Matric);
 ALTER TABLE gickp_Competitions_Equipes_Joueurs ADD FOREIGN KEY (Matric) REFERENCES gickp_Liste_Coureur (Matric);
@@ -26,4 +24,7 @@ ALTER TABLE gickp_Journees ADD FOREIGN KEY (Code_competition) REFERENCES gickp_C
 ALTER TABLE gickp_Matchs ADD FOREIGN KEY (Id_journee) REFERENCES gickp_Journees (Id);
 ALTER TABLE gickp_Matchs_Detail ADD FOREIGN KEY (Id_match) REFERENCES gickp_Matchs (Id);
 ALTER TABLE gickp_Matchs_Joueurs ADD FOREIGN KEY (Id_match) REFERENCES gickp_Matchs (Id);
+
+-- ion_auth
+-- executer /third_party/ion_auth/sql/ion_auth.sql
 

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <meta  charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <head>
+        {% block head %}
+        <link rel="icon" href="{{ site_url() }}favicon.ico">
+        <title>{% block title %}{{ title }}{% endblock %}</title>
+        {% block style %}
+        <link href="{{ css_url('librairies/jquery-ui') }}" rel="stylesheet" type="text/css"/>
+
+        <link rel="stylesheet" href="{{ css_url('librairies/bootstrap') }}">
+        <link rel="stylesheet" href="{{ css_url('librairies/jquery-te-1.4.0') }}">
+
+        <link rel="stylesheet" href="{{ css_url('librairies/bootstrap-theme') }}">
+
+        <link href="{{ css_url('librairies/jquery.dataTables') }}" rel="stylesheet" type="text/css"/>
+
+        <link href="{{ css_url('librairies/font-awesome') }}" rel="stylesheet" type="text/css"/>
+
+        <link rel="stylesheet" href="{{ css_url('librairies/buttons.dataTables.min') }}">
+        
+        <link rel="stylesheet" href="{{ css_url('librairies/themeroller') }}">
+        
+        <link rel="stylesheet" href="{{ css_url('librairies/highcharts') }}">
+
+        <link rel="stylesheet" href="{{ css_url('orcco') }}">
+
+        {% endblock %}
+        {% endblock %}
+    </head>
+    <body>
+{#        {% include 'tpl/include/modal_credits.html' %}#}
+        <!--[if lt IE 9]>
+            <p class="browserupgrade">Vous utilisez un navigateur <strong>obsolète</strong>. Merci de mettre à jour votre navigateur, ou utiliser de préférence Mozilla Firefox.</p>
+        <![endif]-->
+        <!-- Navigation -->
+        {% block navigation %}
+        <!-- Contenu du menu -->
+        {% endblock %}
+        <!-- Contenu -->
+        {% block contenu %}
+
+        {% endblock %}
+
+        <!-- Footer -->
+        <footer>
+            {% block footer %}
+            <!--<nav class="navbar navbar-default navbar-fixed-bottom">-->
+            <div class="container-fluid">
+                <nav class="navbar navbar-inverse navbar-fixed-bottom">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#footernavbar" aria-expanded="false" aria-controls="navbar">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <div id="footernavbar" class="navbar-collapse collapse">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <ul class="nav navbar-nav navbar-left">
+                                    <li><a href="#"><span class="glyphicon glyphicon-user"></span> {{ nom }} {{ prenom }} - {{ nom_role }}</a></li>
+                                    <li><a href="{{ base_url() }}auth/logout" title="Me déconnecter"><span class="glyphicon glyphicon-log-out"></span> Me déconnecter</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-md-4">
+                                <p class="nav navbar-text navbar-left">
+                                    {% block copyright %}&copy; Copyright {{ date('Y') }} - FFCK - <a data-toggle="modal" href="#" title="Changelog" data-target="#modal_credits">v{{ version() }}</a>{% endblock %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+
+            {% endblock %}
+        </footer>
+
+        <!-- Bootstrap core JavaScript -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        {% block javascript %}
+
+        <script> role = "{{ role }}";</script>
+        <script> departement = "{{ departement }}";</script>
+        <script> base_url = "{{ base_url() }}";</script>
+        <script> version = "{{ version() }}";</script>
+
+        <script src="{{ js_url('librairies/jquery-2.1.4') }}"></script>
+
+        <script src="{{ js_url('librairies/jquery-ui') }}"></script>
+        <script src="{{ js_url('jqte/jquery-te-1.4.0.min') }}" type="text/javascript"></script>
+
+        <script src="{{ js_url('librairies/jquery.dataTables') }}" type="text/javascript"></script>
+
+        <script src="{{ js_url('librairies/jquery.jeditable') }}" type="text/javascript"></script>
+
+        <script src="{{ js_url('librairies/bootstrap') }}" type="text/javascript"></script>
+
+        <script src="{{ js_url('librairies/jquery.ui.datepicker-fr') }}" type="text/javascript"></script>
+        <script src="{{ js_url('librairies/jquery.mask') }}" type="text/javascript"></script>
+
+        <script src="{{ js_url('fonctions_orcco') }}" type="text/javascript"></script>
+        <noscript><div id="noscript-warning">MERCI D'ACTIVER LE JAVASCRIPT POUR UTILISER ORCCO</div></noscript>
+        {% endblock %}
+    </body>
+</html>

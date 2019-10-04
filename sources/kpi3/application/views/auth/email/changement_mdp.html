@@ -1,0 +1,90 @@
+{% extends "Trame.html" %}
+    {# Commentaire : Je reprends la trame de base. 
+                    NE RIEN ECRIRE EN DEHORS DES BLOCKS #}
+
+
+{% block head %}
+<!-- Je réécris le block head -->
+   <!-- Finalement je reprends le block head comme il était (après modification du block title)... -->
+    {{ parent() }}        
+    <!-- ...et je rajoute du contenu après : je change la couleur de fond -->
+
+{% endblock %}
+
+{% block navigation %}
+    
+{% endblock %}
+
+
+{% block contenu %}
+<!-- Je réécris le block contenu -->
+    <div align="center">
+
+    <img src="{{ base_url() }}assets/images/orcco.png" alt="ORCCO"><br>
+    <!--<img src="{{ base_url() }}assets/images/orcco.png" alt="ORCCO" width="40%"><br>-->
+    
+    <br>
+    <div id="infoMessage">{{ message }}</div>
+    
+    <div id="modal_attribution" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <center>
+                        <h4 class="titre_modal"><u>Mot de passe oublié</u></h4>
+                    </center>
+                </div>
+                <div class="modal-body">
+                    <form id="login" action="{{ base_url() }}Auth/forgot_password" method="post">
+                    <!--<form id="login" action="{{ base_url() }}toto" method="post">-->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <center>
+                                Pour changer votre mot de passe, veuillez renseigner votre <b>Matricule</b>.
+                            </center>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-2"></div>
+                        <div class="col-lg-8">
+                            <input type="text" name="identity" id="identity" class="form_input" autocomplete="off" maxlength="255" />
+                        </div>
+                        <div class="col-lg-2"></div>
+                    </div>
+                    <br>
+                    <div class="modal-footer">
+                            <input type="submit" name="submit" value="Valider" id="submit_button" class="btn btn-success">
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+            <!--<nav class="navbar navbar-default navbar-fixed-bottom">-->
+            <div class="container-fluid">
+                <nav class="navbar navbar-inverse navbar-fixed-bottom">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <ul class="nav navbar-nav navbar-left">
+                            </ul>
+                        </div>
+                        <div class="col-lg-4">
+                            <p class="navbar-text navbar-left">
+                                {% block copyright %}&copy; Copyright {{ date('Y') }} - DSPAP / SDSO / <a href="#">STI</a> V{{ version() }}{% endblock %}
+                            </p>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+    
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+
+
+{% endblock %}

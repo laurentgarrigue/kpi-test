@@ -1,0 +1,106 @@
+{% extends "Trame.html" %}
+    {# Commentaire : Je reprends la trame de base. 
+                    NE RIEN ECRIRE EN DEHORS DES BLOCKS #}
+
+
+{% block head %}
+<!-- Je réécris le block head -->
+   <!-- Finalement je reprends le block head comme il était (après modification du block title)... -->
+    {{ parent() }}        
+    <!-- ...et je rajoute du contenu après : je change la couleur de fond -->
+
+{% endblock %}
+
+{% block navigation %}
+    
+    <div class="navbar navbar-inverse navbar-fixed-top titre_connect">
+        Optimisation des Ressources et des Compétences Cynophiles Opérationnelles
+    </div>
+    
+{% endblock %}
+
+
+{% block contenu %}
+<!-- Je réécris le block contenu -->
+    <div align="center">
+    
+    <br>
+    
+    <img src="{{ base_url() }}assets/images/orcco_login.png" alt="ORCCO">
+
+    <br>
+    <div id="infoMessage">{{ message |raw }}</div>
+    
+    <div id="modal_attribution" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <center><h4 class="titre_modal"><u>Identifiez-vous</u></h4></center>
+                </div>
+                <div class="modal-body">
+                    <form id="login" action="{{ base_url() }}Auth/login" method="post">
+                    <!--<form id="login" action="{{ base_url() }}toto" method="post">-->
+                    <div class="row">
+                        <div class="col-lg-2"></div>
+                        <div class="col-lg-4">
+                            <label for="login_string" class="form_label">Matricule ou RIO :&nbsp;</label>
+                        </div>
+                        <div class="col-lg-4">
+                            <input required type="text" name="identity" id="identity" class="form_input" autocomplete="off" maxlength="255" />
+                        </div>
+                        <div class="col-lg-2"></div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-2"></div>
+                        <div class="col-lg-4">
+                            <label for="login_pass" class="form_label">Mot de passe : </label>
+                        </div>
+                        <div class="col-lg-4">
+                            <input required type="password" name="password" id="password" class="form_input password" autocomplete="off" maxlength="<?php echo config_item('max_chars_for_password'); ?>" />
+                        </div>
+                        <div class="col-lg-2"></div>
+                    </div>
+                    <br>
+                    <div class="modal-footer">
+                        <div class="row">
+                            <div class="col-md-5">
+                                    <a href="{{ base_url() }}Auth/forgot_password" class="btn btn-warning">Réinitialiser son mot de passe</a>
+                            </div>
+                        <div class="col-md-4"></div>
+                        <div class="col-md-3">
+                            <input type="submit" name="submit" value="Connexion" id="submit_button" class="btn btn-success">
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+            <!--<nav class="navbar navbar-default navbar-fixed-bottom">-->
+            <div class="container-fluid">
+                <nav class="navbar navbar-inverse navbar-fixed-bottom">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <ul class="nav navbar-nav navbar-left">
+                            </ul>
+                        </div>
+                        <div class="col-lg-4">
+                            <p class="navbar-text navbar-left">
+                                {% block copyright %}&copy; Copyright {{ date('Y') }} - DSPAP / SDSO / <a href="#">STI</a> V{{ version() }}{% endblock %}
+                            </p>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+    
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+
+
+{% endblock %}
