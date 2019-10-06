@@ -9,6 +9,14 @@ if ( ! function_exists('css_url'))
     }
 }
 
+if ( ! function_exists('lib_url'))
+{
+    function lib_url($nom)
+    {
+        return base_url() . 'assets/libraries/' . $nom . '?='.version();
+    }
+}
+
 if ( ! function_exists('js_url'))
 {
     function js_url($nom)

@@ -53,11 +53,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //$route['404_override'] = '';
 //$route['translate_uri_dashes'] = FALSE;
 
-$route['matchs/pdf'] = 'matchs/pdf';
-$route['matchs/ionauth'] = 'matchs/ionauth';
-$route['matchs/authenticated'] = 'matchs/authenticated';
-$route['matchs/mpdf/(:any)'] = 'matchs/mpdf/$1';
-$route['matchs/(:any)'] = 'matchs/view/$1';
-$route['matchs'] = 'matchs';
-$route['(:any)'] = 'pages/view/$1';
+//$route['matchs/pdf'] = 'matchs/pdf';
+//$route['matchs/ionauth'] = 'matchs/ionauth';
+//$route['matchs/authenticated'] = 'matchs/authenticated';
+//$route['matchs/mpdf/(:any)'] = 'matchs/mpdf/$1';
+//$route['matchs/(:any)'] = 'matchs/view/$1';
+//$route['matchs'] = 'matchs';
+//$route['(:any)'] = 'pages/view/$1';
+
 $route['default_controller'] = 'matchs';
+//$route[LOGIN_PAGE] = 'Accueil/bienvenue';

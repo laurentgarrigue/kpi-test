@@ -21,10 +21,8 @@ class Matchs extends CI_Controller {
         $data['title'] = 'Liste des matchs';
         $data['matchs'] = $this->matchs_model->get_matchs();
 
-//        $this->twig->display('templates/header.html', $data);
 //        vdebug($data);
         $this->twig->display('matchs/index.html', $data);
-//        $this->twig->display('templates/footer.html');
     }
 
     public function view($id = NULL)
@@ -44,14 +42,47 @@ class Matchs extends CI_Controller {
 //        $this->twig->display('templates/footer.html');
     }
     
-    public function pdf() {
-        require_once APPPATH.'third_party/fpdf181/fpdf.php';
+    public function fpdf() {
+        require_once APPPATH.'third_party/fpdf-1.8.1/fpdf.php';
         
         $pdf = new FPDF();
         $pdf->AddPage('P','A4',0);
         $pdf->SetFont('Arial','B',16);
         $pdf->Cell(0,0,'Pdf généré par FPDF via Codeigniter',0,1,'C');
         $pdf->Output('pageBlanche.pdf' , 'I' );
+    }
+    
+    public function tfpdf() { // FPDF en UTF-8
+        // Définition facultative du répertoire des polices systèmes
+        // Sinon tFPDF utilise le répertoire [chemin vers tFPDF]/font/unifont/
+        // define("_SYSTEM_TTFONTS", "C:/Windows/Fonts/");
+        require_once APPPATH.'third_party/tfpdf-1.25/tfpdf.php';
+        
+
+        $pdf = new tFPDF();
+        $pdf->AddPage();
+
+        // Ajoute une police Unicode (utilise UTF-8)
+        $pdf->AddFont('DejaVu','','DejaVuSansCondensed.ttf',true);
+        $pdf->SetFont('DejaVu','',14);
+
+        // Charge une chaîne UTF-8
+        $pdf->Write(8,'Pdf généré par FPDF via Codeigniter en UTF-8 (DejaVu)');
+
+        // Sélectionne une police standard (utilise windows-1252)
+        $pdf->SetFont('Arial','',14);
+        $pdf->Ln(10);
+        $pdf->Write(5,"Partie générée en windows-1252 (Arial).");
+        $pdf->Ln(10);
+        $pdf->Write(5,"La taille de ce PDF n'est que de 13 ko.");
+
+        $pdf->Output();
+        
+//        $pdf = new FPDF();
+//        $pdf->AddPage('P','A4',0);
+//        $pdf->SetFont('Arial','B',16);
+//        $pdf->Cell(0,0,'Pdf généré par FPDF via Codeigniter',0,1,'C');
+//        $pdf->Output('pageBlanche.pdf' , 'I' );
     }
     
     public function mpdf($id = NULL) {

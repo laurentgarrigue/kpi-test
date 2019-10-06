@@ -29,19 +29,18 @@ class Twig
 	/**
 	 * @var array Functions to add to Twig
 	 */
-	private $functions_asis = [
-		'base_url', 'site_url', 'css_url', 'js_url', 'version'
-	];
+	private $functions_asis;
     
 	/**
 	 * @var array Functions with `is_safe` option
 	 * @see http://twig.sensiolabs.org/doc/advanced.html#automatic-escaping
 	 */
-	private $functions_safe = [
-		'form_open', 'form_close', 'form_error', 'form_hidden', 'set_value',
-//		'form_open_multipart', 'form_upload', 'form_submit', 'form_dropdown',
-//		'set_radio', 'set_select', 'set_checkbox',
-	];
+	private $functions_safe;
+    
+	/**
+	 * @var string Template extension
+	 */
+	private $template_ext;
     
 	/**
 	 * @var bool Whether functions are added or not
@@ -60,7 +59,14 @@ class Twig
     
 	public function __construct($params = [])
 	{
-		if (isset($params['functions']))
+		$this->CI =& get_instance();
+        $this->_config = $this->CI->config->item('twig');
+        
+        $this->functions_asis = $this->_config['functions_asis'];
+        $this->functions_safe = $this->_config['functions_safe'];
+        $this->template_ext = $this->_config['template_ext'];
+        
+        if (isset($params['functions']))
 		{
 			$this->functions_asis =
 				array_unique(
@@ -85,14 +91,14 @@ class Twig
 		}
 		else
 		{
-			$this->paths = [VIEWPATH];
+			$this->paths = $this->_config['template_dir'];
 		}
         
 		// default Twig config
 		$this->config = [
 			'cache'      => APPPATH . 'cache/twig',
 			'debug'      => ENVIRONMENT !== 'production',
-			'autoescape' => 'html',
+			'autoescape' => $this->_config['environment']['autoescape'],
 		];
 		$this->config = array_merge($this->config, $params);
 	}
@@ -165,7 +171,7 @@ class Twig
 		// We call addFunctions() here, because we must call addFunctions()
 		// after loading CodeIgniter functions in a controller.
 		$this->addFunctions();
-		$view = $view . '.twig';
+		$view = $view . $this->template_ext;
 		return $this->twig->render($view, $params);
 	}
     

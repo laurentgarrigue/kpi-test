@@ -1,11 +1,70 @@
-<h2>{{ title }}</h2>
+{% extends "templates/trame.html.twig" %}
+    {# Commentaire : Je reprends la trame de base. 
+                    NE RIEN ECRIRE EN DEHORS DES BLOCKS #}
 
-{% for matchs_item in matchs %}
 
-    <h3>{{ matchs_item.Numero_ordre }}</h3>
-    <div class="main">
-        {{ matchs_item.Date_match }} {{ matchs_item.Heure_match }}
-    </div>
-    <p><a href="{{ base_url('matchs/' ~ matchs_item.Id) }}">Voir le match</a></p>
+{% block head %}
+<!-- Je réécris le block head -->
+   <!-- Finalement je reprends le block head comme il était (après modification du block title)... -->
+    {{ parent() }}        
+    <!-- ...et je rajoute du contenu après : je change la couleur de fond -->
 
-{% endfor %}
+{% endblock %}
+
+{% block navigation %}
+    
+{% endblock %}
+
+
+{% block contenu %}
+<!-- Je réécris le block contenu -->
+    <div align="center">
+
+    <img src="{{ base_url() }}assets/images/kpi.png" alt="KPI"><br>
+    
+    <br>
+    <div id="infoMessage">{{ message }}</div>
+    
+    <input type="text" name="date" id="date">
+    
+    {% for matchs_item in matchs %}
+
+        <h3>{{ matchs_item.Numero_ordre }}</h3>
+        <div class="main">
+            {{ matchs_item.Date_match }} {{ matchs_item.Heure_match }}
+            <a class="btn btn-primary" href="{{ base_url('matchs/view/' ~ matchs_item.Id) }}">Voir le match</a>
+        </div>
+
+    {% endfor %}
+{% endblock %}
+
+{% block footer %}
+            <!--<nav class="navbar navbar-default navbar-fixed-bottom">-->
+            <div class="container-fluid">
+                <nav class="navbar navbar-inverse navbar-fixed-bottom">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <ul class="nav navbar-nav navbar-left">
+                            </ul>
+                        </div>
+                        <div class="col-lg-4">
+                            <p class="navbar-text navbar-left">
+                                {% block copyright %}&copy; Copyright {{ date('Y') }} - FFCK - v{{ version() }}{% endblock %}
+                            </p>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+    
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script>
+        $(function() {
+            console.log( "ready!" );
+            $( "#date" ).datepicker();
+        });
+    </script>
+{% endblock %}
+
