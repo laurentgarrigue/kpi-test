@@ -8,7 +8,8 @@ $config['twig']['environment']['debug'] = FALSE;
 
 $config['twig']['template_ext'] = '.twig';
 $config['twig']['functions_asis'] = [
-        'base_url', 'site_url', 'css_url', 'js_url', 'lib_url', 'version'
+        'base_url', 'site_url', 'css_url', 'js_url', 'lib_url', 'img_url', 'img',
+        'version'
     ];
 $config['twig']['functions_safe'] = [
 		'form_open', 'form_close', 'form_error', 'form_hidden', 'set_value',

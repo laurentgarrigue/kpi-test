@@ -12,6 +12,8 @@
             {% block style %}
                 <link rel="stylesheet" href="{{ lib_url('bootstrap-4.3.1/css/bootstrap.min.css') }}">
                 <link rel="stylesheet" href="{{ lib_url('jquery-ui-1.12.1/jquery-ui.min.css') }}">
+                <link rel="stylesheet" href="{{ lib_url('fontawesome-5.11.2/css/all.css') }}">
+                <link rel="stylesheet" href="{{ css_url('style') }}">
                 
 {#                <link rel="stylesheet" href="{{ css_url('librairies/jquery-ui') }}" type="text/css"/>
                 <link rel="stylesheet" href="{{ css_url('librairies/jquery-te-1.4.0') }}">
@@ -21,7 +23,6 @@
                 <link rel="stylesheet" href="{{ css_url('librairies/buttons.dataTables.min') }}">
                 <link rel="stylesheet" href="{{ css_url('librairies/themeroller') }}">
                 <link rel="stylesheet" href="{{ css_url('librairies/highcharts') }}">
-                <link rel="stylesheet" href="{{ css_url('kpi') }}">
 #}            {% endblock %}
         {% endblock %}
     </head>
@@ -79,7 +80,6 @@
         {% block javascript %}
 
         <script> role = "{{ role }}";</script>
-        <script> departement = "{{ departement }}";</script>
         <script> base_url = "{{ base_url() }}";</script>
         <script> version = "{{ version() }}";</script>
 
@@ -94,8 +94,8 @@
         <script src="{{ js_url('librairies/bootstrap') }}" type="text/javascript"></script>
         <script src="{{ js_url('librairies/jquery.ui.datepicker-fr') }}" type="text/javascript"></script>
         <script src="{{ js_url('librairies/jquery.mask') }}" type="text/javascript"></script>
-        <script src="{{ js_url('fonctions_orcco') }}" type="text/javascript"></script>
-#}        <noscript><div id="noscript-warning">MERCI D'ACTIVER LE JAVASCRIPT POUR UTILISER KPI</div></noscript>
+#}
+            <noscript><div id="noscript-warning">MERCI D'ACTIVER LE JAVASCRIPT POUR UTILISER KPI</div></noscript>
         {% endblock %}
     </body>
 </html>
