@@ -13,13 +13,12 @@
 
 {% block navigation %}
     <header id="header">
-        <nav class="navbar fixed-top navbar-expand-lg navbar-dark" style="background-color: #1e64af;">
+        <nav class="navbar fixed-top navbar-expand-lg navbar-dark navbar-main">
             <a class="navbar-brand" href="{{ base_url() }}" >
-{#                <img src="{{ img_url('logoKPI.png') }}" height="30" class="d-inline-block align-top" alt="">#}
                 <span class="btn btn-sm btn-outline-dark"><b>KPI</b></span>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarPublic" aria-controls="navbarPublic" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+                <span class="fa fa-bars"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarPublic">
@@ -76,7 +75,62 @@
                 </ul>
                     
             </div>
-        </nav>  
+        </nav>
+                     
+        <!-- Navbar logged-in -->                
+        <nav class="navbar fixed-top navbar-expand-lg navbar-light fixed-top-2 navbar-logged-in">
+            <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarLoggedIn" aria-controls="navbarLoggedIn" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="fa fa-bars fa-sm"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarLoggedIn">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Competitions</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Docs <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Teams</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Clubs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Athletes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Events</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gamedays/Phases</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown04">
+                            <a class="dropdown-item" href="#">Rules</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Games</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Rankings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Stats</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Import</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Users</a>
+                    </li>
+                </ul>
+                
+            </div>
+        </nav>
+        
     </header>
 {% endblock %}
 
@@ -84,13 +138,11 @@
 {% block contenu %}
 <!-- Je réécris le block contenu -->
     <div align="center">
-
-    <img src="{{ base_url() }}assets/images/kpi.png" alt="KPI"><br>
-    
-    <br>
     <div id="infoMessage">{{ message }}</div>
     
-    <input type="text" name="date" id="date">
+    <h1>{{ title }}</h1>
+    <h2>{{ title2 }}</h2>
+    <h3>{{ lang('kpi_title') }}</h3>
     
     {% for matchs_item in matchs %}
 
@@ -103,25 +155,6 @@
     {% endfor %}
 {% endblock %}
 
-{% block footer %}
-            <!--<nav class="navbar navbar-default navbar-fixed-bottom">-->
-            <div class="container-fluid">
-                <nav class="navbar navbar-inverse navbar-fixed-bottom">
-                    <div class="row">
-                        <div class="col-lg-8">
-                            <ul class="nav navbar-nav navbar-left">
-                            </ul>
-                        </div>
-                        <div class="col-lg-4">
-                            <p class="navbar-text navbar-left">
-                                {% block copyright %}&copy; Copyright {{ date('Y') }} - FFCK - v{{ version() }}{% endblock %}
-                            </p>
-                        </div>
-                    </div>
-                </nav>
-            </div>
-    
-{% endblock %}
 
 {% block javascript %}
     {{ parent() }}

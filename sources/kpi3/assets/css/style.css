@@ -64,12 +64,48 @@ body {
 }
 .navbar {
     padding: 0 1rem;
+}
+
+.navbar-main {
     background-image:-moz-linear-gradient(left, #0098ce, #313b9b);
     background-image:-webkit-linear-gradient(left, #0098ce, #313b9b);
     background-image:-o-linear-gradient(left, #0098ce, #313b9b);
     background-image:linear-gradient(to right, #0098ce, #313b9b);
 }
 
-.nav-item {
+.navbar-logged-in {
+    background-color: #cacaca;
+    font-size: 0.8em;
+}
+
+.navbar .nav-item {
     line-height: 1;
+}
+
+.fixed-top-2 {
+    margin-top: 43px;
+}
+
+body {
+    padding-top: 43px; /* public */
+    padding-top: 75px; /* logged */
+}
+
+.navbar-logged-in::after {
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid #cacaca;
+    border-top: none;
+    height: 0;
+    width: 0;
+    bottom: 0;
+    content: ' ';
+    position: absolute;
+    right: 30px;
+    top: -5px;
+    margin-left: -5px;
+}
+
+.navbar-light .navbar-nav .active > .nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show > .nav-link {
+	font-weight: bold;
 }

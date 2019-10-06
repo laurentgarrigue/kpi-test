@@ -10,8 +10,7 @@ class Matchs extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('matchs_model');
-//        $this->twig->add_function('site_url');
-//        $this->twig->add_function('base_url');
+        $this->session->lang = 'english';
         
         $this->output->enable_profiler(TRUE);
     }
@@ -22,6 +21,24 @@ class Matchs extends CI_Controller {
         $data['matchs'] = $this->matchs_model->get_matchs();
 
 //        vdebug($data);
+        $this->twig->display('matchs/index.html', $data);
+    }
+    
+    public function traduction()
+    {
+        
+        $lang = $this->session->lang;
+        $this->lang->load('kpi', $lang);
+        // méthode 1 : librairie
+        $data['title'] = $this->lang->line('kpi_title');
+        // méthode 2 : helper
+        $this->load->helper('language');
+        $data['title2'] = lang('kpi_title');
+        // méthode 3 : helper via Twig {{ lang('kpi_title') }}
+        
+        
+        $data['matchs'] = $this->matchs_model->get_matchs();
+
         $this->twig->display('matchs/index.html', $data);
     }
 
