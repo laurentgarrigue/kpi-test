@@ -31,10 +31,127 @@
         <!--[if lt IE 9]>
             <p class="browserupgrade">Vous utilisez un navigateur <strong>obsolète</strong>. Merci de mettre à jour votre navigateur, ou utiliser de préférence Mozilla Firefox.</p>
         <![endif]-->
+        
         <!-- Navigation -->
         {% block navigation %}
-        <!-- Contenu du menu -->
+            <header id="header">
+                {% if menu_public|length > 0 %}
+                    <nav class="navbar fixed-top navbar-expand-lg navbar-dark navbar-main">
+                        <a class="navbar-brand" href="{{ base_url() }}" >
+                            <span class="btn btn-sm btn-outline-dark"><b>KPI</b></span>
+                        </a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarPublic" aria-controls="navbarPublic" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="fa fa-bars"></span>
+                        </button>
+                        {% if menu_admin|length > 0 %}
+                            <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarLoggedIn" aria-controls="navbarLoggedIn" aria-expanded="false" aria-label="Toggle navigation">
+                                Administration <span class="fa fa-bars fa-sm"></span>
+                            </button>
+                        {% endif %}
+                        <div class="collapse navbar-collapse" id="navbarPublic">
+                            <ul class="navbar-nav mr-auto">
+                                {% for item in menu_public %}
+                                    {% if item.content|length > 0 %}
+                                        <li class="nav-item dropdown">
+                                            <a class="nav-link dropdown-toggle" href="{{ item.route }}" id="dropdown{{ item.label }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                {{ item.label }}{% if item.current == ' active' %} <span class="sr-only">(current)</span>{% endif %}
+                                            </a>
+                                            <div class="dropdown-menu" aria-labelledby="dropdown{{ item.label }}">
+                                                {% for item2 in item.content %}
+                                                    {% if item2.content == 'separator' %}
+                                                        <div class="dropdown-divider"></div>
+                                                    {% else %}
+                                                        <a class="dropdown-item" href="{{ item2.route }}">{{ item2.label }}</a>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        </li>
+                                    {% else %}
+                                        <li class="nav-item{{ item.current }}">
+                                            <a class="nav-link" href="{{ item.route }}">
+                                                {{ item.label }}{% if item.current == ' active' %} <span class="sr-only">(current)</span>{% endif %}
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                                <li class="nav-item">
+                                    <a class="nav-link nav-lang" href="#"><img src="{{ img_url('fra-60.png') }}" height="16" alt="FR" title="Français" class="d-inline-block align-top"></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link nav-lang" href="#"><img src="{{ img_url('gbr-60.png') }}" height="16" alt="EN" title="English" class="d-inline-block align-top"></a>
+                                </li>
+                            </ul>
+
+
+                            <ul class="navbar-nav">
+                                {% if user %}
+                                    <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-user" aria-hidden="true"></i> {{ user.first_name }} {{ user.last_name }}
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownId">
+                                        <a class="dropdown-item" href="#">
+                                            <label><i class="fa fa-user-tag" aria-hidden="true"></i> {{ lang('kpi_Roles') }}</label> : <br>
+                                            {% for group in user.groups %}
+                                                <i title="{{ group.description }}">{{ group.name }}</i>,&nbsp;
+                                            {% endfor %}
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#"><i class="fa fa-id-card" aria-hidden="true"></i> {{ lang('kpi_Account') }}</a>
+                                        <a class="dropdown-item" href="#"><i class="fa fa-key" aria-hidden="true"></i> {{ lang('kpi_Change_password') }}</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="{{ base_url('auth/logout') }}"><i class="fa fa-sign-out-alt" aria-hidden="true"></i> {{ lang('kpi_Logout') }}</a>
+                                    </div>
+                                {% else %}
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ base_url('auth/login') }}">
+                                            <i class="fa fa-sign-in-alt" aria-hidden="true"></i> {{ lang('kpi_Login') }}
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+
+                        </div>
+                    </nav>
+                {% endif %}
+
+                {% if menu_admin|length > 0 %}
+                    <!-- Navbar logged-in -->                
+                    <nav class="navbar fixed-top navbar-expand-lg navbar-light fixed-top-2 navbar-logged-in">
+                        <div class="collapse navbar-collapse" id="navbarLoggedIn">
+                            <ul class="navbar-nav ml-auto">
+                                {% for item in menu_admin %}
+                                    {% if item.content|length > 0 %}
+                                        <li class="nav-item dropdown">
+                                            <a class="nav-link dropdown-toggle" href="{{ item.route }}" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                {{ item.label }}{% if item.current == ' active' %} <span class="sr-only">(current)</span>{% endif %}
+                                            </a>
+                                            <div class="dropdown-menu" aria-labelledby="dropdown04">
+                                                {% for item2 in item.content %}
+                                                    {% if item2.content == 'separator' %}
+                                                        <div class="dropdown-divider"></div>
+                                                    {% else %}
+                                                        <a class="dropdown-item" href="{{ item2.route }}">{{ item2.label }}</a>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        </li>
+                                    {% else %}
+                                        <li class="nav-item{{ item.current }}">
+                                            <a class="nav-link" href="{{ item.route }}">
+                                                {{ item.label }}{% if item.current == ' active' %} <span class="sr-only">(current)</span>{% endif %}
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </nav>
+                    <span></span>
+                {% endif %}
+
+            </header>
         {% endblock %}
+
         <!-- Contenu -->
         {% block contenu %}
 

@@ -4,58 +4,60 @@
  *
  * @author laurent
  */
-class Matchs extends CI_Controller {
+class Tests extends MY_Controller {
     
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('matchs_model');
-        $this->session->lang = 'english';
-        
-        $this->output->enable_profiler(TRUE);
     }
 
     public function index()
     {
-        $data['title'] = 'Liste des matchs';
-        $data['matchs'] = $this->matchs_model->get_matchs();
+        $this->data['title'] = 'Liste des matchs';
+        $this->data['matchs'] = $this->matchs_model->get_matchs();
 
-//        vdebug($data);
-        $this->twig->display('matchs/index.html', $data);
+//        vdebug($this->data['user']);
+        $this->twig->display('tests/index.html', $this->data);
+    }
+    
+    public function menu()
+    {
+        
+
+//        vdebug($this->data);
+        $this->twig->display('tests/menu_dynamique.html', $this->data);
     }
     
     public function traduction()
     {
-        
-        $lang = $this->session->lang;
-        $this->lang->load('kpi', $lang);
+        $this->lang->load('kpi', $this->session->lang);
         // méthode 1 : librairie
-        $data['title'] = $this->lang->line('kpi_title');
+        $this->data['title'] = $this->lang->line('kpi_title');
         // méthode 2 : helper
         $this->load->helper('language');
-        $data['title2'] = lang('kpi_title');
+        $this->data['title2'] = lang('kpi_title');
         // méthode 3 : helper via Twig {{ lang('kpi_title') }}
         
         
-        $data['matchs'] = $this->matchs_model->get_matchs();
+        $this->data['matchs'] = $this->matchs_model->get_matchs();
 
-        $this->twig->display('matchs/index.html', $data);
+        $this->twig->display('tests/index.html', $this->data);
     }
 
     public function view($id = NULL)
     {
-        $data['match_item'] = $this->matchs_model->get_matchs($id);
+        $this->data['match_item'] = $this->matchs_model->get_matchs($id);
 
-        if (empty($data['match_item']))
+        if (empty($this->data['match_item']))
         {
                 show_404();
         }
 
-        $data['title'] = $data['match_item']['Numero_ordre'];
+        $this->data['title'] = $this->data['match_item']['Numero_ordre'];
         $_SESSION['toto'] = 'tata';
 
-//        $this->twig->display('templates/header.html', $data);
-        $this->twig->display('matchs/view.html', $data);
+//        $this->twig->display('templates/header.html', $this->data);
+        $this->twig->display('tests/view.html', $this->data);
 //        $this->twig->display('templates/footer.html');
     }
     
@@ -103,18 +105,18 @@ class Matchs extends CI_Controller {
     }
     
     public function mpdf($id = NULL) {
-        $data['match_item'] = $this->matchs_model->get_matchs($id);
+        $this->data['match_item'] = $this->matchs_model->get_matchs($id);
 
-        if (empty($data['match_item']))
+        if (empty($this->data['match_item']))
         {
                 show_404();
         }
 
-        $data['title'] = $data['match_item']['Numero_ordre'];
+        $this->data['title'] = $this->data['match_item']['Numero_ordre'];
         $_SESSION['toto'] = 'tata';
 
-//        $html = $this->twig->render('templates/header.html', $data);
-        $html .= $this->twig->render('matchs/view.html', $data);
+//        $html = $this->twig->render('templates/header.html', $this->data);
+        $html .= $this->twig->render('tests/view.html', $this->data);
 //        $html .= $this->twig->render('templates/footer.html');
         
         $this->load->library('m_pdf');
@@ -126,8 +128,8 @@ class Matchs extends CI_Controller {
     public function ionauth() {
         $this->load->add_package_path(APPPATH.'third_party/ion_auth/');
         $this->load->library('ion_auth');
-        $data['users'] = $this->ion_auth->users()->result(); // get all users
-        $this->twig->display('matchs/users.html', $data);
+        $this->data['users'] = $this->ion_auth->users()->result(); // get all users
+        $this->twig->display('tests/users.html', $this->data);
     }
     
     public function authenticated() {
@@ -137,7 +139,7 @@ class Matchs extends CI_Controller {
         {
               redirect('auth/login');
         }
-        $data['user'] = $_SESSION;
-        $this->twig->display('matchs/logged_user.html', $data);
+        $this->data['user'] = $_SESSION;
+        $this->twig->display('tests/logged_user.html', $this->data);
     }
 }

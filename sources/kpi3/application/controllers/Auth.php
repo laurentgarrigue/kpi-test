@@ -5,7 +5,7 @@
  * @property Ion_auth|Ion_auth_model $ion_auth        The ION Auth spark
  * @property CI_Form_validation      $form_validation The form validation library
  */
-class Auth extends CI_Controller
+class Auth extends MY_Controller
 {
 	public $data = [];
 
@@ -80,9 +80,9 @@ class Auth extends CI_Controller
 			if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember))
 			{
 				//if the login is successful
-				//redirect them back to the home page
+				//redirect them back to the main admin page
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
-				redirect('/', 'refresh');
+				redirect('admin/competitions', 'refresh');
 			}
 			else
 			{
@@ -126,7 +126,7 @@ class Auth extends CI_Controller
 		$this->ion_auth->logout();
 
 		// redirect them to the login page
-		redirect('auth/login', 'refresh');
+		redirect('/', 'refresh');
 	}
 
 	/**

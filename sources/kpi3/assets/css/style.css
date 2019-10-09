@@ -5,11 +5,12 @@
 
 /************** Google icon font **************/
 
+/*
 @font-face {
   font-family: 'Material Icons';
   font-style: normal;
   font-weight: 400;
-  src: url('../libraries/material-design-icons-3.0.1/iconfont/MaterialIcons-Regular.eot'); /* For IE6-8 */
+  src: url('../libraries/material-design-icons-3.0.1/iconfont/MaterialIcons-Regular.eot');  For IE6-8 
   src: local('Material Icons'),
     local('MaterialIcons-Regular'),
     url('../libraries/material-design-icons-3.0.1/iconfont/MaterialIcons-Regular.woff2') format('woff2'),
@@ -21,7 +22,7 @@
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
-  font-size: 24px;  /* Preferred icon size */
+  font-size: 24px;   Preferred icon size 
   display: inline-block;
   line-height: 1;
   text-transform: none;
@@ -30,32 +31,32 @@
   white-space: nowrap;
   direction: ltr;
 
-  /* Support for all WebKit browsers. */
+   Support for all WebKit browsers. 
   -webkit-font-smoothing: antialiased;
-  /* Support for Safari and Chrome. */
+   Support for Safari and Chrome. 
   text-rendering: optimizeLegibility;
 
-  /* Support for Firefox. */
+   Support for Firefox. 
   -moz-osx-font-smoothing: grayscale;
 
-  /* Support for IE. */
+   Support for IE. 
   font-feature-settings: 'liga';
 }
 
-/* Rules for sizing the icon. */
+ Rules for sizing the icon. 
 .material-icons.md-18 { font-size: 18px; }
 .material-icons.md-24 { font-size: 24px; }
 .material-icons.md-36 { font-size: 36px; }
 .material-icons.md-48 { font-size: 48px; }
 
-/* Rules for using icons as black on a light background. */
+ Rules for using icons as black on a light background. 
 .material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
 .material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
 
-/* Rules for using icons as white on a dark background. */
+ Rules for using icons as white on a dark background. 
 .material-icons.md-light { color: rgba(255, 255, 255, 1); }
 .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
-
+*/
 
 
 /************** Bootstrap adjustments **************/
@@ -74,8 +75,10 @@ body {
 }
 
 .navbar-logged-in {
+    font-size: 0.9em;
+    margin-top: 42px;
+    z-index: 930;
     background-color: #cacaca;
-    font-size: 0.8em;
 }
 
 .navbar .nav-item {
@@ -83,7 +86,6 @@ body {
 }
 
 .fixed-top-2 {
-    margin-top: 43px;
 }
 
 body {
@@ -91,21 +93,23 @@ body {
     padding-top: 75px; /* logged */
 }
 
-.navbar-logged-in::after {
-    border-left: 6px solid transparent;
-    border-right: 6px solid transparent;
-    border-bottom: 6px solid #cacaca;
-    border-top: none;
-    height: 0;
-    width: 0;
-    bottom: 0;
-    content: ' ';
-    position: absolute;
-    right: 30px;
-    top: -5px;
-    margin-left: -5px;
-}
 
+@media (min-width: 992px) {
+    .navbar-logged-in::after {
+        border-top: 6px solid transparent;
+        border-bottom: 6px solid transparent;
+        border-right: 6px solid #313b9b;
+        border-left: none;
+        height: 0;
+        width: 0;
+        bottom: 0;
+        content: ' ';
+        position: absolute;
+        right: 0px;
+        top: 9px;
+        margin-left: 0px;
+    }
+}
 .navbar-light .navbar-nav .active > .nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show > .nav-link {
 	font-weight: bold;
 }

@@ -1,0 +1,45 @@
+{% extends "templates/trame.html.twig" %}
+    {# Commentaire : Je reprends la trame de base. 
+                    NE RIEN ECRIRE EN DEHORS DES BLOCKS #}
+
+
+{% block head %}
+<!-- Je réécris le block head -->
+   <!-- Finalement je reprends le block head comme il était (après modification du block title)... -->
+    {{ parent() }}        
+    <!-- ...et je rajoute du contenu après : je change la couleur de fond -->
+
+{% endblock %}
+
+
+{% block contenu %}
+<!-- Je réécris le block contenu -->
+    <div align="center">
+    <div id="infoMessage">{{ message }}</div>
+    
+    <h1>{{ title }}</h1>
+    <h2>{{ title2 }}</h2>
+    <h3>{{ lang('kpi_title') }}</h3>
+    
+    {% for matchs_item in matchs %}
+
+        <h3>{{ matchs_item.Numero_ordre }}</h3>
+        <div class="main">
+            {{ matchs_item.Date_match }} {{ matchs_item.Heure_match }}
+            <a class="btn btn-primary" href="{{ base_url('matchs/view/' ~ matchs_item.Id) }}">Voir le match</a>
+        </div>
+
+    {% endfor %}
+{% endblock %}
+
+
+{% block javascript %}
+    {{ parent() }}
+    <script>
+        $(function() {
+            console.log( "ready!" );
+            $( "#date" ).datepicker();
+        });
+    </script>
+{% endblock %}
+
