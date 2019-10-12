@@ -24,3 +24,6 @@ $lang['kpi_Change_password'] = 'Change my password';
 $lang['kpi_Logout'] = 'Logout';
 $lang['kpi_Roles'] = 'Roles';
 $lang['kpi_Login'] = 'Login';
+$lang['kpi_Password'] = 'Login';
+$lang['kpi_Identify'] = 'Identify';
+$lang['kpi_Reinit_password'] = 'Reinit my password';

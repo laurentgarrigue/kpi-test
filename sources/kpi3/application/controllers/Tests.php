@@ -28,6 +28,27 @@ class Tests extends MY_Controller {
         $this->twig->display('tests/menu_dynamique.html', $this->data);
     }
     
+    public function sendmail()
+    {
+        $this->load->library('email');
+
+        $this->email->from('contact@kayak-polo.info', 'Kayak-polo.info v3');
+        $this->email->to('lgarrigue@gmail.com');
+//        $this->email->cc('another@another-example.com');
+        $this->email->bcc('contact@kayak-polo.info');
+
+        $this->email->subject('Email Test');
+        $this->email->message('Testing the email class 2');
+        
+//        $this->email->attach('image.jpg');
+
+        $this->email->send();
+        echo $this->email->print_debugger();
+        
+        redirect('tests/menu');
+
+    }
+    
     public function traduction()
     {
         $this->lang->load('kpi', $this->session->lang);

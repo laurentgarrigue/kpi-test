@@ -1,18 +1,4 @@
 {% extends "templates/trame.html.twig" %}
-    {# Commentaire : Je reprends la trame de base. 
-                    NE RIEN ECRIRE EN DEHORS DES BLOCKS #}
-
-
-{% block head %}
-<!-- Je réécris le block head -->
-   <!-- Finalement je reprends le block head comme il était (après modification du block title)... -->
-    {{ parent() }}        
-    <!-- ...et je rajoute du contenu après : je change la couleur de fond -->
-
-{% endblock %}
-
-
-
 
 {% block contenu %}
 <!-- Je réécris le block contenu -->
@@ -39,7 +25,6 @@
     {{ parent() }}
     <script>
         $(function() {
-            console.log( "ready!" );
             $( "#date" ).datepicker();
         });
     </script>

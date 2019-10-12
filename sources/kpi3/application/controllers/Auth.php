@@ -19,7 +19,9 @@ class Auth extends MY_Controller
 
 		$this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
 
-		$this->lang->load('auth');
+		$this->lang->load('auth', $this->session->lang);
+
+		$this->data['page'] = 'Users';
 	}
 
 	/**
@@ -56,7 +58,7 @@ class Auth extends MY_Controller
 				$this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
 			}
 
-			$this->_render_page('auth' . DIRECTORY_SEPARATOR . 'index.php', $this->data);
+			$this->_render_page('auth' . DIRECTORY_SEPARATOR . 'users.html', $this->data);
 		}
 	}
 
@@ -177,7 +179,7 @@ class Auth extends MY_Controller
 			];
 
 			// render
-			$this->_render_page('auth' . DIRECTORY_SEPARATOR . 'change_password', $this->data);
+			$this->_render_page('auth' . DIRECTORY_SEPARATOR . 'change_password.html', $this->data);
 		}
 		else
 		{
@@ -330,7 +332,7 @@ class Auth extends MY_Controller
 				$this->data['code'] = $code;
 
 				// render
-				$this->_render_page('auth' . DIRECTORY_SEPARATOR . 'reset_password', $this->data);
+				$this->twig->display('auth' . DIRECTORY_SEPARATOR . 'reset_password.html', $this->data);
 			}
 			else
 			{
@@ -431,7 +433,7 @@ class Auth extends MY_Controller
 			$this->data['csrf'] = $this->_get_csrf_nonce();
 			$this->data['user'] = $this->ion_auth->user($id)->row();
 
-			$this->_render_page('auth' . DIRECTORY_SEPARATOR . 'deactivate_user', $this->data);
+			$this->_render_page('auth' . DIRECTORY_SEPARATOR . 'deactivate_user.html', $this->data);
 		}
 		else
 		{
@@ -564,7 +566,7 @@ class Auth extends MY_Controller
 				'value' => $this->form_validation->set_value('password_confirm'),
 			];
 
-			$this->_render_page('auth' . DIRECTORY_SEPARATOR . 'create_user', $this->data);
+			$this->_render_page('auth' . DIRECTORY_SEPARATOR . 'create_user.html', $this->data);
 		}
 	}
 	/**
@@ -681,7 +683,7 @@ class Auth extends MY_Controller
 		$this->data['user'] = $user;
 		$this->data['groups'] = $groups;
 		$this->data['currentGroups'] = $currentGroups;
-
+		
 		$this->data['first_name'] = [
 			'name'  => 'first_name',
 			'id'    => 'first_name',
@@ -717,7 +719,7 @@ class Auth extends MY_Controller
 			'type' => 'password'
 		];
 
-		$this->_render_page('auth/edit_user', $this->data);
+		$this->_render_page('auth/edit_user.html', $this->data);
 	}
 
 	/**
@@ -765,7 +767,7 @@ class Auth extends MY_Controller
 				'value' => $this->form_validation->set_value('description'),
 			];
 
-			$this->_render_page('auth/create_group', $this->data);
+			$this->_render_page('auth/create_group.html', $this->data);
 		}
 	}
 
@@ -837,7 +839,7 @@ class Auth extends MY_Controller
 			'value' => $this->form_validation->set_value('group_description', $group->description),
 		];
 
-		$this->_render_page('auth' . DIRECTORY_SEPARATOR . 'edit_group', $this->data);
+		$this->_render_page('auth' . DIRECTORY_SEPARATOR . 'edit_group.html', $this->data);
 	}
 
 	/**

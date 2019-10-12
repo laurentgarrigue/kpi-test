@@ -1,0 +1,65 @@
+{% extends "templates/trame.html.twig" %}
+
+{% block contenu %}
+    <div class="container">
+        <h1>{{ lang('edit_user_heading') }}</h1>
+        <p>{{ lang('edit_user_subheading') }}</p>
+
+        <div id="infoMessage">{{ message | raw }}</div>
+
+        {{ form_open("auth/edit_user/".user.id) }}
+
+            <p>
+                    {{ lang('edit_user_fname_label', 'first_name') | raw }} <br />
+                    {{ form_input(first_name) }}
+            </p>
+
+            <p>
+                    {{ lang('edit_user_lname_label', 'last_name') | raw }} <br />
+                    {{ form_input(last_name) }}
+            </p>
+
+            <p>
+                    {{ lang('edit_user_company_label', 'company') | raw }} <br />
+                    {{ form_input(company) }}
+            </p>
+
+            <p>
+                    {{ lang('edit_user_phone_label', 'phone') | raw }} <br />
+                    {{ form_input(phone) }}
+            </p>
+
+            <p>
+                    {{ lang('edit_user_password_label', 'password') | raw }} <br />
+                    {{ form_input(password) }}
+            </p>
+
+            <p>
+                    {{ lang('edit_user_password_confirm_label', 'password_confirm') | raw }}<br />
+                    {{ form_input(password_confirm) }}
+            </p>
+
+            {% if is_admin() %}
+                <h3>{{ lang('edit_user_groups_heading') }}</h3>
+                {% for group in groups %}
+                    <label class="checkbox">
+                        {% set checked = '' %}
+                        {% for grp in currentGroups %}
+                            {% if group.id == grp.id %}
+                                {% set checked = ' checked="checked"' %}
+                            {% endif %}
+                        {% endfor %}
+                    <input type="checkbox" name="groups[]" value="{{ group.id }}"{{ checked }}>
+                    {{ group.name }}
+                    </label>
+                {% endfor %}
+            {% endif %}
+
+            {{ form_hidden('id', user.id) }}
+            {{ form_hidden(csrf) }}
+
+            <p>{{ form_submit('submit', lang('edit_user_submit_btn')) }}</p>
+
+        {{ form_close() }}
+    </div>
+{% endblock %}

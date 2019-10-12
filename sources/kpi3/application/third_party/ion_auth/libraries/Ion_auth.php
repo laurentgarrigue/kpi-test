@@ -66,7 +66,7 @@ class Ion_auth
 
 		$this->config->load('ion_auth', TRUE);
 		$this->load->library(['email']);
-		$this->lang->load('ion_auth');
+		$this->lang->load('ion_auth', $this->session->lang);
 		$this->load->helper(['cookie', 'language','url']);
 
 		$this->load->library('session');
@@ -151,9 +151,10 @@ class Ion_auth
 
 			if ($code)
 			{
-				$data = [
+				$forgotten_password_link = anchor('auth/reset_password/'. $code, lang('email_forgot_password_link'));
+                $data = [
 					'identity' => $identity,
-					'forgotten_password_code' => $code
+					'forgotten_password_code' => $forgotten_password_link
 				];
 
 				if (!$this->config->item('use_ci_email', 'ion_auth'))
@@ -163,13 +164,13 @@ class Ion_auth
 				}
 				else
 				{
-					$message = $this->load->view($this->config->item('email_templates', 'ion_auth') . $this->config->item('email_forgot_password', 'ion_auth'), $data, TRUE);
+					$message = $this->twig->render($this->config->item('email_templates', 'ion_auth') . $this->config->item('email_forgot_password', 'ion_auth'), $data, TRUE);
 					$this->email->clear();
 					$this->email->from($this->config->item('admin_email', 'ion_auth'), $this->config->item('site_title', 'ion_auth'));
 					$this->email->to($user->email);
 					$this->email->subject($this->config->item('site_title', 'ion_auth') . ' - ' . $this->lang->line('email_forgotten_password_subject'));
 					$this->email->message($message);
-
+                    vdebug($message);
 					if ($this->email->send())
 					{
 						$this->set_message('forgot_password_successful');

@@ -1,0 +1,23 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+/**
+ * Constantes générales
+ */
+defined('VERSION') OR define('VERSION', '3.0.0');
+
+/**
+ * mail
+ */
+defined('SMTP_HOST') OR define('SMTP_HOST', 'ssl://smtp.host.com');
+defined('SMTP_PORT') OR define('SMTP_PORT', 465);
+defined('SMTP_USER') OR define('SMTP_USER', 'user');
+defined('SMTP_PASS') OR define('SMTP_PASS', 'password');
+
+/**
+ * database
+ */
+defined('DB_HOST') OR define('DB_HOST', 'db');
+defined('DB_USER') OR define('DB_USER', 'root');
+defined('DB_PASS') OR define('DB_PASS', 'root');
+defined('DB_BASE') OR define('DB_BASE', 'kpi');

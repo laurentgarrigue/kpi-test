@@ -1,0 +1,55 @@
+{% extends "templates/trame.html.twig" %}
+
+{% block contenu %}
+    <h1>{{ lang('create_user_heading') }}</h1>
+    <p>{{ lang('create_user_subheading') }}</p>
+
+    <div id="infoMessage">{{ message }}</div>
+
+    {{ form_open("auth/create_user") }}
+
+        <p>
+                {{ lang('create_user_identity_label', 'identity') | raw }} <br />
+                {{ form_input(identity) }}
+        </p>
+
+        <p>
+                {{ lang('create_user_fname_label', 'first_name') | raw }} <br />
+                {{ form_input(first_name) }}
+        </p>
+
+        <p>
+                {{ lang('create_user_lname_label', 'last_name') | raw }} <br />
+                {{ form_input(last_name) }}
+        </p>
+        
+        <p>
+                {{ lang('create_user_company_label', 'company') | raw }} <br />
+                {{ form_input(company) }}
+        </p>
+
+        <p>
+                {{ lang('create_user_email_label', 'email') | raw }} <br />
+                {{ form_input(email) }}
+        </p>
+
+        <p>
+                {{ lang('create_user_phone_label', 'phone') | raw }} <br />
+                {{ form_input(phone) }}
+        </p>
+
+        <p>
+                {{ lang('create_user_password_label', 'password') | raw }} <br />
+                {{ form_input(password) }}
+        </p>
+
+        <p>
+                {{ lang('create_user_password_confirm_label', 'password_confirm') | raw }} <br />
+                {{ form_input(password_confirm) }}
+        </p>
+
+
+        <p>{{ form_submit('submit', lang('create_user_submit_btn')) }}</p>
+
+    {{ form_close() }}
+{% endblock %}

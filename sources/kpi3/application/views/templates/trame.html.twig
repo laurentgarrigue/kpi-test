@@ -37,7 +37,7 @@
             <header id="header">
                 {% if menu_public|length > 0 %}
                     <nav class="navbar fixed-top navbar-expand-lg navbar-dark navbar-main">
-                        <a class="navbar-brand" href="{{ base_url() }}" >
+                        <a class="navbar-brand" href="{{ base_url() }}" title="Kayak-polo.info">
                             <span class="btn btn-sm btn-outline-dark"><b>KPI</b></span>
                         </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarPublic" aria-controls="navbarPublic" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,9 +52,9 @@
                             <ul class="navbar-nav mr-auto">
                                 {% for item in menu_public %}
                                     {% if item.content|length > 0 %}
-                                        <li class="nav-item dropdown">
+                                        <li class="nav-item dropdown"{% if item.page == page %} active{% endif %}>
                                             <a class="nav-link dropdown-toggle" href="{{ item.route }}" id="dropdown{{ item.label }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                {{ item.label }}{% if item.current == ' active' %} <span class="sr-only">(current)</span>{% endif %}
+                                                {{ item.label }}{% if item.page == page %} <span class="sr-only">(current)</span>{% endif %}
                                             </a>
                                             <div class="dropdown-menu" aria-labelledby="dropdown{{ item.label }}">
                                                 {% for item2 in item.content %}
@@ -67,18 +67,18 @@
                                             </div>
                                         </li>
                                     {% else %}
-                                        <li class="nav-item{{ item.current }}">
+                                        <li class="nav-item{% if item.page == page %} active{% endif %}">
                                             <a class="nav-link" href="{{ item.route }}">
-                                                {{ item.label }}{% if item.current == ' active' %} <span class="sr-only">(current)</span>{% endif %}
+                                                {{ item.label }}{% if item.page == page %} <span class="sr-only">(current)</span>{% endif %}
                                             </a>
                                         </li>
                                     {% endif %}
                                 {% endfor %}
                                 <li class="nav-item">
-                                    <a class="nav-link nav-lang" href="#"><img src="{{ img_url('fra-60.png') }}" height="16" alt="FR" title="Français" class="d-inline-block align-top"></a>
+                                    <a class="nav-link nav-lang" data-lang="french" href="#"><img src="{{ img_url('fra-60.png') }}" height="16" alt="FR" title="Français" class="d-inline-block align-top"></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link nav-lang" href="#"><img src="{{ img_url('gbr-60.png') }}" height="16" alt="EN" title="English" class="d-inline-block align-top"></a>
+                                    <a class="nav-link nav-lang" data-lang="english" href="#"><img src="{{ img_url('gbr-60.png') }}" height="16" alt="EN" title="English" class="d-inline-block align-top"></a>
                                 </li>
                             </ul>
 
@@ -92,12 +92,12 @@
                                         <a class="dropdown-item" href="#">
                                             <label><i class="fa fa-user-tag" aria-hidden="true"></i> {{ lang('kpi_Roles') }}</label> : <br>
                                             {% for group in user.groups %}
-                                                <i title="{{ group.description }}">{{ group.name }}</i>,&nbsp;
+                                                <span class="badge badge-secondary" title="{{ group.description }}">{{ group.name }}</span>
                                             {% endfor %}
                                         </a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="#"><i class="fa fa-id-card" aria-hidden="true"></i> {{ lang('kpi_Account') }}</a>
-                                        <a class="dropdown-item" href="#"><i class="fa fa-key" aria-hidden="true"></i> {{ lang('kpi_Change_password') }}</a>
+                                        <a class="dropdown-item" href="{{ base_url('auth/change_password') }}"><i class="fa fa-key" aria-hidden="true"></i> {{ lang('kpi_Change_password') }}</a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="{{ base_url('auth/logout') }}"><i class="fa fa-sign-out-alt" aria-hidden="true"></i> {{ lang('kpi_Logout') }}</a>
                                     </div>
@@ -121,9 +121,9 @@
                             <ul class="navbar-nav ml-auto">
                                 {% for item in menu_admin %}
                                     {% if item.content|length > 0 %}
-                                        <li class="nav-item dropdown">
+                                        <li class="nav-item dropdown{% if item.page == page %} active{% endif %}">
                                             <a class="nav-link dropdown-toggle" href="{{ item.route }}" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                {{ item.label }}{% if item.current == ' active' %} <span class="sr-only">(current)</span>{% endif %}
+                                                {{ item.label }}{% if item.page == page %} <span class="sr-only">(current)</span>{% endif %}
                                             </a>
                                             <div class="dropdown-menu" aria-labelledby="dropdown04">
                                                 {% for item2 in item.content %}
@@ -136,9 +136,9 @@
                                             </div>
                                         </li>
                                     {% else %}
-                                        <li class="nav-item{{ item.current }}">
+                                        <li class="nav-item{% if item.page == page %} active{% endif %}">
                                             <a class="nav-link" href="{{ item.route }}">
-                                                {{ item.label }}{% if item.current == ' active' %} <span class="sr-only">(current)</span>{% endif %}
+                                                {{ item.label }}{% if item.page == page %} <span class="sr-only">(current)</span>{% endif %}
                                             </a>
                                         </li>
                                     {% endif %}
@@ -179,7 +179,22 @@
         <script src="{{ lib_url('jquery-3.4.1.min.js') }}"></script>
         <script src="{{ lib_url('jquery-ui-1.12.1/jquery-ui.min.js') }}"></script>
         <script src="{{ lib_url('bootstrap-4.3.1/js/bootstrap.bundle.min.js') }}"></script>
-        
+        <script>
+            $(function() {
+                $('.nav-lang').click(function(e) {
+                    e.preventDefault();
+                    var lang = $(this).data('lang');
+                    $.post( 
+                        "{{ base_url('home/lang') }}", 
+                        { lang: lang },
+                        function( data ) {
+                            location.reload();
+                        }, 
+                        "json"
+                    );
+                });
+            });
+        </script>
 {#        <script src="{{ js_url('librairies/jquery-ui') }}"></script>
         <script src="{{ js_url('jqte/jquery-te-1.4.0.min') }}" type="text/javascript"></script>
         <script src="{{ js_url('librairies/jquery.dataTables') }}" type="text/javascript"></script>

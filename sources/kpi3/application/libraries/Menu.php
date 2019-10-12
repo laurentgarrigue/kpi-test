@@ -18,6 +18,7 @@ class Menu {
         $this->CI->load->library('ion_auth');
     }
     
+    
     /**
      * Renvoi du menu public construit
      * 
@@ -29,9 +30,9 @@ class Menu {
     }
     
     /**
-     * Renvoi du menu d'administration traité
+     * Renvoi du menu d'administration construit
      * 
-     * @return type
+     * @return array|bool
      */
     public function menu_admin() {
         if ($this->CI->ion_auth->logged_in()) {
@@ -96,7 +97,7 @@ class Menu {
             [ 'label' => 'Rankings', 'route' => 'admin/athletes/index' ],
             [ 'label' => 'Stats', 'route' => 'admin/athletes/index', 'groups' => array('admin', 'members') ],
             [ 'label' => 'Import', 'route' => 'admin/athletes/index', 'groups' => array('admin', 'members') ],
-            [ 'label' => 'Users', 'route' => 'admin/athletes/index', 'groups' => array('admin', 'members') ],
+            [ 'label' => 'Users', 'route' => 'auth/index', 'groups' => array('admin') ],
             ];
         
         return $menu;
@@ -115,15 +116,16 @@ class Menu {
                 }
             }
             if (isset($item['label']) || array_key_exists('label', $item)) {
+                $item['page'] = $item['label'];
                 $item['label'] = lang('kpi_' . $item['label']);
             }
             
             if (isset($item['route']) || array_key_exists('route', $item)) {
-                if($item['route'] != '' && strpos($this->CI->uri->uri_string(), $item['route']) === 0) {
-                    $item['current'] = ' active';
-                } else {
-                    $item['current'] = '';
-                }
+                // if($item['route'] != '' && strpos($this->CI->uri->uri_string(), $item['route']) === 0) {
+                //     $item['current'] = ' active';
+                // } else {
+                //     $item['current'] = '';
+                // }
                 
                 if($item['route'] != '') {
                     $item['route'] = base_url($item['route']);

@@ -4,7 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * Constantes générales
  */
-defined('VERSION') OR define('VERSION', '3.0.0');
+include_once('parameters.php');
+
 defined('TITRE_APPLI') OR define('TITRE_APPLI', 'KPI');
 
 

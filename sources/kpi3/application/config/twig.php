@@ -9,10 +9,12 @@ $config['twig']['environment']['debug'] = FALSE;
 $config['twig']['template_ext'] = '.twig';
 $config['twig']['functions_asis'] = [
         'base_url', 'site_url', 'css_url', 'js_url', 'lib_url', 'img_url', 'img',
-        'version', 'lang'
+        'version', 'lang', 'config_item', 'sprintf', 
+        'is_admin', 'in_group'
     ];
 $config['twig']['functions_safe'] = [
 		'form_open', 'form_close', 'form_error', 'form_hidden', 'set_value',
-//		'form_open_multipart', 'form_upload', 'form_submit', 'form_dropdown',
+        'form_input', 'form_submit',
+//		'form_open_multipart', 'form_upload',  'form_dropdown',
 //		'set_radio', 'set_select', 'set_checkbox',
 	];

@@ -12,10 +12,14 @@ class MY_Controller extends CI_Controller {
     
     function __construct() {
         parent::__construct();
+
+        if($this->session->userdata('lang') === NULL) {
+            $this->session->lang = 'french';
+        }
+
         $this->load->add_package_path(APPPATH.'third_party/ion_auth/');
         $this->load->library('ion_auth');
         $this->load->model('matchs_model');
-        $this->session->lang = 'french';
         $this->lang->load('kpi', $this->session->lang);
         $this->load->library('menu');
         
@@ -29,7 +33,8 @@ class MY_Controller extends CI_Controller {
             $this->data['user']['groups'] = $user_groups;
         }
         
-        $this->output->enable_profiler(TRUE);
+        // $this->output->enable_profiler(TRUE);
     }
+
 
 }
