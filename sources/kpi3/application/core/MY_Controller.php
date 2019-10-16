@@ -28,9 +28,9 @@ class MY_Controller extends CI_Controller {
             $this->data['menu_admin'] = $this->menu->menu_admin();
             $user = $this->ion_auth->user()->row();
             $user_groups = $this->ion_auth->get_users_groups()->result();
-            $this->data['user']['first_name'] = $user->first_name;
-            $this->data['user']['last_name'] = $user->last_name;
-            $this->data['user']['groups'] = $user_groups;
+            $this->data['current_user']['first_name'] = $user->first_name;
+            $this->data['current_user']['last_name'] = $user->last_name;
+            $this->data['current_user']['groups'] = $user_groups;
         }
         
         // $this->output->enable_profiler(TRUE);

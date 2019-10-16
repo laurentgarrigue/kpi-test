@@ -3,27 +3,34 @@
 {% block contenu %}
 <div class="container-fluid">
     <h1 class="text-center">{{ lang('index_heading') }}</h1>
-    <p class="text-center">{{ lang('index_subheading') }}</p>
+    {# <p class="text-center">{{ lang('index_subheading') }}</p> #}
 
-    <div id="infoMessage">{{ message }}</div>
+    <div id="infoMessage">{{ message | raw }}</div>
 
     <table id="table_users" class="table table-striped table-compact table-wide">
         <thead>
             <tr>
-                <th>{{ lang('index_fname_th') }}</th>
+                <th>{{ lang('kpi_login_Identity') }}</th>
                 <th>{{ lang('index_lname_th') }}</th>
-                <th>{{ lang('index_email_th') }}</th>
+                <th>{{ lang('kpi_login_Seasons') }}</th>
+                <th>{{ lang('kpi_login_Competitions') }}</th>
+                <th>{{ lang('kpi_login_Phases') }}</th>
+                <th>{{ lang('kpi_login_Clubs') }}</th>
                 <th>{{ lang('index_groups_th') }}</th>
-                <th>{{ lang('index_status_th') }}</th>
                 <th>{{ lang('index_action_th') }}</th>
             </tr>
         </thead>
         <tbody>
             {% for user in users %}
                 <tr>
-                    <td>{{ user.first_name }}</td>
-                    <td>{{ user.last_name }}</td>
-                    <td>{{ user.email }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.first_name }} {{ user.last_name }}
+                        <br><small>{{ user.email }}</small>
+                    </td>
+                    <td><small>{{ user.seasons }}</small></td>
+                    <td><small>{{ user.competitions }}</small></td>
+                    <td><small>{{ user.phases }}</small></td>
+                    <td><small>{{ user.clubs }}</small></td>
                     <td>
                         {% for group in user.groups %}
                             <a class="badge badge-info" href="{{ base_url() }}auth/edit_group/{{ group.id }}" 
@@ -31,6 +38,8 @@
                         {% endfor %}
                     </td>
                     <td>
+                        <a class="btn btn-sm btn-primary" href="{{ base_url() }}auth/edit_user/{{ user.id }}" 
+                                title="">Edit</a>
                         {% if user.active %}
                             <a class="btn btn-sm btn-success" href="{{ base_url() }}auth/deactivate/{{ user.id }}" 
                                 title="">{{ lang('index_inactive_link') }}</a>
@@ -39,10 +48,6 @@
                                 title="">{{ lang('index_active_link') }}</a>
                         {% endif %}
                     </td>
-                    <td>
-                        <a class="btn btn-sm btn-primary" href="{{ base_url() }}auth/edit_user/{{ user.id }}" 
-                                title="">Edit</a>
-                    </td>
                 </tr>
             {% endfor %}
         </tbody>
@@ -50,12 +55,15 @@
 
     <p>
         <a class="btn btn-sm btn-primary" href="{{ base_url() }}auth/create_user" 
-                                title=""><i class="fa fa-user-plus"></i> {{ lang('index_create_user_link') }}</a>
+                title=""><i class="fa fa-user-plus"></i> {{ lang('index_create_user_link') }}</a>
         |
         <a class="btn btn-sm btn-primary" href="{{ base_url() }}auth/create_group" 
-                                title=""><i class="fa fa-user-tag"></i> {{ lang('index_create_group_link') }}</a>
+                title=""><i class="fa fa-user-tag"></i> {{ lang('index_create_group_link') }}</a>
     </p>
 </div>
+<br>
+<br>
+<br>
 {% endblock %}
 
 

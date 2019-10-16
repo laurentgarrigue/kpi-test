@@ -1,65 +1,141 @@
 {% extends "templates/trame.html.twig" %}
 
 {% block contenu %}
-    <div class="container">
-        <h1>{{ lang('edit_user_heading') }}</h1>
-        <p>{{ lang('edit_user_subheading') }}</p>
+<div class="row justify-content-md-center">
+    <div id="loginbox" class="col-md-8">                    
+        <div class="card mb-5 mt-3">
+            <div class="card-header text-white bg_ffck_primary">
+                <h4>{{ lang('edit_user_heading') }}</h4>
+            </div>     
 
-        <div id="infoMessage">{{ message | raw }}</div>
+            <div class="card-body" >
+                <div id="infoMessage">{{ message |raw }}</div>
+                    
+                {{ form_open("auth/edit_user/".user.id, 'role="form" class="form-horizontal row"') }}
 
-        {{ form_open("auth/edit_user/".user.id) }}
+                    <div class="col-6">
+                        <div class="form-group row">
+                            {{ form_label(lang('kpi_login_Identity'), '', 'class="col-sm-3 col-form-label"') }}
+                            <div class="col-sm-4">
+                                {{ form_input(identity) }}
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            {{ form_label(lang('kpi_login_First_name'), '', 'class="col-sm-3 col-form-label"') }}
+                            <div class="col-sm-9">
+                                {{ form_input(first_name) }}
+                            </div>
+                        </div>
 
-            <p>
-                    {{ lang('edit_user_fname_label', 'first_name') | raw }} <br />
-                    {{ form_input(first_name) }}
-            </p>
+                        <div class="form-group row">
+                            {{ form_label(lang('kpi_login_Last_name'), '', 'class="col-sm-3 col-form-label"') }}
+                            <div class="col-sm-9">
+                                {{ form_input(last_name) }}
+                            </div>
+                        </div>
 
-            <p>
-                    {{ lang('edit_user_lname_label', 'last_name') | raw }} <br />
-                    {{ form_input(last_name) }}
-            </p>
+                        <div class="form-group row">
+                            {{ form_label(lang('kpi_login_Company'), '', 'class="col-sm-3 col-form-label"') }}
+                            <div class="col-sm-9">
+                                {{ form_input(company) }}
+                            </div>
+                        </div>
 
-            <p>
-                    {{ lang('edit_user_company_label', 'company') | raw }} <br />
-                    {{ form_input(company) }}
-            </p>
+                        <div class="form-group row">
+                            {{ form_label(lang('kpi_login_Email'), '', 'class="col-sm-3 col-form-label"') }}
+                            <div class="col-sm-9">
+                                {{ form_input(email) }}
+                            </div>
+                        </div>
 
-            <p>
-                    {{ lang('edit_user_phone_label', 'phone') | raw }} <br />
-                    {{ form_input(phone) }}
-            </p>
+                        <div class="form-group row">
+                            {{ form_label(lang('kpi_login_Phone'), '', 'class="col-sm-3 col-form-label"') }}
+                            <div class="col-sm-9">
+                                {{ form_input(phone) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group row">
+                            {{ form_label(lang('kpi_login_Seasons'), '', 'class="col-sm-3 col-form-label"') }}
+                            <div class="col-sm-9">
+                                {{ form_input(seasons) }}
+                            </div>
+                        </div>
 
-            <p>
-                    {{ lang('edit_user_password_label', 'password') | raw }} <br />
-                    {{ form_input(password) }}
-            </p>
+                        <div class="form-group row">
+                            {{ form_label(lang('kpi_login_Competitions'), '', 'class="col-sm-3 col-form-label"') }}
+                            <div class="col-sm-9">
+                                {{ form_input(competitions) }}
+                            </div>
+                        </div>
 
-            <p>
-                    {{ lang('edit_user_password_confirm_label', 'password_confirm') | raw }}<br />
-                    {{ form_input(password_confirm) }}
-            </p>
+                        <div class="form-group row">
+                            {{ form_label(lang('kpi_login_Phases'), '', 'class="col-sm-3 col-form-label"') }}
+                            <div class="col-sm-9">
+                                {{ form_input(phases) }}
+                            </div>
+                        </div>
 
-            {% if is_admin() %}
-                <h3>{{ lang('edit_user_groups_heading') }}</h3>
-                {% for group in groups %}
-                    <label class="checkbox">
-                        {% set checked = '' %}
-                        {% for grp in currentGroups %}
-                            {% if group.id == grp.id %}
-                                {% set checked = ' checked="checked"' %}
-                            {% endif %}
-                        {% endfor %}
-                    <input type="checkbox" name="groups[]" value="{{ group.id }}"{{ checked }}>
-                    {{ group.name }}
-                    </label>
-                {% endfor %}
-            {% endif %}
+                        <div class="form-group row">
+                            {{ form_label(lang('kpi_login_Clubs'), '', 'class="col-sm-3 col-form-label"') }}
+                            <div class="col-sm-9">
+                                {{ form_input(clubs) }}
+                            </div>
+                        </div>
 
-            {{ form_hidden('id', user.id) }}
-            {{ form_hidden(csrf) }}
+                        <div class="form-group row">
+                            {{ form_label(lang('kpi_login_Password'), '', 'class="col-sm-4 col-form-label"') }}
+                            <div class="col-sm-8">
+                                {{ form_input(password) }}
+                            </div>
+                        </div>
 
-            <p>{{ form_submit('submit', lang('edit_user_submit_btn')) }}</p>
+                        <div class="form-group row">
+                            {{ form_label(lang('kpi_login_Password_confirm'), '', 'class="col-sm-4 col-form-label"') }}
+                            <div class="col-sm-8">
+                                {{ form_input(password_confirm) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        {% if is_admin() %}
+                            <hr>
+                            <h5>{{ lang('edit_user_groups_heading') }}</h5>
+                            {% for group in groups %}
+                                {% set checked = '' %}
+                                {% for grp in currentGroups %}
+                                    {% if group.id == grp.id %}
+                                        {% set checked = ' checked="checked"' %}
+                                    {% endif %}
+                                {% endfor %}
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="groups[]" value="{{ group.id }}"{{ checked }}>
+                                    <label class="form-check-label">{{ group.name }}</label>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        <div class="row justify-content-between mt-3">
+                            <!-- Button -->
+                            <div class="col-4">
+                                <a href="{{ site_url('auth/index') }}" class="btn btn-secondary">{{ lang('kpi_Retour') }}</a>
+                            </div>
+                            <div class="col-4 text-right">
+                                {{ form_submit('submit', lang('edit_user_submit_btn'), 'class="btn btn-primary"') }}
+                            </div>
+                        </div>
+                    </div>
+                    {{ form_hidden('id', user.id) }}
+                    {{ form_hidden(csrf) }}
 
-        {{ form_close() }}
-    </div>
+                {{ form_close() }}     
+
+            </div>                     
+        </div>  
+    </div>  
+</div>
+<br>
+<br>
+<br>
 {% endblock %}

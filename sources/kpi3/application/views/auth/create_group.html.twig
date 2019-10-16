@@ -1,24 +1,56 @@
 {% extends "templates/trame.html.twig" %}
 
 {% block contenu %}
-    <h1>{{ lang('create_group_heading') }}</h1>
-    <p>{{ lang('create_group_subheading') }}</p>
+<div class="row justify-content-md-center">
+    <div id="loginbox" class="col-md-6">                    
+        <div class="card mb-5 mt-3">
+            <div class="card-header text-white bg_ffck_primary">
+                <h4>{{ lang('create_group_heading') }}</h4>
+            </div>     
 
-    <div id="infoMessage">{{ message }}</div>
+            <div class="card-body" >
 
-    {{ form_open("auth/create_group") }}
+                <div id="infoMessage">{{ message |raw }}</div>
+                    
+                {{ form_open("auth/create_group", 'role="form" class="form-horizontal row"') }}
+                            
+                    <div class="col-12">
 
-        <p>
-                {{ lang('create_group_name_label', 'group_name') | raw }} <br />
-                {{ form_input(group_name) }}
-        </p>
+                        <div class="form-group row">
+                            {{ form_label(lang('kpi_login_Group_name'), '', 'class="col-sm-3 col-form-label"') }}
+                            <div class="col-sm-9">
+                                {{ form_input(group_name) }}
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            {{ form_label(lang('kpi_login_Description'), '', 'class="col-sm-3 col-form-label"') }}
+                            <div class="col-sm-9">
+                                {{ form_input(description) }}
+                            </div>
+                        </div>
 
-        <p>
-                {{ lang('create_group_desc_label', 'description') | raw }} <br />
-                {{ form_input(description) }}
-        </p>
+                    </div>
+                    <div class="col-12">
+                        <div class="row justify-content-between mt-3">
+                            <div class="col-4">
+                                <a href="{{ site_url('auth/index') }}" class="btn btn-secondary">{{ lang('kpi_Retour') }}</a>
+                            </div>
+                            <div class="col-4 text-right">
+                                {{ form_submit('submit', lang('create_group_submit_btn'), 'class="btn btn-primary"') }}
+                            </div>
+                        </div>
+                    </div>
 
-        <p>{{ form_submit('submit', lang('create_group_submit_btn')) }}</p>
+                    {{ form_hidden(csrf) }}
 
-    {{ form_close() }}
+                {{ form_close() }}     
+
+            </div>                     
+        </div>  
+    </div>  
+</div>
+<br>
+<br>
+<br>
 {% endblock %}

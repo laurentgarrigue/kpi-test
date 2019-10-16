@@ -1,55 +1,124 @@
 {% extends "templates/trame.html.twig" %}
 
 {% block contenu %}
-    <h1>{{ lang('create_user_heading') }}</h1>
-    <p>{{ lang('create_user_subheading') }}</p>
+<div class="row justify-content-md-center">
+    <div id="loginbox" class="col-md-8">                    
+        <div class="card mb-5 mt-3">
+            <div class="card-header text-white bg_ffck_primary">
+                <h4>{{ lang('create_user_heading') }}</h4>
+            </div>     
 
-    <div id="infoMessage">{{ message }}</div>
+            <div class="card-body">
 
-    {{ form_open("auth/create_user") }}
+                <div id="infoMessage">{{ message |raw }}</div>
+                    
+                {{ form_open("auth/create_user", 'role="form" class="form-horizontal row"') }}
 
-        <p>
-                {{ lang('create_user_identity_label', 'identity') | raw }} <br />
-                {{ form_input(identity) }}
-        </p>
+                    <div class="col-6">
+                        <div class="form-group row">
+                            {{ form_label(lang('kpi_login_Identity'), '', 'class="col-sm-3 col-form-label"') }}
+                            <div class="col-sm-9">
+                                {{ form_input(identity) }}
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            {{ form_label(lang('kpi_login_First_name'), '', 'class="col-sm-3 col-form-label"') }}
+                            <div class="col-sm-9">
+                                {{ form_input(first_name) }}
+                            </div>
+                        </div>
 
-        <p>
-                {{ lang('create_user_fname_label', 'first_name') | raw }} <br />
-                {{ form_input(first_name) }}
-        </p>
+                        <div class="form-group row">
+                            {{ form_label(lang('kpi_login_Last_name'), '', 'class="col-sm-3 col-form-label"') }}
+                            <div class="col-sm-9">
+                                {{ form_input(last_name) }}
+                            </div>
+                        </div>
 
-        <p>
-                {{ lang('create_user_lname_label', 'last_name') | raw }} <br />
-                {{ form_input(last_name) }}
-        </p>
-        
-        <p>
-                {{ lang('create_user_company_label', 'company') | raw }} <br />
-                {{ form_input(company) }}
-        </p>
+                        <div class="form-group row">
+                            {{ form_label(lang('kpi_login_Company'), '', 'class="col-sm-3 col-form-label"') }}
+                            <div class="col-sm-9">
+                                {{ form_input(company) }}
+                            </div>
+                        </div>
 
-        <p>
-                {{ lang('create_user_email_label', 'email') | raw }} <br />
-                {{ form_input(email) }}
-        </p>
+                        <div class="form-group row">
+                            {{ form_label(lang('kpi_login_Email'), '', 'class="col-sm-3 col-form-label"') }}
+                            <div class="col-sm-9">
+                                {{ form_input(email) }}
+                            </div>
+                        </div>
 
-        <p>
-                {{ lang('create_user_phone_label', 'phone') | raw }} <br />
-                {{ form_input(phone) }}
-        </p>
+                        <div class="form-group row">
+                            {{ form_label(lang('kpi_login_Phone'), '', 'class="col-sm-3 col-form-label"') }}
+                            <div class="col-sm-9">
+                                {{ form_input(phone) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group row">
+                            {{ form_label(lang('kpi_login_Seasons'), '', 'class="col-sm-3 col-form-label"') }}
+                            <div class="col-sm-9">
+                                {{ form_input(seasons) }}
+                            </div>
+                        </div>
 
-        <p>
-                {{ lang('create_user_password_label', 'password') | raw }} <br />
-                {{ form_input(password) }}
-        </p>
+                        <div class="form-group row">
+                            {{ form_label(lang('kpi_login_Competitions'), '', 'class="col-sm-3 col-form-label"') }}
+                            <div class="col-sm-9">
+                                {{ form_input(competitions) }}
+                            </div>
+                        </div>
 
-        <p>
-                {{ lang('create_user_password_confirm_label', 'password_confirm') | raw }} <br />
-                {{ form_input(password_confirm) }}
-        </p>
+                        <div class="form-group row">
+                            {{ form_label(lang('kpi_login_Phases'), '', 'class="col-sm-3 col-form-label"') }}
+                            <div class="col-sm-9">
+                                {{ form_input(phases) }}
+                            </div>
+                        </div>
 
+                        <div class="form-group row">
+                            {{ form_label(lang('kpi_login_Clubs'), '', 'class="col-sm-3 col-form-label"') }}
+                            <div class="col-sm-9">
+                                {{ form_input(clubs) }}
+                            </div>
+                        </div>
 
-        <p>{{ form_submit('submit', lang('create_user_submit_btn')) }}</p>
+                        <div class="form-group row">
+                            {{ form_label(lang('kpi_login_Password'), '', 'class="col-sm-4 col-form-label"') }}
+                            <div class="col-sm-8">
+                                {{ form_input(password) }}
+                            </div>
+                        </div>
 
-    {{ form_close() }}
+                        <div class="form-group row">
+                            {{ form_label(lang('kpi_login_Password_confirm'), '', 'class="col-sm-4 col-form-label"') }}
+                            <div class="col-sm-8">
+                                {{ form_input(password_confirm) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="row justify-content-between mt-3">
+                            <!-- Button -->
+                            <div class="col-4">
+                                <a href="{{ site_url('auth/index') }}" class="btn btn-secondary">Retour</a>
+                            </div>
+                            <div class="col-4 text-right">
+                                {{ form_submit('submit', lang('create_user_submit_btn'), 'class="btn btn-primary"') }}
+                            </div>
+                        </div>
+                    </div>
+
+                {{ form_close() }}     
+
+            </div>                     
+        </div>  
+    </div>  
+</div>
+<br>
+<br>
+<br> 
 {% endblock %}

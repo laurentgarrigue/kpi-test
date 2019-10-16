@@ -1,22 +1,53 @@
 {% extends "templates/trame.html.twig" %}
 
 {% block contenu %}
-    <h1>{{ lang('deactivate_heading') }}</h1>
-    <p>{{ sprintf(lang('deactivate_subheading'), user.username) }}</p>
+<div class="row justify-content-md-center">
+    <div id="loginbox" class="col-md-6">                    
+        <div class="card mb-5 mt-3">
+            <div class="card-header text-white bg_ffck_primary">
+                <h4>{{ lang('deactivate_heading') }}</h4>
+            </div>     
 
-    {{ form_open("auth/deactivate/".user.id) }}
+            <div class="card-body" >
 
-    <p>
-        {{ lang('deactivate_confirm_y_label', 'confirm') | raw }}
-        <input type="radio" name="confirm" value="yes" checked="checked" />
-        {{ lang('deactivate_confirm_n_label', 'confirm') | raw }}
-        <input type="radio" name="confirm" value="no" />
-    </p>
+                <div id="infoMessage">{{ message |raw }}</div>
+                <p>{{ sprintf(lang('deactivate_subheading'), user.username ~ ' (' ~ user.first_name ~ ' ' ~ user.last_name ~ ')') }}</p>
+                    
+                {{ form_open("auth/deactivate/".user.id, 'role="form" class="form-horizontal row"') }}
+                            
+                    <div class="col-12">
 
-    {{ form_hidden(csrf) }}
-    {{ form_hidden('id', user.id) }}
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="confirm" value="yes" checked="checked">
+                            <label class="form-check-label">{{ lang('kpi_login_Yes') }}</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="confirm" value="no" checked="checked">
+                            <label class="form-check-label">{{ lang('kpi_login_No') }}</label>
+                        </div>
 
-    <p>{{ form_submit('submit', lang('deactivate_submit_btn')) }}</p>
+                    </div>
+                    <div class="col-12">
+                        <div class="row justify-content-between mt-3">
+                            <div class="col-4">
+                                <a href="{{ site_url('auth/index') }}" class="btn btn-secondary">{{ lang('kpi_Retour') }}</a>
+                            </div>
+                            <div class="col-4 text-right">
+                                {{ form_submit('submit', lang('deactivate_submit_btn'), 'class="btn btn-warning"') }}
+                            </div>
+                        </div>
+                    </div>
 
-    {{ form_close() }}
+                    {{ form_hidden('id', user.id) }}
+                    {{ form_hidden(csrf) }}
+
+                {{ form_close() }}     
+
+            </div>                     
+        </div>  
+    </div>  
+</div>
+<br>
+<br>
+<br>
 {% endblock %}

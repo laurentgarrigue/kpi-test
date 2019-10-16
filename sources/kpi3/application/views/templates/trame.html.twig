@@ -84,27 +84,27 @@
 
 
                             <ul class="navbar-nav">
-                                {% if user %}
+                                {% if current_user %}
                                     <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-user" aria-hidden="true"></i> {{ user.first_name }} {{ user.last_name }}
+                                        <i class="fa fa-user" aria-hidden="true"></i> {{ current_user.first_name }} {{ current_user.last_name }}
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownId">
                                         <a class="dropdown-item" href="#">
                                             <label><i class="fa fa-user-tag" aria-hidden="true"></i> {{ lang('kpi_Roles') }}</label> : <br>
-                                            {% for group in user.groups %}
+                                            {% for group in current_user.groups %}
                                                 <span class="badge badge-secondary" title="{{ group.description }}">{{ group.name }}</span>
                                             {% endfor %}
                                         </a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#"><i class="fa fa-id-card" aria-hidden="true"></i> {{ lang('kpi_Account') }}</a>
-                                        <a class="dropdown-item" href="{{ base_url('auth/change_password') }}"><i class="fa fa-key" aria-hidden="true"></i> {{ lang('kpi_Change_password') }}</a>
+                                        <a class="dropdown-item" href="#"><i class="fa fa-id-card" aria-hidden="true"></i> {{ lang('kpi_login_Account') }}</a>
+                                        <a class="dropdown-item" href="{{ base_url('auth/change_password') }}"><i class="fa fa-key" aria-hidden="true"></i> {{ lang('kpi_login_Change_password') }}</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="{{ base_url('auth/logout') }}"><i class="fa fa-sign-out-alt" aria-hidden="true"></i> {{ lang('kpi_Logout') }}</a>
+                                        <a class="dropdown-item" href="{{ base_url('auth/logout') }}"><i class="fa fa-sign-out-alt" aria-hidden="true"></i> {{ lang('kpi_login_Logout') }}</a>
                                     </div>
                                 {% else %}
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ base_url('auth/login') }}">
-                                            <i class="fa fa-sign-in-alt" aria-hidden="true"></i> {{ lang('kpi_Login') }}
+                                            <i class="fa fa-sign-in-alt" aria-hidden="true"></i> {{ lang('kpi_login_Login') }}
                                         </a>
                                     </li>
                                 {% endif %}

@@ -18,8 +18,9 @@ class Home extends MY_Controller {
     // }
     
     /**
-     * 
      * Changement de lange (ajax)
+     * 
+     * @param string lang (POST)
      *
      * @return void
      */

@@ -5,57 +5,68 @@
 {% endblock %}
 
 {% block contenu %}
-<div align="center">
-    
-    <br>
-    <div id="infoMessage">{{ message |raw }}</div>
-    
-    <div id="modal_attribution" >
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <center><h4 class="titre_modal"><u>{{ lang('kpi_Identify') }}</u></h4></center>
-                </div>
-                <div class="modal-body">
-                    <form id="login" action="{{ base_url() }}auth/login" method="post">
-                        <div class="row">
-                            <div class="col-lg-2"></div>
-                            <div class="col-lg-4">
-                                <label for="login_string" class="form_label">{{ lang('kpi_Login') }} :&nbsp;</label>
+<div class="container">
+    <!-- Material form login -->
+    <div class="row justify-content-md-center">
+        <div id="loginbox" class="col-md-6">                    
+            <div class="card mb-5 mt-3">
+                <div class="card-header text-white bg_ffck_primary">
+                    <h4>{{ lang('kpi_login_SignIn') }}</h4>
+                    <a class="float-right text-white" href="{{ base_url() }}auth/forgot_password">{{ lang('kpi_login_Forgot_password') }}?</a>
+                </div>     
+
+                <div class="card-body" >
+
+                    <div id="infoMessage">{{ message |raw }}</div>
+                        
+                    <form id="login" class="form-horizontal" role="form" method="post" action="{{ base_url() }}auth/login">
+                                
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fa fa-user"></i></div>
                             </div>
-                            <div class="col-lg-4">
-                                <input required type="text" name="identity" id="identity" class="form_input" autocomplete="off" maxlength="255" />
-                            </div>
-                            <div class="col-lg-2"></div>
+                            <input id="identity" type="text" class="form-control" name="identity" value="" placeholder="{{ lang('kpi_login_Identity') }}" autocomplete="off">                                        
                         </div>
                         <br>
-                        <div class="row">
-                            <div class="col-lg-2"></div>
-                            <div class="col-lg-4">
-                                <label for="login_pass" class="form_label">{{ lang('kpi_Password') }} : </label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fa fa-key"></i></div>
                             </div>
-                            <div class="col-lg-4">
-                                <input required type="password" name="password" id="password" class="form_input password" autocomplete="off" maxlength="{{ config_item('max_chars_for_password') }}" />
-                            </div>
-                            <div class="col-lg-2"></div>
+                            <input id="password" type="password" class="form-control" name="password" placeholder="{{ lang('kpi_login_Password') }}" autocomplete="off" maxlength="{{ config_item('max_chars_for_password') }}">
                         </div>
                         <br>
-                        <div class="modal-footer">
-                            <div class="row">
-                                <div class="col-md-5">
-                                        <a href="{{ base_url() }}auth/forgot_password" class="btn btn-warning">{{ lang('kpi_Reinit_password') }}</a>
-                                </div>
-                                <div class="col-md-4"></div>
-                                <div class="col-md-3">
-                                    <input type="submit" name="submit" value="{{ lang('kpi_Login') }}" id="submit_button" class="btn btn-success">
+                                
+                        <div class="row">
+                            <div class="form-group col-12">
+                                <!-- Button -->
+                                <div class="input-group-prepend float-right">
+                                    <input type="submit" name="submit" class="btn btn-primary" value="{{ lang('kpi_login_Login') }}">
                                 </div>
                             </div>
                         </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12 control">
+                                <div class="border-top border-secondary" >
+                                    {{ lang('kpi_login_no_account') }} 
+                                <a href="#">
+                                    {{ lang('kpi_login_sign_up') }}
+                                </a>
+                                </div>
+                            </div>
+                        </div>    
+                    </form>     
+
+
+
+                </div>                     
+            </div>  
+        </div>  
     </div>
+    <!-- Material form login -->
 </div>
+<br>
+<br>
+<br>
 {% endblock %}
 

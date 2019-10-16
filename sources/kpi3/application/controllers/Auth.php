@@ -153,24 +153,28 @@ class Auth extends MY_Controller
 			// set the flash data error message if there is one
 			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
 
+			$this->data['csrf'] = $this->_get_csrf_nonce();
 			$this->data['min_password_length'] = $this->config->item('min_password_length', 'ion_auth');
 			$this->data['old_password'] = [
 				'name' => 'old',
 				'id' => 'old',
 				'type' => 'password',
-			];
+				'class' => 'form-control',
+				];
 			$this->data['new_password'] = [
 				'name' => 'new',
 				'id' => 'new',
 				'type' => 'password',
 				'pattern' => '^.{' . $this->data['min_password_length'] . '}.*$',
-			];
+				'class' => 'form-control',
+				];
 			$this->data['new_password_confirm'] = [
 				'name' => 'new_confirm',
 				'id' => 'new_confirm',
 				'type' => 'password',
 				'pattern' => '^.{' . $this->data['min_password_length'] . '}.*$',
-			];
+				'class' => 'form-control',
+				];
 			$this->data['user_id'] = [
 				'name' => 'user_id',
 				'id' => 'user_id',
@@ -490,6 +494,10 @@ class Auth extends MY_Controller
 		$this->form_validation->set_rules('company', $this->lang->line('create_user_validation_company_label'), 'trim');
 		$this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|matches[password_confirm]');
 		$this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_validation_password_confirm_label'), 'required');
+		$this->form_validation->set_rules('seasons', $this->lang->line('create_user_validation_seasons_label'), 'trim');
+		$this->form_validation->set_rules('competitions', $this->lang->line('create_user_validation_competitions_label'), 'trim');
+		$this->form_validation->set_rules('phases', $this->lang->line('create_user_validation_phases_label'), 'trim');
+		$this->form_validation->set_rules('clubs', $this->lang->line('create_user_validation_clubs_label'), 'trim');
 
 		if ($this->form_validation->run() === TRUE)
 		{
@@ -502,6 +510,10 @@ class Auth extends MY_Controller
 				'last_name' => $this->input->post('last_name'),
 				'company' => $this->input->post('company'),
 				'phone' => $this->input->post('phone'),
+				'seasons' => $this->input->post('seasons'),
+				'competitions' => $this->input->post('competitions'),
+				'phases' => $this->input->post('phases'),
+				'clubs' => $this->input->post('clubs'),
 			];
 		}
 		if ($this->form_validation->run() === TRUE && $this->ion_auth->register($identity, $password, $email, $additional_data))
@@ -517,54 +529,109 @@ class Auth extends MY_Controller
 			// set the flash data error message if there is one
 			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 
+			$this->data['identity'] = [
+				'name' => 'identity',
+				'id' => 'identity',
+				'type' => 'text',
+				'class' => 'form-control',
+				'placeholder' => lang('kpi_login_Identity'),
+				'autocomplete' => "off",
+				'value' => $this->form_validation->set_value('identity'),
+			];
 			$this->data['first_name'] = [
 				'name' => 'first_name',
 				'id' => 'first_name',
 				'type' => 'text',
+				'class' => 'form-control',
+				'placeholder' => lang('kpi_login_First_name'),
+				'autocomplete' => "off",
 				'value' => $this->form_validation->set_value('first_name'),
 			];
 			$this->data['last_name'] = [
 				'name' => 'last_name',
 				'id' => 'last_name',
 				'type' => 'text',
+				'class' => 'form-control',
+				'placeholder' => lang('kpi_login_Last_name'),
+				'autocomplete' => "off",
 				'value' => $this->form_validation->set_value('last_name'),
-			];
-			$this->data['identity'] = [
-				'name' => 'identity',
-				'id' => 'identity',
-				'type' => 'text',
-				'value' => $this->form_validation->set_value('identity'),
-			];
-			$this->data['email'] = [
-				'name' => 'email',
-				'id' => 'email',
-				'type' => 'text',
-				'value' => $this->form_validation->set_value('email'),
 			];
 			$this->data['company'] = [
 				'name' => 'company',
 				'id' => 'company',
 				'type' => 'text',
+				'class' => 'form-control',
+				'placeholder' => lang('kpi_login_Company'),
 				'value' => $this->form_validation->set_value('company'),
+			];
+			$this->data['email'] = [
+				'name' => 'email',
+				'id' => 'email',
+				'type' => 'text',
+				'class' => 'form-control',
+				'placeholder' => lang('kpi_login_Email'),
+				'autocomplete' => "off",
+				'value' => $this->form_validation->set_value('email'),
 			];
 			$this->data['phone'] = [
 				'name' => 'phone',
 				'id' => 'phone',
-				'type' => 'text',
+				'type' => 'phone',
+				'class' => 'form-control',
+				'placeholder' => lang('kpi_login_Phone'),
 				'value' => $this->form_validation->set_value('phone'),
 			];
 			$this->data['password'] = [
 				'name' => 'password',
 				'id' => 'password',
 				'type' => 'password',
+				'class' => 'form-control',
+				'placeholder' => lang('kpi_login_Password'),
+				'autocomplete' => "off",
 				'value' => $this->form_validation->set_value('password'),
 			];
 			$this->data['password_confirm'] = [
 				'name' => 'password_confirm',
 				'id' => 'password_confirm',
 				'type' => 'password',
+				'class' => 'form-control',
+				'placeholder' => lang('kpi_login_Password_confirm'),
+				'autocomplete' => "off",
 				'value' => $this->form_validation->set_value('password_confirm'),
 			];
+			$this->data['seasons'] = [
+				'name' => 'seasons',
+				'id' => 'seasons',
+				'type' => 'text',
+				'class' => 'form-control',
+				'placeholder' => lang('kpi_login_Seasons'),
+				'value' => $this->form_validation->set_value('seasons'),
+			];
+			$this->data['competitions'] = [
+				'name' => 'competitions',
+				'id' => 'competitions',
+				'type' => 'text',
+				'class' => 'form-control',
+				'placeholder' => lang('kpi_login_Competitions'),
+				'value' => $this->form_validation->set_value('competitions'),
+			];
+			$this->data['phases'] = [
+				'name' => 'phases',
+				'id' => 'phases',
+				'type' => 'text',
+				'class' => 'form-control',
+				'placeholder' => lang('kpi_login_Phases'),
+				'value' => $this->form_validation->set_value('phases'),
+			];
+			$this->data['clubs'] = [
+				'name' => 'clubs',
+				'id' => 'clubs',
+				'type' => 'text',
+				'class' => 'form-control',
+				'placeholder' => lang('kpi_login_Clubs'),
+				'value' => $this->form_validation->set_value('clubs'),
+			];
+
 
 			$this->_render_page('auth' . DIRECTORY_SEPARATOR . 'create_user.html', $this->data);
 		}
@@ -604,8 +671,13 @@ class Auth extends MY_Controller
 		// validate form input
 		$this->form_validation->set_rules('first_name', $this->lang->line('edit_user_validation_fname_label'), 'trim|required');
 		$this->form_validation->set_rules('last_name', $this->lang->line('edit_user_validation_lname_label'), 'trim|required');
-		$this->form_validation->set_rules('phone', $this->lang->line('edit_user_validation_phone_label'), 'trim');
 		$this->form_validation->set_rules('company', $this->lang->line('edit_user_validation_company_label'), 'trim');
+		$this->form_validation->set_rules('email', $this->lang->line('edit_user_validation_email_label'), 'trim');
+		$this->form_validation->set_rules('phone', $this->lang->line('edit_user_validation_phone_label'), 'trim');
+		$this->form_validation->set_rules('seasons', $this->lang->line('edit_user_validation_phone_label'), 'trim');
+		$this->form_validation->set_rules('competitions', $this->lang->line('edit_user_validation_phone_label'), 'trim');
+		$this->form_validation->set_rules('phases', $this->lang->line('edit_user_validation_phone_label'), 'trim');
+		$this->form_validation->set_rules('clubs', $this->lang->line('edit_user_validation_phone_label'), 'trim');
 
 		if (isset($_POST) && !empty($_POST))
 		{
@@ -629,6 +701,11 @@ class Auth extends MY_Controller
 					'last_name' => $this->input->post('last_name'),
 					'company' => $this->input->post('company'),
 					'phone' => $this->input->post('phone'),
+					'email' => $this->input->post('email'),
+					'seasons' => $this->input->post('seasons'),
+					'competitions' => $this->input->post('competitions'),
+					'phases' => $this->input->post('phases'),
+					'clubs' => $this->input->post('clubs'),
 				];
 
 				// update the password if it was posted
@@ -684,39 +761,101 @@ class Auth extends MY_Controller
 		$this->data['groups'] = $groups;
 		$this->data['currentGroups'] = $currentGroups;
 		
+		$this->data['identity'] = [
+			'name' => 'identity',
+			'id' => 'identity',
+			'type' => 'text',
+			'class' => 'form-control',
+			'readonly' => 'readonly',
+			'value' => $this->form_validation->set_value('identity', $user->username),
+		];
 		$this->data['first_name'] = [
 			'name'  => 'first_name',
 			'id'    => 'first_name',
 			'type'  => 'text',
+			'class' => 'form-control',
+			'placeholder' => lang('kpi_login_First_name'),
+			'autocomplete' => "off",
 			'value' => $this->form_validation->set_value('first_name', $user->first_name),
 		];
 		$this->data['last_name'] = [
 			'name'  => 'last_name',
 			'id'    => 'last_name',
 			'type'  => 'text',
+			'class' => 'form-control',
+			'placeholder' => lang('kpi_login_Last_name'),
+			'autocomplete' => "off",
 			'value' => $this->form_validation->set_value('last_name', $user->last_name),
 		];
 		$this->data['company'] = [
 			'name'  => 'company',
 			'id'    => 'company',
 			'type'  => 'text',
+			'class' => 'form-control',
+			'placeholder' => lang('kpi_login_Company'),
 			'value' => $this->form_validation->set_value('company', $user->company),
+		];
+		$this->data['email'] = [
+			'name'  => 'email',
+			'id'    => 'email',
+			'type'  => 'email',
+			'class' => 'form-control',
+			'placeholder' => lang('kpi_login_Email'),
+			'value' => $this->form_validation->set_value('email', $user->email),
 		];
 		$this->data['phone'] = [
 			'name'  => 'phone',
 			'id'    => 'phone',
 			'type'  => 'text',
+			'class' => 'form-control',
+			'placeholder' => lang('kpi_login_Phone'),
 			'value' => $this->form_validation->set_value('phone', $user->phone),
+		];
+		$this->data['seasons'] = [
+			'name'  => 'seasons',
+			'id'    => 'seasons',
+			'type'  => 'text',
+			'class' => 'form-control',
+			'placeholder' => lang('kpi_login_Seasons'),
+			'value' => $this->form_validation->set_value('seasons', $user->seasons),
+		];
+		$this->data['competitions'] = [
+			'name'  => 'competitions',
+			'id'    => 'competitions',
+			'type'  => 'text',
+			'class' => 'form-control',
+			'placeholder' => lang('kpi_login_Competitions'),
+			'value' => $this->form_validation->set_value('competitions', $user->competitions),
+		];
+		$this->data['phases'] = [
+			'name'  => 'phases',
+			'id'    => 'phases',
+			'type'  => 'text',
+			'class' => 'form-control',
+			'placeholder' => lang('kpi_login_Phases'),
+			'value' => $this->form_validation->set_value('phases', $user->phases),
+		];
+		$this->data['clubs'] = [
+			'name'  => 'clubs',
+			'id'    => 'clubs',
+			'type'  => 'text',
+			'class' => 'form-control',
+			'placeholder' => lang('kpi_login_Clubs'),
+			'value' => $this->form_validation->set_value('clubs', $user->clubs),
 		];
 		$this->data['password'] = [
 			'name' => 'password',
 			'id'   => 'password',
-			'type' => 'password'
+			'type' => 'password',
+			'class' => 'form-control',
+			'placeholder' => lang('kpi_login_Nochange'),
 		];
 		$this->data['password_confirm'] = [
 			'name' => 'password_confirm',
 			'id'   => 'password_confirm',
-			'type' => 'password'
+			'type' => 'password',
+			'class' => 'form-control',
+			'placeholder' => lang('kpi_login_Nochange'),
 		];
 
 		$this->_render_page('auth/edit_user.html', $this->data);
@@ -739,6 +878,12 @@ class Auth extends MY_Controller
 
 		if ($this->form_validation->run() === TRUE)
 		{
+			// do we have a valid request?
+			if ($this->_valid_csrf_nonce() === FALSE)
+			{
+				show_error($this->lang->line('error_csrf'));
+			}
+
 			$new_group_id = $this->ion_auth->create_group($this->input->post('group_name'), $this->input->post('description'));
 			if ($new_group_id)
 			{
@@ -751,6 +896,7 @@ class Auth extends MY_Controller
 		else
 		{
 			// display the create group form
+			$this->data['csrf'] = $this->_get_csrf_nonce();
 			// set the flash data error message if there is one
 			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 
@@ -758,12 +904,16 @@ class Auth extends MY_Controller
 				'name'  => 'group_name',
 				'id'    => 'group_name',
 				'type'  => 'text',
+				'class' => 'form-control',
+				'placeholder' => lang('kpi_login_Group_name'),
 				'value' => $this->form_validation->set_value('group_name'),
 			];
 			$this->data['description'] = [
 				'name'  => 'description',
 				'id'    => 'description',
 				'type'  => 'text',
+				'class' => 'form-control',
+				'placeholder' => lang('kpi_login_Description'),
 				'value' => $this->form_validation->set_value('description'),
 			];
 
@@ -800,6 +950,12 @@ class Auth extends MY_Controller
 		{
 			if ($this->form_validation->run() === TRUE)
 			{
+				// do we have a valid request?
+				if ($this->_valid_csrf_nonce() === FALSE)
+				{
+					show_error($this->lang->line('error_csrf'));
+				}
+
 				$group_update = $this->ion_auth->update_group($id, $_POST['group_name'], array(
 					'description' => $_POST['group_description']
 				));
@@ -816,6 +972,8 @@ class Auth extends MY_Controller
 			}
 		}
 
+		// display the create group form
+		$this->data['csrf'] = $this->_get_csrf_nonce();
 		// set the flash data error message if there is one
 		$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 
@@ -826,6 +984,8 @@ class Auth extends MY_Controller
 			'name'    => 'group_name',
 			'id'      => 'group_name',
 			'type'    => 'text',
+			'class' => 'form-control',
+			'placeholder' => lang('kpi_login_Group_name'),
 			'value'   => $this->form_validation->set_value('group_name', $group->name),
 		];
 		if ($this->config->item('admin_group', 'ion_auth') === $group->name) {
@@ -836,6 +996,8 @@ class Auth extends MY_Controller
 			'name'  => 'group_description',
 			'id'    => 'group_description',
 			'type'  => 'text',
+			'class' => 'form-control',
+			'placeholder' => lang('kpi_login_Description'),
 			'value' => $this->form_validation->set_value('group_description', $group->description),
 		];
 

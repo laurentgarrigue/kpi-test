@@ -29,6 +29,18 @@ body {
     line-height: 1;
 }
 
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(255,255,255,.9);
+    font-weight: bold;
+}
+ 
+.bg_ffck_primary {
+    background-image:-moz-linear-gradient(left, #0098ce, #313b9b);
+    background-image:-webkit-linear-gradient(left, #0098ce, #313b9b);
+    background-image:-o-linear-gradient(left, #0098ce, #313b9b);
+    background-image:linear-gradient(to right, #0098ce, #313b9b);
+}
+
 body {
     padding-top: 43px; /* public */
     padding-top: 75px; /* logged */

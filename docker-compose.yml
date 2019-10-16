@@ -26,6 +26,7 @@ services:
         command: mysqld --sql_mode=""
         volumes:
             - /var/lib/mysql
+            - ./SQL:/home
         environment:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_USER: my_admin
