@@ -19,11 +19,9 @@ class Competitions extends MY_Controller {
 
     public function index()
     {
-        $this->load->model('matchs_model');
-        $this->data['title'] = 'Compétitions';
-        $this->data['matchs'] = $this->matchs_model->get_matchs();
+        $this->data['page'] = 'Competitions';
 
-        $this->twig->display('tests/index.html', $this->data);
+        $this->twig->display('home.html', $this->data);
     }
     
 }

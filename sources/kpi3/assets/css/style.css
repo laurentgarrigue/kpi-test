@@ -60,6 +60,18 @@ body {
     color: rgba(255,255,255,.9);
     font-weight: bold;
 }
+
+.navbar .active {
+    background-color: #ce5e2d;
+    color: white;
+}
+
+.navbar-light .navbar-nav .active > .nav-link, 
+.navbar-light .navbar-nav .nav-link.active, 
+.navbar-light .navbar-nav .nav-link.show, 
+.navbar-light .navbar-nav .show > .nav-link {
+    color: white;
+}
  
 .bg_ffck_primary {
     background-image:-moz-linear-gradient(left, #0098ce, #313b9b);

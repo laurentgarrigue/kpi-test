@@ -13,6 +13,8 @@ class Home extends MY_Controller {
 
     public function index()
     {
+        $this->data['page'] = lang('Home');
+
         $this->twig->display('home.html', $this->data);
     }
     

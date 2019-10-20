@@ -110,28 +110,28 @@ class Menu {
      */
     private function _build_menu($menu) {
         foreach ($menu as $key => $item) {
-            if (isset($item['groups']) || array_key_exists('groups', $item)) { // S'il y a un contrôle de groupe
-                if (!$this->CI->ion_auth->in_group($item['groups'])) { // autorisé selon groupe de l'utilisateur
+            // S'il y a un contrôle de groupe
+            if (isset($item['groups']) || array_key_exists('groups', $item)) {
+                // autorisé selon groupe de l'utilisateur
+                if (!$this->CI->ion_auth->in_group($item['groups'])) { 
                     continue;
                 }
             }
+
+            // Label
             if (isset($item['label']) || array_key_exists('label', $item)) {
                 $item['page'] = $item['label'];
                 $item['label'] = lang('kpi_' . $item['label']);
             }
             
+            // Route
             if (isset($item['route']) || array_key_exists('route', $item)) {
-                // if($item['route'] != '' && strpos($this->CI->uri->uri_string(), $item['route']) === 0) {
-                //     $item['current'] = ' active';
-                // } else {
-                //     $item['current'] = '';
-                // }
-                
                 if($item['route'] != '') {
                     $item['route'] = base_url($item['route']);
                 }
             }
             
+            // S'il y a un sous-menu
             if (isset($item['content']) || array_key_exists('content', $item)) {
                 if (is_array($item['content'])) {
                     $item['content'] = $this->_build_menu($item['content']);
