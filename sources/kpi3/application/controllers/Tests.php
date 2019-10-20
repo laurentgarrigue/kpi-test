@@ -14,6 +14,7 @@ class Tests extends MY_Controller {
     public function index()
     {
         $this->data['title'] = 'Liste des matchs';
+        $this->load->model('matchs_model');
         $this->data['matchs'] = $this->matchs_model->get_matchs();
 
 //        vdebug($this->data['user']);
@@ -59,7 +60,7 @@ class Tests extends MY_Controller {
         $this->data['title2'] = lang('kpi_title');
         // méthode 3 : helper via Twig {{ lang('kpi_title') }}
         
-        
+        $this->load->model('matchs_model');
         $this->data['matchs'] = $this->matchs_model->get_matchs();
 
         $this->twig->display('tests/index.html', $this->data);
@@ -67,6 +68,7 @@ class Tests extends MY_Controller {
 
     public function view($id = NULL)
     {
+        $this->load->model('matchs_model');
         $this->data['match_item'] = $this->matchs_model->get_matchs($id);
 
         if (empty($this->data['match_item']))
@@ -117,15 +119,10 @@ class Tests extends MY_Controller {
         $pdf->Write(5,"La taille de ce PDF n'est que de 13 ko.");
 
         $pdf->Output();
-        
-//        $pdf = new FPDF();
-//        $pdf->AddPage('P','A4',0);
-//        $pdf->SetFont('Arial','B',16);
-//        $pdf->Cell(0,0,'Pdf généré par FPDF via Codeigniter',0,1,'C');
-//        $pdf->Output('pageBlanche.pdf' , 'I' );
     }
     
     public function mpdf($id = NULL) {
+        $this->load->model('matchs_model');
         $this->data['match_item'] = $this->matchs_model->get_matchs($id);
 
         if (empty($this->data['match_item']))
@@ -136,9 +133,7 @@ class Tests extends MY_Controller {
         $this->data['title'] = $this->data['match_item']['Numero_ordre'];
         $_SESSION['toto'] = 'tata';
 
-//        $html = $this->twig->render('templates/header.html', $this->data);
-        $html .= $this->twig->render('tests/view.html', $this->data);
-//        $html .= $this->twig->render('templates/footer.html');
+        $html = $this->twig->render('tests/view.html', $this->data);
         
         $this->load->library('m_pdf');
         $pdf = $this->m_pdf->load();
@@ -162,5 +157,40 @@ class Tests extends MY_Controller {
         }
         $this->data['user'] = $_SESSION;
         $this->twig->display('tests/logged_user.html', $this->data);
+    }
+
+    public function selectpicker() {
+        $this->data['mon_select'] = [
+			'name'    => 'mon_select',
+			'id'      => 'mon_select',
+			'type'    => 'selectpicker',
+			'class' => 'form-control selectpicker',
+			'value'   => '',
+        ];
+        $this->data['mon_select_options'] = [
+			'OptGroup 1'    => [
+                'n1' => 'Ligne 1',
+                'n2' => 'Ligne 2',
+                'n3' => 'Ligne 3',
+                'n4' => 'Ligne 4',
+            ],
+			'OptGroup 2'    => [
+                'n5' => 'Ligne 5',
+                'n6' => 'Ligne 6',
+                'n7' => 'Ligne 7',
+                'n8' => 'Ligne 8',
+                'n9' => 'Ligne 9',
+            ],
+        ];
+
+        if ($this->ion_auth->logged_in()) {
+            $this->data['current_user']['seasons'] = $this->user->seasons;
+        }
+
+        $this->load->model('common_model');
+        $this->data['seasons'] = $this->common_model->get_seasons(TRUE, $this->user->seasons);
+
+        $this->twig->display('tests/selectpicker.html', $this->data);
+
     }
 }

@@ -61,5 +61,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //$route['matchs'] = 'matchs';
 //$route['(:any)'] = 'pages/view/$1';
 
-$route['default_controller'] = 'tests';
+$route['default_controller'] = 'home';
 //$route[LOGIN_PAGE] = 'Accueil/bienvenue';

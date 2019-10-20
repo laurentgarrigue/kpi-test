@@ -21,7 +21,7 @@ $lang['kpi_Stats'] = 'Stats';
 $lang['kpi_Teams'] = 'Teams';
 $lang['kpi_Users'] = 'Users';
 $lang['kpi_login_Clubs'] = 'Clubs';
-$lang['kpi_login_Competitions'] = 'Compet.';
+$lang['kpi_login_Compets'] = 'Compet.';
 $lang['kpi_login_Phases'] = 'Phases';
 $lang['kpi_login_Seasons'] = 'Seasons';
 $lang['kpi_login_Identity'] = 'Identity';
@@ -50,6 +50,6 @@ $lang['kpi_Retour'] = 'Back';
 $lang['kpi_login_Nochange'] = 'No change';
 $lang['kpi_login_Yes'] = 'Yes';
 $lang['kpi_login_No'] = 'No';
-$lang['kpi_login_Group_name'] = 'Group name';
+$lang['kpi_login_Role_name'] = 'Role name';
 $lang['kpi_login_Description'] = 'Description';
 

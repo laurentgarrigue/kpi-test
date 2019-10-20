@@ -29,6 +29,10 @@ class Auth extends MY_Controller
 	 */
 	public function index()
 	{
+		// redirect to the second version
+		redirect("auth/user_list", 'refresh');
+
+
 
 		if (!$this->ion_auth->logged_in())
 		{
@@ -63,6 +67,32 @@ class Auth extends MY_Controller
 	}
 
 	/**
+	 * Display users list
+	 */
+	public function user_list($role = FALSE)
+	{
+		if (!$this->ion_auth->logged_in())
+		{
+			// redirect them to the login page
+			redirect('auth/login', 'refresh');
+		}
+		else
+		{
+			$this->load->model('common_model');
+			$this->data['title'] = $this->lang->line('index_heading');
+			
+			// set the flash data error message if there is one
+			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+			//list the users
+			$min_profile = (int) $this->session->user->groups['0']->id;
+			$this->data['users'] = $this->common_model->get_users($min_profile);
+			
+			$this->_render_page('auth' . DIRECTORY_SEPARATOR . 'users.html', $this->data);
+		}
+	}
+
+
+	/**
 	 * Log the user in
 	 */
 	public function login()
@@ -83,6 +113,7 @@ class Auth extends MY_Controller
 			{
 				//if the login is successful
 				//redirect them back to the main admin page
+				$this->hydrate_session();
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
 				redirect('admin/competitions', 'refresh');
 			}
@@ -116,6 +147,30 @@ class Auth extends MY_Controller
             $this->twig->display('auth/login.html', $this->data);
 		}
 	}
+
+	/**
+	 * hydrate session vars
+	 */
+	private function hydrate_session()
+	{
+		$this->session->user = $this->ion_auth->user()->row();
+		$this->session->user->groups = $this->ion_auth->get_users_groups()->result();
+		unset($this->session->user->password, 
+				$this->session->user->activation_selector, 
+				$this->session->user->activation_code, 
+				$this->session->user->forgotten_password_selector, 
+				$this->session->user->forgotten_password_code, 
+				$this->session->user->forgotten_password_time, 
+				$this->session->user->remember_selector, 
+				$this->session->user->remember_code
+			);
+		$this->load->model('common_model');
+        // $this->session->available_seasons = $this->common_model->get_seasons(TRUE, $this->session->user->seasons);
+        // $this->session->current_season = $this->common_model->get_season(TRUE, $this->user->seasons);
+        // $this->session->available_groups = $this->common_model->get_groups(TRUE, $this->user->seasons);
+
+	}
+
 
 	/**
 	 * Log the user out
@@ -402,7 +457,7 @@ class Auth extends MY_Controller
 		{
 			// redirect them to the auth page
 			$this->session->set_flashdata('message', $this->ion_auth->messages());
-			redirect("auth", 'refresh');
+			redirect("auth/user_list", 'refresh');
 		}
 		else
 		{
@@ -458,7 +513,7 @@ class Auth extends MY_Controller
 			}
 
 			// redirect them back to the auth page
-			redirect('auth', 'refresh');
+			redirect('auth/user_list', 'refresh');
 		}
 	}
 
@@ -471,7 +526,7 @@ class Auth extends MY_Controller
 
 		if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin())
 		{
-			redirect('auth', 'refresh');
+			redirect('auth/user_list', 'refresh');
 		}
 
 		$tables = $this->config->item('tables', 'ion_auth');
@@ -494,10 +549,10 @@ class Auth extends MY_Controller
 		$this->form_validation->set_rules('company', $this->lang->line('create_user_validation_company_label'), 'trim');
 		$this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|matches[password_confirm]');
 		$this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_validation_password_confirm_label'), 'required');
-		$this->form_validation->set_rules('seasons', $this->lang->line('create_user_validation_seasons_label'), 'trim');
-		$this->form_validation->set_rules('competitions', $this->lang->line('create_user_validation_competitions_label'), 'trim');
+		$this->form_validation->set_rules('seasons[]', $this->lang->line('create_user_validation_seasons_label'), 'trim');
+		$this->form_validation->set_rules('compets[]', $this->lang->line('create_user_validation_compets_label'), 'trim');
 		$this->form_validation->set_rules('phases', $this->lang->line('create_user_validation_phases_label'), 'trim');
-		$this->form_validation->set_rules('clubs', $this->lang->line('create_user_validation_clubs_label'), 'trim');
+		$this->form_validation->set_rules('clubs[]', $this->lang->line('create_user_validation_clubs_label'), 'trim');
 
 		if ($this->form_validation->run() === TRUE)
 		{
@@ -510,10 +565,10 @@ class Auth extends MY_Controller
 				'last_name' => $this->input->post('last_name'),
 				'company' => $this->input->post('company'),
 				'phone' => $this->input->post('phone'),
-				'seasons' => $this->input->post('seasons'),
-				'competitions' => $this->input->post('competitions'),
+				'seasons' => implode(',', $this->input->post('seasons')),
+				'compets' => implode(',', $this->input->post('compets')),
 				'phases' => $this->input->post('phases'),
-				'clubs' => $this->input->post('clubs'),
+				'clubs' => implode(',', $this->input->post('clubs')),
 			];
 		}
 		if ($this->form_validation->run() === TRUE && $this->ion_auth->register($identity, $password, $email, $additional_data))
@@ -521,7 +576,7 @@ class Auth extends MY_Controller
 			// check to see if we are creating the user
 			// redirect them back to the admin page
 			$this->session->set_flashdata('message', $this->ion_auth->messages());
-			redirect("auth", 'refresh');
+			redirect("auth/user_list", 'refresh');
 		}
 		else
 		{
@@ -599,21 +654,22 @@ class Auth extends MY_Controller
 				'autocomplete' => "off",
 				'value' => $this->form_validation->set_value('password_confirm'),
 			];
+			$this->load->model('common_model');
 			$this->data['seasons'] = [
-				'name' => 'seasons',
+				'name' => 'seasons[]',
 				'id' => 'seasons',
-				'type' => 'text',
-				'class' => 'form-control',
-				'placeholder' => lang('kpi_login_Seasons'),
-				'value' => $this->form_validation->set_value('seasons'),
+				'type' => 'selectpicker',
+				'class' => 'form-control selectpicker',
+				'options' => $this->common_model->get_seasons(TRUE, $this->session->user->seasons),
+				'selected' => explode(',', $this->form_validation->set_value('seasons')),
 			];
-			$this->data['competitions'] = [
-				'name' => 'competitions',
-				'id' => 'competitions',
-				'type' => 'text',
-				'class' => 'form-control',
-				'placeholder' => lang('kpi_login_Competitions'),
-				'value' => $this->form_validation->set_value('competitions'),
+			$this->data['compets'] = [
+				'name' => 'compets[]',
+				'id' => 'compets',
+				'type' => 'selectpicker',
+				'class' => 'form-control selectpicker',
+				'options' => $this->common_model->get_compet_groups(TRUE, TRUE, $this->session->user->compets),
+				'selected' => explode(',', $this->form_validation->set_value('compets')),
 			];
 			$this->data['phases'] = [
 				'name' => 'phases',
@@ -624,12 +680,12 @@ class Auth extends MY_Controller
 				'value' => $this->form_validation->set_value('phases'),
 			];
 			$this->data['clubs'] = [
-				'name' => 'clubs',
+				'name' => 'clubs[]',
 				'id' => 'clubs',
-				'type' => 'text',
-				'class' => 'form-control',
-				'placeholder' => lang('kpi_login_Clubs'),
-				'value' => $this->form_validation->set_value('clubs'),
+				'type' => 'selectpicker',
+				'class' => 'form-control selectpicker',
+				'options' => $this->common_model->get_clubs(TRUE, TRUE, $this->session->user->clubs),
+				'selected' => explode(',', $this->form_validation->set_value('clubs')),
 			];
 
 
@@ -641,7 +697,7 @@ class Auth extends MY_Controller
 	*/
 	public function redirectUser(){
 		if ($this->ion_auth->is_admin()){
-			redirect('auth', 'refresh');
+			redirect('auth/user_list', 'refresh');
 		}
 		redirect('/', 'refresh');
 	}
@@ -657,7 +713,7 @@ class Auth extends MY_Controller
 
 		if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id)))
 		{
-			redirect('auth', 'refresh');
+			redirect('auth/user_list', 'refresh');
 		}
 
 		$user = $this->ion_auth->user($id)->row();
@@ -674,10 +730,10 @@ class Auth extends MY_Controller
 		$this->form_validation->set_rules('company', $this->lang->line('edit_user_validation_company_label'), 'trim');
 		$this->form_validation->set_rules('email', $this->lang->line('edit_user_validation_email_label'), 'trim');
 		$this->form_validation->set_rules('phone', $this->lang->line('edit_user_validation_phone_label'), 'trim');
-		$this->form_validation->set_rules('seasons', $this->lang->line('edit_user_validation_phone_label'), 'trim');
-		$this->form_validation->set_rules('competitions', $this->lang->line('edit_user_validation_phone_label'), 'trim');
-		$this->form_validation->set_rules('phases', $this->lang->line('edit_user_validation_phone_label'), 'trim');
-		$this->form_validation->set_rules('clubs', $this->lang->line('edit_user_validation_phone_label'), 'trim');
+		$this->form_validation->set_rules('seasons[]', $this->lang->line('edit_user_validation_seasons_label'), 'trim');
+		$this->form_validation->set_rules('compets[]', $this->lang->line('edit_user_validation_compets_label'), 'trim');
+		$this->form_validation->set_rules('phases', $this->lang->line('edit_user_validation_phases_label'), 'trim');
+		$this->form_validation->set_rules('clubs[]', $this->lang->line('edit_user_validation_clubs_label'), 'trim');
 
 		if (isset($_POST) && !empty($_POST))
 		{
@@ -702,10 +758,10 @@ class Auth extends MY_Controller
 					'company' => $this->input->post('company'),
 					'phone' => $this->input->post('phone'),
 					'email' => $this->input->post('email'),
-					'seasons' => $this->input->post('seasons'),
-					'competitions' => $this->input->post('competitions'),
+					'seasons' => implode(',', $this->input->post('seasons')),
+					'compets' => implode(',', $this->input->post('compets')),
 					'phases' => $this->input->post('phases'),
-					'clubs' => $this->input->post('clubs'),
+					'clubs' => implode(',', $this->input->post('clubs')),
 				];
 
 				// update the password if it was posted
@@ -811,21 +867,22 @@ class Auth extends MY_Controller
 			'placeholder' => lang('kpi_login_Phone'),
 			'value' => $this->form_validation->set_value('phone', $user->phone),
 		];
+		$this->load->model('common_model');
 		$this->data['seasons'] = [
-			'name'  => 'seasons',
+			'name'  => 'seasons[]',
 			'id'    => 'seasons',
-			'type'  => 'text',
-			'class' => 'form-control',
-			'placeholder' => lang('kpi_login_Seasons'),
-			'value' => $this->form_validation->set_value('seasons', $user->seasons),
+			'type'    => 'selectpicker',
+			'class' => 'form-control selectpicker',
+			'options' => $this->common_model->get_seasons(TRUE, $this->session->user->seasons),
+			'selected' => explode(',', $this->form_validation->set_value('seasons', $user->seasons)),
 		];
-		$this->data['competitions'] = [
-			'name'  => 'competitions',
-			'id'    => 'competitions',
-			'type'  => 'text',
-			'class' => 'form-control',
-			'placeholder' => lang('kpi_login_Competitions'),
-			'value' => $this->form_validation->set_value('competitions', $user->competitions),
+		$this->data['compets'] = [
+			'name' => 'compets[]',
+			'id' => 'compets',
+			'type' => 'selectpicker',
+			'class' => 'form-control selectpicker',
+			'options' => $this->common_model->get_compet_groups(TRUE, TRUE, $this->session->user->compets),
+			'selected' => explode(',', $this->form_validation->set_value('compets', $user->compets)),
 		];
 		$this->data['phases'] = [
 			'name'  => 'phases',
@@ -836,12 +893,12 @@ class Auth extends MY_Controller
 			'value' => $this->form_validation->set_value('phases', $user->phases),
 		];
 		$this->data['clubs'] = [
-			'name'  => 'clubs',
-			'id'    => 'clubs',
-			'type'  => 'text',
-			'class' => 'form-control',
-			'placeholder' => lang('kpi_login_Clubs'),
-			'value' => $this->form_validation->set_value('clubs', $user->clubs),
+			'name' => 'clubs[]',
+			'id' => 'clubs',
+			'type' => 'selectpicker',
+			'class' => 'form-control selectpicker',
+			'options' => $this->common_model->get_clubs(TRUE, TRUE, $this->session->user->clubs),
+			'selected' => explode(',', $this->form_validation->set_value('clubs', $user->clubs)),
 		];
 		$this->data['password'] = [
 			'name' => 'password',
@@ -870,7 +927,7 @@ class Auth extends MY_Controller
 
 		if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin())
 		{
-			redirect('auth', 'refresh');
+			redirect('auth/user_list', 'refresh');
 		}
 
 		// validate form input
@@ -890,7 +947,7 @@ class Auth extends MY_Controller
 				// check to see if we are creating the group
 				// redirect them back to the admin page
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
-				redirect("auth", 'refresh');
+				redirect("auth/user_list", 'refresh');
 			}
 		}
 		else
@@ -905,7 +962,7 @@ class Auth extends MY_Controller
 				'id'    => 'group_name',
 				'type'  => 'text',
 				'class' => 'form-control',
-				'placeholder' => lang('kpi_login_Group_name'),
+				'placeholder' => lang('kpi_login_Role_name'),
 				'value' => $this->form_validation->set_value('group_name'),
 			];
 			$this->data['description'] = [
@@ -931,14 +988,14 @@ class Auth extends MY_Controller
 		// bail if no group id given
 		if (!$id || empty($id))
 		{
-			redirect('auth', 'refresh');
+			redirect('auth/user_list', 'refresh');
 		}
 
 		$this->data['title'] = $this->lang->line('edit_group_title');
 
 		if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin())
 		{
-			redirect('auth', 'refresh');
+			redirect('auth/user_list', 'refresh');
 		}
 
 		$group = $this->ion_auth->group($id)->row();
@@ -985,7 +1042,7 @@ class Auth extends MY_Controller
 			'id'      => 'group_name',
 			'type'    => 'text',
 			'class' => 'form-control',
-			'placeholder' => lang('kpi_login_Group_name'),
+			'placeholder' => lang('kpi_login_Role_name'),
 			'value'   => $this->form_validation->set_value('group_name', $group->name),
 		];
 		if ($this->config->item('admin_group', 'ion_auth') === $group->name) {

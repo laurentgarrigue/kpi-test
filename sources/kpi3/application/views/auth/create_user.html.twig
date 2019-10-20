@@ -1,5 +1,11 @@
 {% extends "templates/trame.html.twig" %}
 
+{% block style %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ lib_url('bootstrap-select-1.13.9/dist/css/bootstrap-select.css') }}">
+
+{% endblock %}
+
 {% block contenu %}
 <div class="row justify-content-md-center">
     <div id="loginbox" class="col-md-8">                    
@@ -61,17 +67,16 @@
                         <div class="form-group row">
                             {{ form_label(lang('kpi_login_Seasons'), '', 'class="col-sm-3 col-form-label"') }}
                             <div class="col-sm-9">
-                                {{ form_input(seasons) }}
+                                {{ form_selectpicker(seasons, false, false, 'multiple') }}
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            {{ form_label(lang('kpi_login_Competitions'), '', 'class="col-sm-3 col-form-label"') }}
+                            {{ form_label(lang('kpi_login_Compets'), '', 'class="col-sm-3 col-form-label"') }}
                             <div class="col-sm-9">
-                                {{ form_input(competitions) }}
+                                {{ form_selectpicker2(compets, false, false, 'multiple  data-live-search="true"') }}
                             </div>
                         </div>
-
                         <div class="form-group row">
                             {{ form_label(lang('kpi_login_Phases'), '', 'class="col-sm-3 col-form-label"') }}
                             <div class="col-sm-9">
@@ -82,7 +87,7 @@
                         <div class="form-group row">
                             {{ form_label(lang('kpi_login_Clubs'), '', 'class="col-sm-3 col-form-label"') }}
                             <div class="col-sm-9">
-                                {{ form_input(clubs) }}
+                                {{ form_selectpicker2(clubs, false, false, 'multiple  data-live-search="true"') }}
                             </div>
                         </div>
 
@@ -104,7 +109,7 @@
                         <div class="row justify-content-between mt-3">
                             <!-- Button -->
                             <div class="col-4">
-                                <a href="{{ site_url('auth/index') }}" class="btn btn-secondary">Retour</a>
+                                <a href="{{ site_url('auth/user_list') }}" class="btn btn-secondary">Retour</a>
                             </div>
                             <div class="col-4 text-right">
                                 {{ form_submit('submit', lang('create_user_submit_btn'), 'class="btn btn-primary"') }}
@@ -121,4 +126,10 @@
 <br>
 <br>
 <br> 
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script src="{{ lib_url('bootstrap-select-1.13.9/dist/js/bootstrap-select.js') }}"></script>
+    <script src="{{ lib_url('bootstrap-select-1.13.9/dist/js/i18n/defaults-' ~ i18n ~ '.min.js') }}"></script>
 {% endblock %}

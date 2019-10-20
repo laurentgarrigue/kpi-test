@@ -1,0 +1,13 @@
+{% extends "templates/trame.html.twig" %}
+
+{% block style %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ lib_url('bootstrap-select-1.13.9/dist/css/bootstrap-select.css') }}">
+
+{% endblock %}
+
+{% block contenu %}
+    <div style="width: 800">
+        {% include 'facebook_iframe.html.twig' %}
+    </div>
+{% endblock %}

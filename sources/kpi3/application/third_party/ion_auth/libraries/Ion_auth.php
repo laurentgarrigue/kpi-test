@@ -355,7 +355,6 @@ class Ion_auth
 	public function logged_in()
 	{
 		$this->ion_auth_model->trigger_events('logged_in');
-        $toto = base_url();
 
 		$recheck = $this->ion_auth_model->recheck_session();
 

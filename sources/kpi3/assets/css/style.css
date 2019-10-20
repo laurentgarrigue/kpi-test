@@ -3,12 +3,39 @@
     Author     : laurent
 */
 
+/**************** FFCK ****************/
+@font-face {
+    font-family: sansationbold;
+    src: url('../font/Sansation_Bold.ttf');
+}
+
+h1 {
+    color: #1e64af;
+    font-family: "sansationbold";
+    font-size: 30px;
+    margin: 0 0 20px;
+    padding: 0 0 0 12px;
+    position: relative;
+    text-transform: uppercase;
+    width: auto;
+    border-left: 5px solid #ce5e2d;
+}
+
+.card h4 {
+    font-family: "sansationbold";
+}
+
+table.table th {
+    color: white;
+    background-color: #1e64af;
+}
 /************** Bootstrap adjustments **************/
 body {
     padding-top: 50px;
 }
 .navbar {
     padding: 0 1rem;
+    font-family: "sansationbold";
 }
 
 .navbar-main {
@@ -74,3 +101,4 @@ table.table-wide {
 table.table-compact th, table.table-compact td {
     padding: 4px;
 }
+

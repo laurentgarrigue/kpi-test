@@ -1,0 +1,52 @@
+{% extends "templates/trame.html.twig" %}
+
+{% block style %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ lib_url('bootstrap-select-1.13.9/dist/css/bootstrap-select.css') }}">
+
+{% endblock %}
+
+{% block contenu %}
+{# <form> #}
+    <select id="test" class="selectpicker live-search" multiple>
+        <option value="25" title="25">Mustard</option>
+        <option value="28" title="Mayo">Mayo</option>
+        <option value="29" title="29">Ketchup</option>
+        <option value="32" title="Autres">Autres</option>
+    </select>
+    <br>
+    <br>
+    <br>
+    <div class='row'>
+        <div class="col-2">
+            {{ form_dropdown(mon_select, mon_select_options, false, 'multiple data-live-search=true data-max-options="2"') }}
+        </div>
+        <a id="test1" class="btn btn-warning">Valeur =></a>
+        <input type="text" id="test2" value="toto">
+    </div>
+    <br>
+    <br>
+    <br>
+{# </form> #}
+<span class="btn btn-dark">{{ current_user.seasons }}</span>
+<br>
+<br>
+<ul>
+{% for season in seasons %}
+    <li>{{ season }} *{% endif %}</li>
+{% endfor %}
+</ul>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script src="{{ lib_url('bootstrap-select-1.13.9/dist/js/bootstrap-select.js') }}"></script>
+    <script src="{{ lib_url('bootstrap-select-1.13.9/dist/js/i18n/defaults-' ~ i18n ~ '.min.js') }}"></script>
+    <script>
+        $(function () {
+            $('#test1').click(function(){
+                $('#test2').val($('#mon_select').val());
+            });
+        });
+    </script>
+{% endblock %}

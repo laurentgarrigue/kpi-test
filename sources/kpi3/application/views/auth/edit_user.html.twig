@@ -1,5 +1,11 @@
 {% extends "templates/trame.html.twig" %}
 
+{% block style %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ lib_url('bootstrap-select-1.13.9/dist/css/bootstrap-select.css') }}">
+
+{% endblock %}
+
 {% block contenu %}
 <div class="row justify-content-md-center">
     <div id="loginbox" class="col-md-8">                    
@@ -60,14 +66,14 @@
                         <div class="form-group row">
                             {{ form_label(lang('kpi_login_Seasons'), '', 'class="col-sm-3 col-form-label"') }}
                             <div class="col-sm-9">
-                                {{ form_input(seasons) }}
+                                {{ form_selectpicker(seasons, false, false, 'multiple') }}
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            {{ form_label(lang('kpi_login_Competitions'), '', 'class="col-sm-3 col-form-label"') }}
+                            {{ form_label(lang('kpi_login_Compets'), '', 'class="col-sm-3 col-form-label"') }}
                             <div class="col-sm-9">
-                                {{ form_input(competitions) }}
+                                {{ form_selectpicker2(compets, false, false, 'multiple  data-live-search="true"') }}
                             </div>
                         </div>
 
@@ -81,7 +87,7 @@
                         <div class="form-group row">
                             {{ form_label(lang('kpi_login_Clubs'), '', 'class="col-sm-3 col-form-label"') }}
                             <div class="col-sm-9">
-                                {{ form_input(clubs) }}
+                                {{ form_selectpicker2(clubs, false, false, 'multiple  data-live-search="true"') }}
                             </div>
                         </div>
 
@@ -98,28 +104,32 @@
                                 {{ form_input(password_confirm) }}
                             </div>
                         </div>
+
+                        {% if in_group([1,20]) %}
+                            <div class="form-group row">
+                                {{ form_label(lang('edit_user_groups_heading'), '', 'class="col-sm-4 col-form-label"') }}
+                                <div class="col-sm-8">
+                                    <select name="groups[]" id="groups" class="selectpicker">
+                                        {% for group in groups %}
+                                            {% set selected = '' %}
+                                            {% for grp in currentGroups %}
+                                                {% if group.id == grp.id %}
+                                                    {% set selected = ' selected="selected"' %}
+                                                {% endif %}
+                                            {% endfor %}
+                                            <option value="{{ group.id }}" title="{{ group.description }}" {{ selected }}>{{ group.description }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        {% endif %}
                     </div>
                     <div class="col-12">
-                        {% if is_admin() %}
-                            <hr>
-                            <h5>{{ lang('edit_user_groups_heading') }}</h5>
-                            {% for group in groups %}
-                                {% set checked = '' %}
-                                {% for grp in currentGroups %}
-                                    {% if group.id == grp.id %}
-                                        {% set checked = ' checked="checked"' %}
-                                    {% endif %}
-                                {% endfor %}
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" name="groups[]" value="{{ group.id }}"{{ checked }}>
-                                    <label class="form-check-label">{{ group.name }}</label>
-                                </div>
-                            {% endfor %}
-                        {% endif %}
+                        <hr>
                         <div class="row justify-content-between mt-3">
                             <!-- Button -->
                             <div class="col-4">
-                                <a href="{{ site_url('auth/index') }}" class="btn btn-secondary">{{ lang('kpi_Retour') }}</a>
+                                <a href="{{ site_url('auth/user_list') }}" class="btn btn-secondary">{{ lang('kpi_Retour') }}</a>
                             </div>
                             <div class="col-4 text-right">
                                 {{ form_submit('submit', lang('edit_user_submit_btn'), 'class="btn btn-primary"') }}
@@ -138,4 +148,10 @@
 <br>
 <br>
 <br>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script src="{{ lib_url('bootstrap-select-1.13.9/dist/js/bootstrap-select.js') }}"></script>
+    <script src="{{ lib_url('bootstrap-select-1.13.9/dist/js/i18n/defaults-' ~ i18n ~ '.min.js') }}"></script>
 {% endblock %}

@@ -14,7 +14,8 @@ $config['twig']['functions_asis'] = [
     ];
 $config['twig']['functions_safe'] = [
 		'form_open', 'form_close', 'form_error', 'form_hidden', 'set_value',
-        'form_input', 'form_submit', 'form_label'
-//		'form_open_multipart', 'form_upload',  'form_dropdown',
+        'form_input', 'form_submit', 'form_label',  'form_dropdown', 
+        'form_selectpicker', 'form_selectpicker2'
+//		'form_open_multipart', 'form_upload',
 //		'set_radio', 'set_select', 'set_checkbox',
 	];

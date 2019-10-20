@@ -17,7 +17,7 @@
                     <div class="col-12">
 
                         <div class="form-group row">
-                            {{ form_label(lang('kpi_login_Group_name'), '', 'class="col-sm-3 col-form-label"') }}
+                            {{ form_label(lang('kpi_login_Role_name'), '', 'class="col-sm-3 col-form-label"') }}
                             <div class="col-sm-9">
                                 {{ form_input(group_name) }}
                             </div>
@@ -34,7 +34,7 @@
                     <div class="col-12">
                         <div class="row justify-content-between mt-3">
                             <div class="col-4">
-                                <a href="{{ site_url('auth/index') }}" class="btn btn-secondary">{{ lang('kpi_Retour') }}</a>
+                                <a href="{{ site_url('auth/user_list') }}" class="btn btn-secondary">{{ lang('kpi_Retour') }}</a>
                             </div>
                             <div class="col-4 text-right">
                                 {{ form_submit('submit', lang('edit_group_submit_btn'), 'class="btn btn-primary"') }}

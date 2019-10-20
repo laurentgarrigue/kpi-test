@@ -132,7 +132,7 @@ $config['argon2_admin_params']		= [
  */
 $config['site_title']                 = "Kayak-polo.info";       // Site Title, example.com
 $config['admin_email']                = "contact@kayak-polo.info"; // Admin Email, admin@example.com
-$config['default_group']              = 'members';           // Default group, use name
+$config['default_group']              = 'coach';           // Default group, use name
 $config['admin_group']                = 'admin';             // Default administrators group, use name
 $config['identity']                   = 'username';             /* You can use any unique column in your table as identity column.
 															    The values in this column, alongside password, will be used for login purposes
@@ -208,7 +208,13 @@ $config['email_forgot_password'] = 'forgot_password.html';
  | -------------------------------------------------------------------------
  */
 $config['delimiters_source']       = 'form_validation'; 	// "config" = use the settings defined here, "form_validation" = use the settings defined in CI's form validation library
-$config['message_start_delimiter'] = '<p>'; 	// Message start delimiter
-$config['message_end_delimiter']   = '</p>'; 	// Message end delimiter
-$config['error_start_delimiter']   = '<p>';		// Error message start delimiter
-$config['error_end_delimiter']     = '</p>';	// Error message end delimiter
+$config['message_start_delimiter'] = '<div class="alert alert-info alert-dismissible" role="alert">'; 	// Message start delimiter
+$config['message_end_delimiter']   = '<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>'; 	// Message end delimiter
+$config['error_start_delimiter']   = '<div class="alert alert-danger alert-dismissible" role="alert">';		// Error message start delimiter
+$config['error_end_delimiter']     = '<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>';	// Error message end delimiter

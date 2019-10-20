@@ -52,7 +52,7 @@ class Menu {
     private function _content_public()
     {
         $menu = array(
-            [ 'label' => 'Home', 'route' => '' ],
+            [ 'label' => 'Home', 'route' => '/' ],
             [ 'label' => 'Schedule', 'route' => 'matchs/index'],
             [ 'label' => 'Games', 'route' => 'tests/menu' ],
             [ 'label' => 'Rankings', 'route' => 'matchs/index' ],
@@ -97,7 +97,7 @@ class Menu {
             [ 'label' => 'Rankings', 'route' => 'admin/athletes/index' ],
             [ 'label' => 'Stats', 'route' => 'admin/athletes/index', 'groups' => array('admin', 'members') ],
             [ 'label' => 'Import', 'route' => 'admin/athletes/index', 'groups' => array('admin', 'members') ],
-            [ 'label' => 'Users', 'route' => 'auth/index', 'groups' => array('admin') ],
+            [ 'label' => 'Users', 'route' => 'auth/user_list', 'groups' => array('admin') ],
             ];
         
         return $menu;

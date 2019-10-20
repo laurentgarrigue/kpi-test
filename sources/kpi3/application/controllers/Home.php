@@ -11,11 +11,10 @@ class Home extends MY_Controller {
         parent::__construct();
     }
 
-    // public function index()
-    // {
-
-
-    // }
+    public function index()
+    {
+        $this->twig->display('home.html', $this->data);
+    }
     
     /**
      * Changement de lange (ajax)

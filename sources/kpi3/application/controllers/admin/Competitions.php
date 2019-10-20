@@ -19,6 +19,7 @@ class Competitions extends MY_Controller {
 
     public function index()
     {
+        $this->load->model('matchs_model');
         $this->data['title'] = 'Compétitions';
         $this->data['matchs'] = $this->matchs_model->get_matchs();
 

@@ -10,30 +10,43 @@ class MY_Controller extends CI_Controller {
      */
     protected $data = [];
     
+    /**
+     *
+     * @var array user  
+     */
+    protected $user = [];
+    
     function __construct() {
         parent::__construct();
 
-        if($this->session->userdata('lang') === NULL) {
-            $this->session->lang = 'french';
+        switch ($this->session->lang) {
+            case 'english':
+                $this->session->i18n = 'en_US';
+                break;
+            case 'french':
+                $this->session->i18n = 'fr_FR';
+                break;
+            case NULL:
+                $this->session->lang = 'french';
+                $this->session->i18n = 'fr_FR';
+                break;
         }
+        $this->lang->load('kpi', $this->session->lang);
+        $this->data['i18n'] = $this->session->i18n;
 
         $this->load->add_package_path(APPPATH.'third_party/ion_auth/');
         $this->load->library('ion_auth');
-        $this->load->model('matchs_model');
-        $this->lang->load('kpi', $this->session->lang);
+
         $this->load->library('menu');
-        
         $this->data['menu_public'] = $this->menu->menu_public();
         if ($this->ion_auth->logged_in()) {
             $this->data['menu_admin'] = $this->menu->menu_admin();
-            $user = $this->ion_auth->user()->row();
-            $user_groups = $this->ion_auth->get_users_groups()->result();
-            $this->data['current_user']['first_name'] = $user->first_name;
-            $this->data['current_user']['last_name'] = $user->last_name;
-            $this->data['current_user']['groups'] = $user_groups;
+            $this->data['current_user'] = $this->session->user;
         }
         
-        // $this->output->enable_profiler(TRUE);
+        if (!$this->input->is_ajax_request()) {
+            $this->output->enable_profiler(TRUE);
+        }
     }
 
 

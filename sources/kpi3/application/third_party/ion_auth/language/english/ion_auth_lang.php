@@ -19,8 +19,8 @@ $lang['account_creation_successful']            = 'Account Successfully Created'
 $lang['account_creation_unsuccessful']          = 'Unable to Create Account';
 $lang['account_creation_duplicate_email']       = 'Email Already Used or Invalid';
 $lang['account_creation_duplicate_identity']    = 'Identity Already Used or Invalid';
-$lang['account_creation_missing_default_group'] = 'Default group is not set';
-$lang['account_creation_invalid_default_group'] = 'Invalid default group name set';
+$lang['account_creation_missing_default_group'] = 'Default role is not set';
+$lang['account_creation_invalid_default_group'] = 'Invalid default role name set';
 
 
 // Password
@@ -56,10 +56,10 @@ $lang['group_creation_successful']           = 'Group created Successfully';
 $lang['group_already_exists']                = 'Group name already taken';
 $lang['group_update_successful']             = 'Group details updated';
 $lang['group_delete_successful']             = 'Group deleted';
-$lang['group_delete_unsuccessful']           = 'Unable to delete group';
-$lang['group_delete_notallowed']             = 'Can\'t delete the administrators\' group';
+$lang['group_delete_unsuccessful']           = 'Unable to delete role';
+$lang['group_delete_notallowed']             = 'Can\'t delete the administrators\' role';
 $lang['group_name_required']                 = 'Group name is a required field';
-$lang['group_name_admin_not_alter']          = 'Admin group name can not be changed';
+$lang['group_name_admin_not_alter']          = 'Admin role name can not be changed';
 
 // Activation Email
 $lang['email_activation_subject']            = 'Account Activation';

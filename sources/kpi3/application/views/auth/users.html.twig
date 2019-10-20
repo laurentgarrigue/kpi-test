@@ -2,7 +2,7 @@
 
 {% block contenu %}
 <div class="container-fluid">
-    <h1 class="text-center">{{ lang('index_heading') }}</h1>
+    <h1>{{ lang('index_heading') }}</h1>
     {# <p class="text-center">{{ lang('index_subheading') }}</p> #}
 
     <div id="infoMessage">{{ message | raw }}</div>
@@ -13,7 +13,7 @@
                 <th>{{ lang('kpi_login_Identity') }}</th>
                 <th>{{ lang('index_lname_th') }}</th>
                 <th>{{ lang('kpi_login_Seasons') }}</th>
-                <th>{{ lang('kpi_login_Competitions') }}</th>
+                <th>{{ lang('kpi_login_Compets') }}</th>
                 <th>{{ lang('kpi_login_Phases') }}</th>
                 <th>{{ lang('kpi_login_Clubs') }}</th>
                 <th>{{ lang('index_groups_th') }}</th>
@@ -28,24 +28,24 @@
                         <br><small>{{ user.email }}</small>
                     </td>
                     <td><small>{{ user.seasons }}</small></td>
-                    <td><small>{{ user.competitions }}</small></td>
+                    <td><small>{{ user.compets }}</small></td>
                     <td><small>{{ user.phases }}</small></td>
                     <td><small>{{ user.clubs }}</small></td>
                     <td>
-                        {% for group in user.groups %}
-                            <a class="badge badge-info" href="{{ base_url() }}auth/edit_group/{{ group.id }}" 
-                                title="{{ group.description }}">{{ group.name }}</a>
+                        {% for role in user.roles %}
+                            <a class="badge badge-info" href="{{ base_url() }}auth/edit_group/{{ role.id }}" 
+                                title="{{ role.description }}">{{ role.name | upper }}</a>
                         {% endfor %}
                     </td>
                     <td>
                         <a class="btn btn-sm btn-primary" href="{{ base_url() }}auth/edit_user/{{ user.id }}" 
-                                title="">Edit</a>
+                                title=""><i class="fa fa-edit"></i></a>
                         {% if user.active %}
                             <a class="btn btn-sm btn-success" href="{{ base_url() }}auth/deactivate/{{ user.id }}" 
-                                title="">{{ lang('index_inactive_link') }}</a>
+                                title="{{ lang('index_inactive_link') }}"><i class="fa fa-lock-open"></i></a>
                         {% else %}
                             <a class="btn btn-sm btn-danger" href="{{ base_url() }}auth/activate/{{ user.id }}" 
-                                title="">{{ lang('index_active_link') }}</a>
+                                title="{{ lang('index_active_link') }}"><i class="fa fa-lock"></i></a>
                         {% endif %}
                     </td>
                 </tr>
@@ -71,7 +71,13 @@
     {{ parent() }}
     <script>
         $(function() {
-            $('#table_users').DataTable();
+            $('#table_users').DataTable({
+                {% if i18n == 'fr_FR' %}
+                    "language": {
+                        "url": "{{ lib_url('datatables.fr_FR.lang.json') }}"
+                    }
+                {% endif %}
+            });
         });
     </script>
 {% endblock %}
