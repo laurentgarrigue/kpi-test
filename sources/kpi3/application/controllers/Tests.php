@@ -9,11 +9,11 @@ class Tests extends MY_Controller {
     public function __construct()
     {
         parent::__construct();
+        $this->data['page'] = 'Competitions';
     }
 
     public function index()
     {
-        $this->data['title'] = 'Liste des matchs';
         $this->load->model('matchs_model');
         $this->data['matchs'] = $this->matchs_model->get_matchs();
 

@@ -1,19 +1,25 @@
 <?php
 /**
- * Description of Matchs
+ * Public home page
  *
  * @author laurent
  */
 class Home extends MY_Controller {
     
+    /**
+     *
+     * @var array data to send to Twig 
+     */
+    public $data;
+    
     public function __construct()
     {
         parent::__construct();
+        $this->data['page'] = lang('Home');
     }
 
     public function index()
     {
-        $this->data['page'] = lang('Home');
 
         $this->twig->display('home.html', $this->data);
     }

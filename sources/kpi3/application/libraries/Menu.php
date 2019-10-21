@@ -61,10 +61,10 @@ class Menu {
             [ 'label' => 'Clubs', 'route' => 'matchs/index' ],
             [ 'label' => 'Documents', 'route' => 'matchs/index', 
                 'content' => [
-                    [ 'label' => 'Games', 'route' => 'admin/docs/doc1' ],
-                    [ 'label' => 'Rankings', 'route' => 'admin/docs/doc2', 'groups' => array('admin') ],
+                    [ 'label' => 'Games', 'route' => 'manager/docs/doc1' ],
+                    [ 'label' => 'Rankings', 'route' => 'manager/docs/doc2', 'groups' => array('admin') ],
                     [ 'content' => 'separator' ],
-                    [ 'label' => 'Teams', 'route' => 'admin/docs/doc2', 'groups' => array('admin') ],
+                    [ 'label' => 'Teams', 'route' => 'manager/docs/doc2', 'groups' => array('admin') ],
                 ]
             ],
             );
@@ -81,22 +81,22 @@ class Menu {
     private function _content_admin()
     {
         $menu = [
-            [ 'label' => 'Competitions', 'route' => 'admin/competitions' ],
+            [ 'label' => 'Competitions', 'route' => 'manager/competitions' ],
             [ 'label' => 'Docs', 'route' => '', 
                 'content' => [
-                    [ 'label' => 'Doc1', 'route' => 'admin/docs/doc1' ],
-                    [ 'label' => 'Doc2', 'route' => 'admin/docs/doc2', 'groups' => array('admin') ],
-                    [ 'label' => 'Doc3', 'route' => 'admin/docs/doc3' ],
+                    [ 'label' => 'Doc1', 'route' => 'manager/docs/doc1' ],
+                    [ 'label' => 'Doc2', 'route' => 'manager/docs/doc2', 'groups' => array('admin') ],
+                    [ 'label' => 'Doc3', 'route' => 'manager/docs/doc3' ],
                 ]
             ],
-            [ 'label' => 'Teams', 'route' => 'admin/teams/index', 'groups' => array('admin') ],
-            [ 'label' => 'Clubs', 'route' => 'admin/clubs/index', 'groups' => array('members') ],
-            [ 'label' => 'Athletes', 'route' => 'admin/athletes/index', 'groups' => array('admin', 'members') ],
-            [ 'label' => 'Phases', 'route' => 'admin/athletes/index', 'groups' => array('admin', 'members') ],
-            [ 'label' => 'Games', 'route' => 'admin/athletes/index', 'groups' => array('admin', 'members') ],
-            [ 'label' => 'Rankings', 'route' => 'admin/athletes/index' ],
-            [ 'label' => 'Stats', 'route' => 'admin/athletes/index', 'groups' => array('admin', 'members') ],
-            [ 'label' => 'Import', 'route' => 'admin/athletes/index', 'groups' => array('admin', 'members') ],
+            [ 'label' => 'Teams', 'route' => 'manager/teams', 'groups' => array('admin') ],
+            [ 'label' => 'Clubs', 'route' => 'manager/clubs', 'groups' => array('members') ],
+            [ 'label' => 'Athletes', 'route' => 'manager/athletes', 'groups' => array('admin', 'members') ],
+            [ 'label' => 'Phases', 'route' => 'manager/athletes', 'groups' => array('admin', 'members') ],
+            [ 'label' => 'Games', 'route' => 'manager/athletes', 'groups' => array('admin', 'members') ],
+            [ 'label' => 'Rankings', 'route' => 'manager/athletes' ],
+            [ 'label' => 'Stats', 'route' => 'manager/athletes', 'groups' => array('admin', 'members') ],
+            [ 'label' => 'Import', 'route' => 'manager/athletes', 'groups' => array('admin', 'members') ],
             [ 'label' => 'Users', 'route' => 'auth/user_list', 'groups' => array('admin') ],
             ];
         

@@ -10,16 +10,16 @@ class Competitions extends MY_Controller {
      *
      * @var array data to send to Twig 
      */
-    protected $data;
+    public $data;
     
     public function __construct()
     {
         parent::__construct();
+        $this->data['page'] = 'Competitions';
     }
 
     public function index()
     {
-        $this->data['page'] = 'Competitions';
 
         $this->twig->display('home.html', $this->data);
     }
