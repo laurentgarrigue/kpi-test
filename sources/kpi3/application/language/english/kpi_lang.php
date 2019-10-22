@@ -15,6 +15,7 @@ $lang['kpi_Home'] = 'Home';
 $lang['kpi_Import'] = 'Import';
 $lang['kpi_Phases'] = 'Gamedays/Phases';
 $lang['kpi_Rankings'] = 'Rankings';
+$lang['kpi_Role'] = 'Role';
 $lang['kpi_Roles'] = 'Roles';
 $lang['kpi_Schedule'] = 'Schedule';
 $lang['kpi_Stats'] = 'Stats';

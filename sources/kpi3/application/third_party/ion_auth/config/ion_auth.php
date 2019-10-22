@@ -139,7 +139,7 @@ $config['identity']                   = 'username';             /* You can use a
 															    IMPORTANT: If you are changing it from the default (email),
 															    		   update the UNIQUE constraint in your DB */
 $config['min_password_length']        = 8;                   // Minimum Required Length of Password (not enforced by lib - see note above)
-$config['email_activation']           = FALSE;               // Email Activation for registration
+$config['email_activation']           = TRUE;               // Email Activation for registration
 $config['manual_activation']          = FALSE;               // Manual Activation for registration
 $config['remember_users']             = TRUE;                // Allow users to be remembered and enable auto-login
 $config['user_expire']                = 86500;               // How long to remember the user (seconds). Set to zero for no expiration - see sess_expiration in CodeIgniter Session Config for session expiration
@@ -149,7 +149,7 @@ $config['track_login_ip_address']     = TRUE;                // Track login atte
 $config['maximum_login_attempts']     = 3;                   // The maximum number of failed login attempts.
 $config['lockout_time']               = 600;                 /* The number of seconds to lockout an account due to exceeded attempts
 																You should not use a value below 60 (1 minute) */
-$config['forgot_password_expiration'] = 1800;                /* The number of seconds after which a forgot password request will expire. If set to 0, forgot password requests will not expire.
+$config['forgot_password_expiration'] = 3600;                /* The number of seconds after which a forgot password request will expire. If set to 0, forgot password requests will not expire.
                    												30 minutes to 1 hour are good values (enough for a user to receive the email and reset its password)
                    												You should not set a value too high, as it would be a security issue! */
 $config['recheck_timer']              = 0;                   /* The number of seconds after which the session is checked again against database to see if the user still exists and is active.
@@ -192,7 +192,7 @@ $config['email_templates'] = 'auth/email/';
  | -------------------------------------------------------------------------
  | Default: activate.tpl.php
  */
-$config['email_activate'] = 'activate.tpl.php';
+$config['email_activate'] = 'activate.html';
 
 /*
  | -------------------------------------------------------------------------

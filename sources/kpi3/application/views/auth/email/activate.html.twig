@@ -1,0 +1,7 @@
+<html>
+<body>
+	<h1>{{  sprintf(lang('email_activate_heading'), identity) }}</h1>
+	<p>{{  sprintf(lang('email_activate_subheading'), anchor('auth/activate/' ~ id_user ~ '/' ~ activation, lang('email_activate_link'))) }}</p>
+	<p>{{  lang('email_activate_forgot_password_text') ~ lang('forgot_password_heading') }}</p>
+</body>
+</html>

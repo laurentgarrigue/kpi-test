@@ -147,9 +147,10 @@ $lang['reset_password_validation_new_password_label']         = 'Nouveau mot de 
 $lang['reset_password_validation_new_password_confirm_label'] = 'Confirmer le nouveau mot de passe';
 
 // Activation Email
-$lang['email_activate_heading']    = 'Activer le compte pour %s';
+$lang['email_activate_heading']    = 'Activer le compte pour l\'utilisateur %s';
 $lang['email_activate_subheading'] = 'Veuillez cliquer sur le lien pour %s';
 $lang['email_activate_link']       = 'Activer votre compte';
+$lang['email_activate_forgot_password_text']       = 'Si vous ne connaissez pas votre mot de passe, cliquer ensuite sur le lien : ';
 
 // Forgot Password Email
 $lang['email_forgot_password_heading']    = 'Changer le mot de passe pour %s';

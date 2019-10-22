@@ -63,9 +63,10 @@ $lang['group_name_admin_not_alter']          = 'Admin role name can not be chang
 
 // Activation Email
 $lang['email_activation_subject']            = 'Account Activation';
-$lang['email_activate_heading']              = 'Activate account for %s';
+$lang['email_activate_heading']              = 'Activate account for user %s';
 $lang['email_activate_subheading']           = 'Please click this link to %s.';
 $lang['email_activate_link']                 = 'Activate Your Account';
+$lang['email_activate_forgot_password_text']       = 'If you don\t know your password, click then on link: ';
 
 // Forgot Password Email
 $lang['email_forgotten_password_subject']    = 'Forgotten Password Verification';

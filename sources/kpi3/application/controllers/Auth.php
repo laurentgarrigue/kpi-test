@@ -115,7 +115,7 @@ class Auth extends MY_Controller
 				//redirect them back to the main admin page
 				$this->hydrate_session();
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
-				redirect('admin/competitions', 'refresh');
+				redirect('manager/competitions', 'refresh');
 			}
 			else
 			{
@@ -565,10 +565,10 @@ class Auth extends MY_Controller
 				'last_name' => $this->input->post('last_name'),
 				'company' => $this->input->post('company'),
 				'phone' => $this->input->post('phone'),
-				'seasons' => implode(',', $this->input->post('seasons')),
-				'compets' => implode(',', $this->input->post('compets')),
+				'seasons' => is_array($this->input->post('seasons')) ? implode(',', $this->input->post('seasons')) : $this->input->post('seasons'),
+				'compets' => is_array($this->input->post('compets')) ? implode(',', $this->input->post('compets')) : $this->input->post('compets'),
 				'phases' => $this->input->post('phases'),
-				'clubs' => implode(',', $this->input->post('clubs')),
+				'clubs' => is_array($this->input->post('clubs')) ? implode(',', $this->input->post('clubs')) : $this->input->post('clubs'),
 			];
 		}
 		if ($this->form_validation->run() === TRUE && $this->ion_auth->register($identity, $password, $email, $additional_data))
@@ -758,10 +758,10 @@ class Auth extends MY_Controller
 					'company' => $this->input->post('company'),
 					'phone' => $this->input->post('phone'),
 					'email' => $this->input->post('email'),
-					'seasons' => implode(',', $this->input->post('seasons')),
-					'compets' => implode(',', $this->input->post('compets')),
+					'seasons' => is_array($this->input->post('seasons')) ? implode(',', $this->input->post('seasons')) : $this->input->post('seasons'),
+					'compets' => is_array($this->input->post('compets')) ? implode(',', $this->input->post('compets')) : $this->input->post('compets'),
 					'phases' => $this->input->post('phases'),
-					'clubs' => implode(',', $this->input->post('clubs')),
+					'clubs' => is_array($this->input->post('clubs')) ? implode(',', $this->input->post('clubs')) : $this->input->post('clubs'),
 				];
 
 				// update the password if it was posted

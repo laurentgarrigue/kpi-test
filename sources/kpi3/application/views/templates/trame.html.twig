@@ -90,9 +90,9 @@
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownId">
                                         <a class="dropdown-item" href="#">
-                                            <label><i class="fa fa-user-tag" aria-hidden="true"></i> {{ lang('kpi_Roles') }}</label> : <br>
+                                            <label><i class="fa fa-user-tag" aria-hidden="true"></i> {{ lang('kpi_Role') }}</label> : 
                                             {% for group in current_user.groups %}
-                                                <span class="badge badge-secondary" title="{{ group.description }}">{{ group.name }}</span>
+                                                <span class="badge badge-secondary" title="{{ group.description }}">{{ group.name | upper }}</span>
                                             {% endfor %}
                                         </a>
                                         <div class="dropdown-divider"></div>
