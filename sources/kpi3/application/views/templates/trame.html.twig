@@ -3,8 +3,8 @@
     <meta  charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Kayak-Polo.Info">
+    <meta name="author" content="FFCK - Laurent G.">
     <head>
         {% block head %}
             <link rel="icon" href="{{ site_url() }}favicon.ico">
@@ -26,7 +26,7 @@
 #}            {% endblock %}
         {% endblock %}
     </head>
-    <body>
+    <body{% if menu_admin|length > 0 %} class="logged-in"{% endif %}>
 {#        {% include 'tpl/include/modal_credits.html' %}#}
         <!--[if lt IE 9]>
             <p class="browserupgrade">Vous utilisez un navigateur <strong>obsolète</strong>. Merci de mettre à jour votre navigateur, ou utiliser de préférence Mozilla Firefox.</p>
@@ -38,7 +38,7 @@
                 {% if menu_public|length > 0 %}
                     <nav class="navbar fixed-top navbar-expand-lg navbar-dark navbar-main">
                         <a class="navbar-brand" href="{{ base_url() }}" title="Kayak-polo.info">
-                            <span class="btn btn-sm btn-outline-dark"><b>KPI</b></span>
+                            <img src="{{ img_url('kpi3-rect-logo-200.png') }}" height="28">
                         </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarPublic" aria-controls="navbarPublic" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="fa fa-bars"></span>
@@ -74,6 +74,8 @@
                                         </li>
                                     {% endif %}
                                 {% endfor %}
+
+                                <!-- Flags -->
                                 <li class="nav-item">
                                     <a class="nav-link nav-lang" data-lang="french" href="#"><img src="{{ img_url('fra-60.png') }}" height="16" alt="FR" title="Français" class="d-inline-block align-top"></a>
                                 </li>
@@ -82,7 +84,7 @@
                                 </li>
                             </ul>
 
-
+                            <!-- User -->
                             <ul class="navbar-nav">
                                 {% if current_user %}
                                     <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -118,6 +120,9 @@
                     <!-- Navbar logged-in -->                
                     <nav class="navbar fixed-top navbar-expand-lg navbar-light fixed-top-2 navbar-logged-in">
                         <div class="collapse navbar-collapse" id="navbarLoggedIn">
+                            <b class="navbar-text">
+                                Manager
+                            </b>
                             <ul class="navbar-nav ml-auto">
                                 {% for item in menu_admin %}
                                     {% if item.content|length > 0 %}

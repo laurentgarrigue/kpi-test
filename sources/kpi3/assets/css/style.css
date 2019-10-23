@@ -9,6 +9,13 @@
     src: url('../font/Sansation_Bold.ttf');
 }
 
+.bg_ffck_primary {
+    background-image:-moz-linear-gradient(left, #0098ce, #313b9b);
+    background-image:-webkit-linear-gradient(left, #0098ce, #313b9b);
+    background-image:-o-linear-gradient(left, #0098ce, #313b9b);
+    background-image:linear-gradient(to right, #0098ce, #313b9b);
+}
+
 h1 {
     color: #1e64af;
     font-family: "sansationbold";
@@ -25,14 +32,16 @@ h1 {
     font-family: "sansationbold";
 }
 
-table.table th {
-    color: white;
-    background-color: #1e64af;
-}
 /************** Bootstrap adjustments **************/
+
 body {
-    padding-top: 50px;
+    padding-top: 46px; /* public */
 }
+
+body.logged-in {
+    padding-top: 78px; /* manager */
+}
+
 .navbar {
     padding: 0 1rem;
     font-family: "sansationbold";
@@ -45,9 +54,17 @@ body {
     background-image:linear-gradient(to right, #0098ce, #313b9b);
 }
 
+.navbar-logged-in .navbar-text {
+    padding-top: 0;
+    padding-bottom: 0;
+    color: #ce5e2d;
+    font-style: italic;
+    opacity: 0.7;
+}
+
 .navbar-logged-in {
     font-size: 0.9em;
-    margin-top: 42px;
+    margin-top: 41px;
     z-index: 930;
     background-color: #cacaca;
 }
@@ -71,26 +88,16 @@ body {
 .navbar-light .navbar-nav .nav-link.show, 
 .navbar-light .navbar-nav .show > .nav-link {
     color: white;
-}
- 
-.bg_ffck_primary {
-    background-image:-moz-linear-gradient(left, #0098ce, #313b9b);
-    background-image:-webkit-linear-gradient(left, #0098ce, #313b9b);
-    background-image:-o-linear-gradient(left, #0098ce, #313b9b);
-    background-image:linear-gradient(to right, #0098ce, #313b9b);
+    font-weight: bold;
 }
 
-body {
-    padding-top: 43px; /* public */
-    padding-top: 75px; /* logged */
-}
 
 
 @media (min-width: 992px) {
     .navbar-logged-in::after {
         border-top: 6px solid transparent;
         border-bottom: 6px solid transparent;
-        border-right: 6px solid #313b9b;
+        border-right: 6px solid #ce5e2d;
         border-left: none;
         height: 0;
         width: 0;
@@ -102,9 +109,6 @@ body {
         margin-left: 0px;
     }
 }
-.navbar-light .navbar-nav .active > .nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show > .nav-link {
-	font-weight: bold;
-}
 
 /**************** Datatable ****************/
 table.table-wide {
@@ -114,3 +118,22 @@ table.table-compact th, table.table-compact td {
     padding: 4px;
 }
 
+table.table th {
+    color: white;
+    background-color: #1e64af;
+}
+
+
+/**************** LOGO *******************/
+h1#logo {
+    display: inline-block;
+    font-size: 15em;
+    padding: 8px 0px;
+    border-radius: 10%;
+    border: 8px solid #1e64af;
+    font-weight: bold;
+}
+
+h1#logo span {
+    color: #ce5e2d;
+}
