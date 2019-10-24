@@ -17,7 +17,11 @@ class Tests extends MY_Controller {
         $this->load->model('matchs_model');
         $this->data['matchs'] = $this->matchs_model->get_matchs();
 
-//        vdebug($this->data['user']);
+        $this->data['message'] = '<div class="alert alert-warning alert-dismissible fade show" role="alert"><strong>Holy guacamole!</strong> You should check in on some of those fields below.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
+        $messages[] = [ 'context' => 'warning', 'content' => '<b>Holy guacamole!</b> You should check in on some of those fields below.'];
+        $messages[] = [ 'context' => 'primary', 'content' => '<b>Hep!</b> Attention.'];
+        
+        $this->data['messages'] = json_encode($messages);
         $this->twig->display('tests/index.html', $this->data);
     }
     

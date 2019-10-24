@@ -10,7 +10,7 @@ $config['twig']['template_ext'] = '.twig';
 $config['twig']['functions_asis'] = [
         'base_url', 'site_url', 'css_url', 'js_url', 'lib_url', 'img_url', 'img',
         'version', 'lang', 'config_item', 
-        'is_admin', 'in_group'
+        'is_admin', 'in_group', 'serialize'
     ];
 $config['twig']['functions_safe'] = [
 		'form_open', 'form_close', 'form_error', 'form_hidden', 'set_value',

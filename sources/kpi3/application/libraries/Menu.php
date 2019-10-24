@@ -53,10 +53,10 @@ class Menu {
     {
         $menu = array(
             [ 'label' => 'Home', 'route' => '/' ],
-            [ 'label' => 'Schedule', 'route' => 'matchs/index'],
-            [ 'label' => 'Games', 'route' => 'tests/menu' ],
-            [ 'label' => 'Rankings', 'route' => 'matchs/index' ],
-            [ 'label' => 'History', 'route' => 'matchs/index' ],
+            [ 'label' => 'Schedule', 'route' => 'matchs/schedule'],
+            [ 'label' => 'Games', 'route' => 'matchs/games' ],
+            [ 'label' => 'Standings', 'route' => 'matchs/standings' ],
+            [ 'label' => 'History', 'route' => 'matchs/history' ],
             [ 'label' => 'Teams', 'route' => 'matchs/index' ],
             [ 'label' => 'Clubs', 'route' => 'matchs/index' ],
             [ 'label' => 'Documents', 'route' => 'matchs/index', 
@@ -92,11 +92,11 @@ class Menu {
             [ 'label' => 'Teams', 'route' => 'manager/teams', 'groups' => array('admin') ],
             [ 'label' => 'Clubs', 'route' => 'manager/clubs', 'groups' => array('members') ],
             [ 'label' => 'Athletes', 'route' => 'manager/athletes', 'groups' => array('admin', 'members') ],
-            [ 'label' => 'Phases', 'route' => 'manager/athletes', 'groups' => array('admin', 'members') ],
-            [ 'label' => 'Games', 'route' => 'manager/athletes', 'groups' => array('admin', 'members') ],
-            [ 'label' => 'Rankings', 'route' => 'manager/athletes' ],
-            [ 'label' => 'Stats', 'route' => 'manager/athletes', 'groups' => array('admin', 'members') ],
-            [ 'label' => 'Import', 'route' => 'manager/athletes', 'groups' => array('admin', 'members') ],
+            [ 'label' => 'Phases', 'route' => 'manager/phases', 'groups' => array('admin', 'members') ],
+            [ 'label' => 'Games', 'route' => 'manager/games', 'groups' => array('admin', 'members') ],
+            [ 'label' => 'Standings', 'route' => 'manager/standings' ],
+            [ 'label' => 'Stats', 'route' => 'manager/sats', 'groups' => array('admin', 'members') ],
+            [ 'label' => 'Import', 'route' => 'manager/import', 'groups' => array('admin', 'members') ],
             [ 'label' => 'Users', 'route' => 'auth/user_list', 'groups' => array('admin') ],
             ];
         

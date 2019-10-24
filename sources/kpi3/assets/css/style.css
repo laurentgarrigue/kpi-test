@@ -124,7 +124,7 @@ table.table th {
 }
 
 
-/**************** LOGO *******************/
+/**************** LOGO ****************/
 h1#logo {
     display: inline-block;
     font-size: 15em;
@@ -136,4 +136,26 @@ h1#logo {
 
 h1#logo span {
     color: #ce5e2d;
+}
+
+/**************** alerts ****************/
+#infoMessage {
+    position: fixed;
+    width: 500px;
+    top: 50px;
+    right: 5px;
+    z-index: 1200;
+}
+
+body.logged-in #infoMessage {
+    top: 80px;
+}
+
+#infoMessage .alert-dismissible .close {
+    padding: .25rem .25rem;
+}
+
+#infoMessage .alert {
+    padding: .25rem .25rem;
+    margin-bottom: .5rem;
 }

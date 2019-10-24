@@ -154,8 +154,12 @@
                     <span></span>
                 {% endif %}
 
+                <!-- messages et alertes -->
+                <div id="infoMessage"></div>
+
             </header>
         {% endblock %}
+
 
         <!-- Contenu -->
         {% block contenu %}
@@ -177,29 +181,20 @@
         <!-- Placed at the end of the document so the pages load faster -->
         {% block javascript %}
 
-        <script> role = "{{ role }}";</script>
-        <script> base_url = "{{ base_url() }}";</script>
-        <script> version = "{{ version() }}";</script>
+        <script>
+            // Variables
+            var role = "{{ role }}";
+            var base_url = "{{ base_url() }}";
+            var version = "{{ version() }}";
+            var messages = {{ messages | default('{}') | raw }};
+        </script>
 
         <script src="{{ lib_url('jquery-3.4.1.min.js') }}"></script>
         <script src="{{ lib_url('jquery-ui-1.12.1/jquery-ui.min.js') }}"></script>
         <script src="{{ lib_url('bootstrap-4.3.1/js/bootstrap.bundle.min.js') }}"></script>
-        <script>
-            $(function() {
-                $('.nav-lang').click(function(e) {
-                    e.preventDefault();
-                    var lang = $(this).data('lang');
-                    $.post( 
-                        "{{ base_url('home/lang') }}", 
-                        { lang: lang },
-                        function( data ) {
-                            location.reload();
-                        }, 
-                        "json"
-                    );
-                });
-            });
-        </script>
+        
+        <script src="{{ js_url('functions') }}"></script>
+
 {#        <script src="{{ js_url('librairies/jquery-ui') }}"></script>
         <script src="{{ js_url('jqte/jquery-te-1.4.0.min') }}" type="text/javascript"></script>
         <script src="{{ js_url('librairies/jquery.dataTables') }}" type="text/javascript"></script>
