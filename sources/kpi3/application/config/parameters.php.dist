@@ -5,6 +5,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * Constantes générales
  */
 defined('VERSION') OR define('VERSION', '3.0.0');
+defined('BASE_URL') OR define('BASE_URL', '/');
+
+/**
+ * Security
+ */
+defined('ENCRYPTION_KEY') OR define('ENCRYPTION_KEY', '');
 
 /**
  * mail
