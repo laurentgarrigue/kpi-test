@@ -465,7 +465,7 @@ function qtranxf_filter_options(){
 }
 qtranxf_filter_options();
 
-function qtranxf_postsFilter($posts,&$query) {//WP_Query
+function qtranxf_postsFilter($posts,$query) {//WP_Query
 	global $q_config;
 	//qtranxf_dbg_log('qtranxf_postsFilter: $posts: ',$posts);
 	//$post->post_content = qtranxf_useCurrentLanguageIfNotFoundShowAvailable($post->post_content);
@@ -580,7 +580,7 @@ function qtranxf_excludeUntranslatedAdjacentPosts($where) {
 	return $where;
 }
 
-function qtranxf_excludeUntranslatedPosts($where,&$query) {//WP_Query
+function qtranxf_excludeUntranslatedPosts($where,$query) {//WP_Query
 	//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: post_type: ',$query->query_vars['post_type']);
 	switch($query->query_vars['post_type']){
 		//known not to filter
