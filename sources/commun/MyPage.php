@@ -17,7 +17,7 @@ class MyPage
 	var $m_tpl;
 
 	// Constructeur ...
-	function MyPage()
+	function __construct()
 	{
 			session_start();
 	}
@@ -298,7 +298,7 @@ class MyPage
 
 class MyPageSecure extends MyPage
 {
-	function MyPageSecure($profile)
+	function __construct($profile)
 	{
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
@@ -317,4 +317,4 @@ class MyPageSecure extends MyPage
 	}
 }
 
-?>
+
