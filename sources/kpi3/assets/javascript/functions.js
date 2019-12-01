@@ -7,7 +7,7 @@ $(function() {
         e.preventDefault();
         var lang = $(this).data('lang');
         $.post( 
-            "{{ base_url('home/lang') }}", 
+            base_url + 'home/lang', 
             { lang: lang },
             function( data ) {
                 location.reload();

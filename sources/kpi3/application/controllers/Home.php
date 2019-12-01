@@ -25,15 +25,23 @@ class Home extends MY_Controller {
     }
     
     /**
-     * Changement de lange (ajax)
+     * Changement de langue (ajax)
      * 
      * @param string lang (POST)
      *
      * @return void
      */
     public function lang() {
-        if($this->input->is_ajax_request() && in_array($this->input->post('lang'), ['french', 'english'])) {
-            $this->session->lang = $this->input->post('lang');
+        if($this->input->is_ajax_request() && in_array($this->input->post('lang'), ['fr', 'en'])) {
+            switch ($this->input->post('lang')) {
+                case 'fr':
+                    $lang = 'french';
+                break;
+                case 'en':
+                    $lang = 'english';
+                break;
+            }
+            $this->session->lang = $lang;
             $response = array('status' => 'OK');
             
             $this->output

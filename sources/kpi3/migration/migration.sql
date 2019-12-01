@@ -3,9 +3,42 @@
  * Created: 27 sept. 2019
  */
 -- InnoDB
-ALTER TABLE my_table ENGINE = InnoDB;
+ALTER TABLE gickp_Arbitre ENGINE = InnoDB;
+ALTER TABLE gickp_Categorie ENGINE = InnoDB;
+ALTER TABLE gickp_Chrono ENGINE = InnoDB;
+ALTER TABLE gickp_Club ENGINE = InnoDB;
+ALTER TABLE gickp_Club1 ENGINE = InnoDB;
+ALTER TABLE gickp_Comite_dep ENGINE = InnoDB;
+ALTER TABLE gickp_Comite_reg ENGINE = InnoDB;
+ALTER TABLE gickp_Competitions ENGINE = InnoDB;
+ALTER TABLE gickp_Competitions_Groupes ENGINE = InnoDB;
+ALTER TABLE gickp_Competitions_Equipes_Niveau ENGINE = InnoDB;
+ALTER TABLE gickp_Competitions_Equipes_Journee ENGINE = InnoDB;
+ALTER TABLE gickp_Competitions_Equipes_Joueurs ENGINE = InnoDB;
+ALTER TABLE gickp_Competitions_Equipes_Init ENGINE = InnoDB;
+ALTER TABLE gickp_Competitions_Equipes ENGINE = InnoDB;
+ALTER TABLE gickp_Equipe ENGINE = InnoDB;
+ALTER TABLE gickp_Evenement ENGINE = InnoDB;
+ALTER TABLE gickp_Evenement_Journees ENGINE = InnoDB;
+ALTER TABLE gickp_Evenement_Export ENGINE = InnoDB;
+ALTER TABLE gickp_Journal ENGINE = InnoDB;
+ALTER TABLE gickp_Journees ENGINE = InnoDB;
+ALTER TABLE gickp_Liste_Coureur ENGINE = InnoDB;
+ALTER TABLE gickp_Matchs ENGINE = InnoDB;
+ALTER TABLE gickp_Matchs_Detail ENGINE = InnoDB;
+ALTER TABLE gickp_Matchs_Joueurs ENGINE = InnoDB;
+ALTER TABLE gickp_News ENGINE = InnoDB;
+ALTER TABLE gickp_Recherche_Licence ENGINE = InnoDB;
+ALTER TABLE gickp_Ref_Journee ENGINE = InnoDB;
+ALTER TABLE gickp_Saison ENGINE = InnoDB;
+ALTER TABLE gickp_Surclassements ENGINE = InnoDB;
+ALTER TABLE gickp_Tv ENGINE = InnoDB;
+ALTER TABLE gickp_Utilisateur ENGINE = InnoDB;
 -- utf8_general_ci
-ALTER TABLE my_table CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
+ALTER TABLE gickp_Chrono CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
+ALTER TABLE gickp_Ref_Journee CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
+ALTER TABLE gickp_Surclassements CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
+ALTER TABLE gickp_Tv CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 -- Foreign keys
 ALTER TABLE gickp_Equipe ADD FOREIGN KEY (Code_club) REFERENCES gickp_Club (Code);
@@ -27,8 +60,10 @@ ALTER TABLE gickp_Matchs_Joueurs ADD FOREIGN KEY (Id_match) REFERENCES gickp_Mat
 -- ---------
 
 
+-- ********************
+-- ***** ion_auth *****
+-- ********************
 
--- ion_auth
 -- executer /third_party/ion_auth/sql/ion_auth.sql
 
 -- sessions
@@ -53,9 +88,9 @@ ALTER TABLE `users`
         ADD `clubs` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL AFTER `phases`;
 
 -- groups
-TRUNCATE TABLE `groups`;
+DELETE FROM `users_groups` WHERE `group_id` = 2;
+DELETE FROM `groups` WHERE `id` = 2;
 INSERT INTO `groups` (`id`, `name`, `description`) VALUES
-(1, 'admin', 'Administrateur'),
 (20, 'bureau', 'Bureau CNKP'),
 (30, 'rc', 'Responsable compétition'),
 (32, 'rc_int', 'Responsable compétition internationale'),
@@ -69,6 +104,7 @@ INSERT INTO `groups` (`id`, `name`, `description`) VALUES
 (80, 'consultation', 'Consultation'),
 (90, 'table', 'Table de marque'),
 (100, 'members', 'Utilisateurs');
+UPDATE `groups` SET `description` = 'Administrateur' WHERE `id` = 1;
 
 -- sections
 CREATE TABLE `gickp_sections` (
@@ -84,5 +120,6 @@ INSERT INTO `gickp_sections` (`id`, `name`) VALUES
 (5, 'Continental'),
 (100, 'Divers');
 
-ALTER TABLE `gickp_sections` ADD PRIMARY KEY(`id`)
+ALTER TABLE `gickp_sections` ADD PRIMARY KEY(`id`);
 ALTER TABLE `gickp_Competitions_Groupes` ADD FOREIGN KEY (section) REFERENCES `gickp_sections` (id);
+
