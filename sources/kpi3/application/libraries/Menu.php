@@ -98,6 +98,7 @@ class Menu {
             [ 'label' => 'Stats', 'route' => 'manager/sats', 'groups' => array('admin', 'members') ],
             [ 'label' => 'Import', 'route' => 'manager/import', 'groups' => array('admin', 'members') ],
             [ 'label' => 'Users', 'route' => 'auth/user_list', 'groups' => array('admin') ],
+            [ 'label' => 'Migration', 'route' => 'manager/migration', 'groups' => array('admin') ],
             ];
         
         return $menu;

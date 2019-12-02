@@ -19,12 +19,17 @@ class Migration extends MY_Controller {
 		{
             redirect('/auth/login/');
 		}
-        $this->data['page'] = 'Users';
+        $this->data['page'] = 'Migration';
+
+        if (isset($this->session->message)) {
+            $messages[] = [ 'context' => 'primary', 'content' => $this->session->message];
+        }
     }
 
     public function index()
     {
-        $this->twig->display('home.html', $this->data);
+        $this->data['messages'] = json_encode($messages);
+        $this->twig->display('manager/migration.html', $this->data);
     }
 
     public function import_user($user)

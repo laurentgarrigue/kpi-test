@@ -187,6 +187,7 @@
             var base_url = "{{ base_url() }}";
             var version = "{{ version() }}";
             var messages = {{ messages | default('{}') | raw }};
+            var message = "{{ message }}"
         </script>
 
         <script src="{{ lib_url('jquery-3.4.1.min.js') }}"></script>

@@ -16,10 +16,15 @@ class Competitions extends MY_Controller {
     {
         parent::__construct();
         $this->data['page'] = 'Competitions';
+        if (isset($this->session->message)) {
+            $messages[] = [ 'context' => 'primary', 'content' => $this->session->message];
+        }
     }
 
     public function index()
     {
+        
+        $this->data['messages'] = json_encode($messages);
         $this->twig->display('home.html', $this->data);
     }
     

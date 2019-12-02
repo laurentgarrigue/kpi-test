@@ -1,0 +1,55 @@
+{% extends "templates/trame.html.twig" %}
+
+{% block style %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ lib_url('bootstrap-select-1.13.9/dist/css/bootstrap-select.css') }}">
+
+{% endblock %}
+
+{% block contenu %}
+<div class="container-fluid">
+    <h1>Migration</h1>
+    <div id="infoMessage"></div>
+
+    <h2>Importer un utilisateur dans KPI3</h2>
+    <form id="form_import">
+        <div class="form-row align-items-center">
+            <div class="col-auto">
+                <label class="sr-only" for="licence">Licence</label>
+                <input type="number" min="0" max="3000000" class="form-control mb-2" id="licence" placeholder="123456">
+            </div>
+            <div class="col-auto">
+                <button type="submit" id="import_submit" class="btn btn-primary mb-2">Importer</button>
+            </div>
+        </div>
+    </form>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+</div>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script>
+        $(function() {
+            $('#form_import').submit(function(e) {
+                e.preventDefault();
+                var licence = $('#licence').val();
+                window.location = base_url + 'manager/migration/import_user/' + licence;
+            });
+        });
+    </script>
+{% endblock %}
