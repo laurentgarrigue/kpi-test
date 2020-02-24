@@ -31,23 +31,22 @@ class GestionMatchEquipeJoueur extends MyPageSecure
 		// Chargement des Joueurs provenant de la Recherche ...
 		if (isset($_SESSION['Signature']))
 		{
-				$sql  = "Replace Into gickp_Matchs_Joueurs (Id_match, Matric, Equipe) ";
-				$sql .= "Select $idMatch, a.Matric, '$codeEquipe' ";
-				$sql .= "From gickp_Liste_Coureur a, gickp_Recherche_Licence b ";
-				$sql .= "Where a.Matric = b.Matric ";
-				$sql .= "And b.Signature = '";
-				$sql .= $_SESSION['Signature'];
-				$sql .= "' And b.Validation = 'O' ";
-				
-				mysql_query($sql, $myBdd->m_link) or die ("Erreur Replace");
+			$sql  = "Replace Into gickp_Matchs_Joueurs (Id_match, Matric, Equipe) ";
+			$sql .= "Select $idMatch, a.Matric, '$codeEquipe' ";
+			$sql .= "From gickp_Liste_Coureur a, gickp_Recherche_Licence b ";
+			$sql .= "Where a.Matric = b.Matric ";
+			$sql .= "And b.Signature = '";
+			$sql .= $_SESSION['Signature'];
+			$sql .= "' And b.Validation = 'O' ";
+			$myBdd->Query($sql);
 
-				// Vidage gickp_Recherche_Licence ...				
-				$sql = "Delete From gickp_Recherche_Licence Where Signature = '";
-				$sql .= $_SESSION['Signature'];
-				$sql .= "'";
-				mysql_query($sql, $myBdd->m_link) or die ("Erreur Delete");
-				
-				unset($_SESSION['Signature']);
+			// Vidage gickp_Recherche_Licence ...				
+			$sql = "Delete From gickp_Recherche_Licence Where Signature = '";
+			$sql .= $_SESSION['Signature'];
+			$sql .= "'";
+			$myBdd->Query($sql);
+			
+			unset($_SESSION['Signature']);
 		}
 
 		$clefEntraineur = '';
@@ -60,15 +59,15 @@ class GestionMatchEquipeJoueur extends MyPageSecure
 			$sql .= "Where Id = ";
 			$sql .= $idMatch;
 			
-			$result = mysql_query($sql, $myBdd->m_link) or die ("Erreur Select");
-			if (mysql_num_rows($result) == 1)
+			$result = $myBdd->Query($sql);
+			if ($myBdd->NumRows($result) == 1)
 			{
-					$row = mysql_fetch_array($result);	 
-					$Numero_ordre = $row['Numero_ordre'];
-						// Titre ...
-					$this->m_tpl->assign('headerTitle', '(Saison '.utyGetSaison().') Match n°'.$row['Numero_ordre'].' du '.utyDateUsToFr($row['Date_match']).' à '.$row['Heure_match'].' Terrain '.$row['Terrain'].' ('.$idMatch.')');	
-					$this->m_tpl->assign('idJournee', $row['Id_journee']);
-					$this->m_tpl->assign('Validation', $row['Validation']);
+				$row = $myBdd->FetchRow($result);	 
+				$Numero_ordre = $row['Numero_ordre'];
+				// Titre ...
+				$this->m_tpl->assign('headerTitle', '(Saison '.utyGetSaison().') Match n°'.$row['Numero_ordre'].' du '.utyDateUsToFr($row['Date_match']).' à '.$row['Heure_match'].' Terrain '.$row['Terrain'].' ('.$idMatch.')');	
+				$this->m_tpl->assign('idJournee', $row['Id_journee']);
+				$this->m_tpl->assign('Validation', $row['Validation']);
 			}
 			
 			// Prise des Informations sur l'Equipe ...
@@ -81,19 +80,19 @@ class GestionMatchEquipeJoueur extends MyPageSecure
 			$sql .= "And b.Id = ";
 			$sql .= $idMatch;
 				
-			$result = mysql_query($sql, $myBdd->m_link) or die ("Erreur Select");
-			if (mysql_num_rows($result) == 1)
+			$result = $myBdd->Query($sql);
+			if ($myBdd->NumRows($result) == 1)
 			{
-					$row = mysql_fetch_array($result);	  
-					$idEquipe = $row['Id'];
+				$row = $myBdd->FetchRow($result);	 
+				$idEquipe = $row['Id'];
 			
-					$infoEquipe = $row['Libelle'].' ('.$row['Code_compet'].'-'.$row['Code_saison'].')';
-					$_SESSION['idEquipe'] = $idEquipe;
-					$_SESSION['infoEquipe'] = $infoEquipe;
-					$_SESSION['codeClub'] = $row['Code_club'];
-					
-					// Sous-Titre ...
-					$this->m_tpl->assign('headerSubTitle', 'Joueurs Equipe '.$codeEquipe.' : '.$infoEquipe);
+				$infoEquipe = $row['Libelle'].' ('.$row['Code_compet'].'-'.$row['Code_saison'].')';
+				$_SESSION['idEquipe'] = $idEquipe;
+				$_SESSION['infoEquipe'] = $infoEquipe;
+				$_SESSION['codeClub'] = $row['Code_club'];
+				
+				// Sous-Titre ...
+				$this->m_tpl->assign('headerSubTitle', 'Joueurs Equipe '.$codeEquipe.' : '.$infoEquipe);
 			}
 			
 			// Chargement des Joueurs de l'Equipe déja inscrit ...
